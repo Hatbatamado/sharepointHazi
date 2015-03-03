@@ -271,7 +271,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BejelentesContext.cs" />
+    <Compile Include="Models\BejelentesDatabaseInitializer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IdoBejelentes.cs" />
+    <Compile Include="Models\Jogcim.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
