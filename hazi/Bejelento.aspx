@@ -13,12 +13,22 @@
         });
     </script>
     <!-- jqueryui vége -->
-
-    <asp:Label ID="Label1" runat="server" Text="Folyamat kezdése:"></asp:Label>
-    <asp:TextBox ID="datepicker1" runat="server"></asp:TextBox>
-    <asp:Label ID="Label2" runat="server" Text="Folyamat befejezése:"></asp:Label>
-    <asp:TextBox ID="datepicker2" runat="server"></asp:TextBox>
-    <asp:DropDownList ID="DropDownList1" runat="server" ItemType="hazi.Models.Jogcim" SelectMethod="GetJogcimek" DataTextField="Cim"></asp:DropDownList>
-    <asp:Button ID="save" runat="server" Text="Mentés" OnClick="save_Click" />
-    <asp:Button ID="cancel" runat="server" Text="Mégse" OnClick="cancel_Click" />
+    <!-- TODO style -->
+    <div style="padding-top: 20px;">
+        <div style="padding-bottom: 20px;">
+            <asp:Label ID="Label1" runat="server" Text="Folyamat kezdése:" Width="150px"></asp:Label>
+            <asp:TextBox ID="datepicker1" runat="server"></asp:TextBox>
+        </div>
+        <div style="padding-bottom: 20px;">
+            <asp:Label ID="Label2" runat="server" Text="Folyamat befejezése:" Width="150px"></asp:Label>
+            <asp:TextBox ID="datepicker2" runat="server"></asp:TextBox>
+        </div>
+        <div style="padding-left:50px;padding-bottom:20px;">
+            <asp:DropDownList ID="DropDownList1" runat="server" ItemType="hazi.Models.Jogcim"
+                SelectMethod="GetJogcimek" DataTextField="Cim" Width="175px">
+            </asp:DropDownList><br />
+        </div>
+        <asp:Button ID="save" runat="server" Text="Mentés" OnClick="save_Click" />
+        <asp:Button ID="cancel" runat="server" Text="Mégse" OnClick="cancel_Click" />
+    </div>
 </asp:Content>
