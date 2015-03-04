@@ -7,8 +7,9 @@
     <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
     <script>
         $(function () {
-            $("#<%=datepicker1.ClientID%>").datepicker();
-            $("#<%=datepicker2.ClientID%>").datepicker();
+            //readonly miatt felhasználó nem tud hibás dátumot beállítani
+            $("#<%=datepicker1.ClientID%>").datepicker().attr('readonly', 'readonly');
+            $("#<%=datepicker2.ClientID%>").datepicker().attr('readonly', 'readonly');
         });
     </script>
     <!-- jqueryui vége -->

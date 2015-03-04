@@ -7,8 +7,8 @@ namespace hazi.Models
     {
         [ScaffoldColumn(false)]
         public int ID { get; set; }
-        public string KezdetiDatum { get; set; }
-        public string VegeDatum { get; set; }
+        public DateTime KezdetiDatum { get; set; }
+        public DateTime VegeDatum { get; set; }
         public int? JogcimID { get; set; }
         public virtual Jogcim Jogcim { get; set; }
     }
