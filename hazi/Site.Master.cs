@@ -1,5 +1,7 @@
-﻿using System;
+﻿using hazi.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Web;
