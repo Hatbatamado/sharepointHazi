@@ -21,5 +21,11 @@ namespace hazi
             IQueryable<Jogcim> query = _db.Jogcimek;
             return query;
         }
+
+        protected void cancel_Click(object sender, EventArgs e)
+        {
+            HttpContext.Current.Response.Redirect("./");
+        }
+
     }
 }

@@ -16,4 +16,6 @@
     <asp:Label ID="Label2" runat="server" Text="Folyamat befejezése:"></asp:Label>
     <asp:TextBox ID="datepicker2" runat="server"></asp:TextBox>
     <asp:DropDownList ID="DropDownList1" runat="server" ItemType="hazi.Models.Jogcim" SelectMethod="GetJogcimek" DataTextField="Cim"></asp:DropDownList>
+    <asp:Button ID="save" runat="server" Text="Mentés" />
+    <asp:Button ID="cancel" runat="server" Text="Mégse" OnClick="cancel_Click" />
 </asp:Content>
