@@ -20,10 +20,7 @@ namespace hazi
         int idDB = 1;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                
-            }
+
         }
 
         //Jogcimek kiolvasása DB-ből
