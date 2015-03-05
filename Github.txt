@@ -1,0 +1,2 @@
+A feladat megoldása során a kódot a githubra is felraktam, hogy esetleges probléma esetén könnyen visszatudjak állni a régebbi verzióra:
+https://github.com/Hatbatamado/sharepointHazi
