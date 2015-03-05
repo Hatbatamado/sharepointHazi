@@ -9,8 +9,8 @@ using System.Web.UI.WebControls;
 namespace hazi
 {
     enum hibak { nincsHiba,
-                 elsoDatumRegebbiMainal,
-                 masodikDatumRegebbiMainal,
+                 elsoDatumRegebbiMostaninal,
+                 masodikDatumRegebbiMostaninal,
                  elsoDatumNincsKivalasztva,
                  masodikDatumNincsKivalasztva,
                  befejezesIdejeKezdesElottVan };
@@ -37,6 +37,7 @@ namespace hazi
             HttpContext.Current.Response.Redirect("./");
         }
 
+        //readonly miatt a felhasználó nem tud hibás formátum-ú adatot megadni
         protected void save_Click(object sender, EventArgs e)
         {
             hibak hiba = hibak.nincsHiba;
@@ -46,22 +47,28 @@ namespace hazi
             //van-e kiválasztva dátum midenhol
             if (datetimepicker1.Text != "" && datetimepicker2.Text != "")
             {
-                string[] seged;
+                string[] seged, segedido;
                 
-                //az első dátum régebbi-e mainál
-                seged = datetimepicker1.Text.Split('/');
-                datum1 = new DateTime(Int32.Parse(seged[2]), Int32.Parse(seged[0]), Int32.Parse(seged[1]));
+                //az első dátum régebbi-e mostaninál
+                seged = datetimepicker1.Text.Split(' ');
+                segedido = seged[1].Split(':');
+                seged = seged[0].Split('/');
+                datum1 = new DateTime(Int32.Parse(seged[0]), Int32.Parse(seged[1]), Int32.Parse(seged[2]),
+                    Int32.Parse(segedido[0]), Int32.Parse(segedido[1]), 0);
                 if (datum1 < DateTime.Now)
-                    hiba = hibak.elsoDatumRegebbiMainal;
+                    hiba = hibak.elsoDatumRegebbiMostaninal;
 
                 //ha még hiba nem történt
                 if (hiba == hibak.nincsHiba)
                 {
-                    //a második dátum régebbi-e mainál
-                    seged = datetimepicker2.Text.Split('/');
-                    datum2 = new DateTime(Int32.Parse(seged[2]), Int32.Parse(seged[0]), Int32.Parse(seged[1]));
+                    //a második dátum régebbi-e mostaninál
+                    seged = datetimepicker2.Text.Split(' ');
+                    segedido = seged[1].Split(':');
+                    seged = seged[0].Split('/');
+                    datum2 = new DateTime(Int32.Parse(seged[0]), Int32.Parse(seged[1]), Int32.Parse(seged[2]),
+                        Int32.Parse(segedido[0]), Int32.Parse(segedido[1]), 0);
                     if (datum2 < DateTime.Now)
-                        hiba = hibak.masodikDatumRegebbiMainal;
+                        hiba = hibak.masodikDatumRegebbiMostaninal;
                 }
 
                 //ha még hiba nem történt
@@ -119,11 +126,11 @@ namespace hazi
                     case hibak.masodikDatumNincsKivalasztva:
                         hibaUzenet = "A második dátum nincs kiválasztva, így a mentés sikertelen!";
                         break;
-                    case hibak.elsoDatumRegebbiMainal:
-                        hibaUzenet = "A folyamat kezdeti dátuma, a mai dátumnál régebbi, így a mentés sikertelen!";
+                    case hibak.elsoDatumRegebbiMostaninal:
+                        hibaUzenet = "A folyamat kezdeti dátuma a mostani dátumnál / időnél régebbi, így a mentés sikertelen!";
                         break;
-                    case hibak.masodikDatumRegebbiMainal:
-                        hibaUzenet = "A folyamat befejező dátuma, a mai dátumnál régebbi, így a mentés sikertelen!";
+                    case hibak.masodikDatumRegebbiMostaninal:
+                        hibaUzenet = "A folyamat befejező dátuma a mostani dátumnál / időnél régebbi, így a mentés sikertelen!";
                         break;
                     case hibak.befejezesIdejeKezdesElottVan:
                         hibaUzenet = "A folyamat befejező dátuma a kezdeti dátum előtt van, így a mentés sikertelen!";
