@@ -22,13 +22,13 @@ namespace hazi {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// datepicker1 control.
+        /// datetimepicker1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox datepicker1;
+        protected global::System.Web.UI.WebControls.TextBox datetimepicker1;
         
         /// <summary>
         /// Label2 control.
@@ -40,13 +40,22 @@ namespace hazi {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// datepicker2 control.
+        /// datetimepicker2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox datepicker2;
+        protected global::System.Web.UI.WebControls.TextBox datetimepicker2;
+        
+        /// <summary>
+        /// Label3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
         /// DropDownList1 control.

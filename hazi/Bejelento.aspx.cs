@@ -44,12 +44,12 @@ namespace hazi
             DateTime datum2 = new DateTime();
 
             //van-e kiválasztva dátum midenhol
-            if (datepicker1.Text != "" && datepicker2.Text != "")
+            if (datetimepicker1.Text != "" && datetimepicker2.Text != "")
             {
                 string[] seged;
                 
                 //az első dátum régebbi-e mainál
-                seged = datepicker1.Text.Split('/');
+                seged = datetimepicker1.Text.Split('/');
                 datum1 = new DateTime(Int32.Parse(seged[2]), Int32.Parse(seged[0]), Int32.Parse(seged[1]));
                 if (datum1 < DateTime.Now)
                     hiba = hibak.elsoDatumRegebbiMainal;
@@ -58,7 +58,7 @@ namespace hazi
                 if (hiba == hibak.nincsHiba)
                 {
                     //a második dátum régebbi-e mainál
-                    seged = datepicker2.Text.Split('/');
+                    seged = datetimepicker2.Text.Split('/');
                     datum2 = new DateTime(Int32.Parse(seged[2]), Int32.Parse(seged[0]), Int32.Parse(seged[1]));
                     if (datum2 < DateTime.Now)
                         hiba = hibak.masodikDatumRegebbiMainal;
@@ -75,14 +75,14 @@ namespace hazi
             else
             {
                 //első dátum ki van-e választva
-                if (datepicker1.Text == "")
+                if (datetimepicker1.Text == "")
                     hiba = hibak.elsoDatumNincsKivalasztva;
 
                 //ha még hiba nem történt
                 if (hiba == hibak.nincsHiba)
                 {
                     //második dátum ki van-e választva
-                    if (datepicker2.Text == "")
+                    if (datetimepicker2.Text == "")
                         hiba = hibak.masodikDatumNincsKivalasztva;
                 }
             }
