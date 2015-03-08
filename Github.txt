@@ -3,3 +3,5 @@ A feladat megoldása során a kódot a githubra is felraktam, hogy esetleges problé
 https://github.com/Hatbatamado/sharepointHazi
 2. házi:
 https://github.com/Hatbatamado/sharepointHazi/tree/hazi2
+
+TODO: 2 branch helyett 1 solution-be minden, mapákkal elválasztva
