@@ -208,6 +208,7 @@ namespace hazi.WEB.Pages
             cancel.Text = "Vissza";
         }
 
+        //dátum validátor
         protected void CustomValidatorDatum_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (hiba == hibak.nincsHiba)
@@ -235,6 +236,7 @@ namespace hazi.WEB.Pages
             }
         }
 
+        //folyamat kezdeti időpont validátor
         protected void CustomValidatorIdopont1_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (hiba == hibak.nincsHiba)
@@ -261,6 +263,7 @@ namespace hazi.WEB.Pages
             }
         }
 
+        //folyamat vége időpont validátor
         protected void CustomValidatorIdopont2_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (hiba == hibak.nincsHiba)
