@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="hazi2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="IdoBejelentes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KezdetiDatum" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="VegeDatum" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="JogcimID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Jogcim" Relationship="Self.FK_IdoBejelentes_Jogcim" FromRole="IdoBejelentes" ToRole="Jogcim" />
+  </EntityType>
+  <EntityType Name="Jogcim">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cim" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="IdoBejelentes" Relationship="Self.FK_IdoBejelentes_Jogcim" FromRole="Jogcim" ToRole="IdoBejelentes" />
+  </EntityType>
+  <Association Name="FK_IdoBejelentes_Jogcim">
+    <End Role="Jogcim" Type="Self.Jogcim" Multiplicity="1" />
+    <End Role="IdoBejelentes" Type="hazi2Model.IdoBejelentes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jogcim">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IdoBejelentes">
+        <PropertyRef Name="JogcimID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="hazi2Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="IdoBejelentes1" EntityType="hazi2Model.IdoBejelentes" />
+    <EntitySet Name="Jogcims" EntityType="Self.Jogcim" />
+    <AssociationSet Name="FK_IdoBejelentes_Jogcim" Association="Self.FK_IdoBejelentes_Jogcim">
+      <End Role="Jogcim" EntitySet="Jogcims" />
+      <End Role="IdoBejelentes" EntitySet="IdoBejelentes1" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

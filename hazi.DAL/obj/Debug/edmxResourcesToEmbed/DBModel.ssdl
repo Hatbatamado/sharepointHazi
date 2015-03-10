@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="hazi2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="IdoBejelentes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KezdetiDatum" Type="datetime" Nullable="false" />
+    <Property Name="VegeDatum" Type="datetime" Nullable="false" />
+    <Property Name="JogcimID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Jogcim">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cim" Type="nvarchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_IdoBejelentes_Jogcim">
+    <End Role="Jogcim" Type="Self.Jogcim" Multiplicity="1" />
+    <End Role="IdoBejelentes" Type="Self.IdoBejelentes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jogcim">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IdoBejelentes">
+        <PropertyRef Name="JogcimID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="hazi2ModelStoreContainer">
+    <EntitySet Name="IdoBejelentes" EntityType="Self.IdoBejelentes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jogcim" EntityType="Self.Jogcim" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_IdoBejelentes_Jogcim" Association="Self.FK_IdoBejelentes_Jogcim">
+      <End Role="Jogcim" EntitySet="Jogcim" />
+      <End Role="IdoBejelentes" EntitySet="IdoBejelentes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
