@@ -7,3 +7,6 @@ C:\Users\Nakia\Desktop\bot\sharepointHazi\hazi.BLL\bin\Debug\EntityFramework.xml
 C:\Users\Nakia\Desktop\bot\sharepointHazi\hazi.BLL\obj\Debug\hazi.BLL.csprojResolveAssemblyReference.cache
 C:\Users\Nakia\Desktop\bot\sharepointHazi\hazi.BLL\obj\Debug\hazi.BLL.dll
 C:\Users\Nakia\Desktop\bot\sharepointHazi\hazi.BLL\obj\Debug\hazi.BLL.pdb
+C:\Users\Nakia\Desktop\bot\sharepointHazi\hazi.BLL\bin\Debug\hazi.BLL.dll.config
+C:\Users\Nakia\Desktop\bot\sharepointHazi\hazi.BLL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Nakia\Desktop\bot\sharepointHazi\hazi.BLL\bin\Debug\EntityFramework.SqlServer.xml
