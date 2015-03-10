@@ -7,24 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace hazi.WEB.Account
-{
-
-
-    public partial class RegisterExternalLogin
-    {
-
-
-
-        /// <summary>
-        /// userNameForm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder userNameForm;
-
+namespace hazi.Account {
+    
+    
+    public partial class RegisterExternalLogin {
+        
         /// <summary>
         /// userName control.
         /// </summary>
@@ -33,7 +20,5 @@ namespace hazi.WEB.Account
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox userName;
-
-
     }
 }

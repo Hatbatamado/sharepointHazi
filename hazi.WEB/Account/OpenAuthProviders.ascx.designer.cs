@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace hazi.WEB.Account
-{
-
-
-    public partial class OpenAuthProviders
-    {
-
+namespace hazi.Account {
+    
+    
+    public partial class OpenAuthProviders {
+        
         /// <summary>
         /// providerDetails control.
         /// </summary>
@@ -22,6 +20,5 @@ namespace hazi.WEB.Account
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView providerDetails;
-
     }
 }

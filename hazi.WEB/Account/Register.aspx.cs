@@ -1,31 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Linq;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Microsoft.AspNet.Membership.OpenAuth;
+using hazi.Models;
 
-namespace hazi.WEB.Account
+namespace hazi.Account
 {
     public partial class Register : Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void CreateUser_Click(object sender, EventArgs e)
         {
-            RegisterUser.ContinueDestinationPageUrl = Request.QueryString["ReturnUrl"];
-        }
-
-        protected void RegisterUser_CreatedUser(object sender, EventArgs e)
-        {
-            FormsAuthentication.SetAuthCookie(RegisterUser.UserName, createPersistentCookie: false);
-
-            string continueUrl = RegisterUser.ContinueDestinationPageUrl;
-            if (!OpenAuth.IsLocalUrl(continueUrl))
+            var manager = new UserManager();
+            var user = new ApplicationUser() { UserName = UserName.Text };
+            IdentityResult result = manager.Create(user, Password.Text);
+            if (result.Succeeded)
             {
-                continueUrl = "~/";
+                IdentityHelper.SignIn(manager, user, isPersistent: false);
+                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
             }
-            Response.Redirect(continueUrl);
+            else 
+            {
+                ErrorMessage.Text = result.Errors.FirstOrDefault();
+            }
         }
     }
 }

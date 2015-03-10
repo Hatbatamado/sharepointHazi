@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace hazi.WEB {
+namespace hazi {
     
     
     public partial class Site_Mobile {
