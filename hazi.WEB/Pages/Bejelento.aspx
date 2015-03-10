@@ -1,7 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Bejelento.aspx.cs" Inherits="hazi.WEB.Pages.Bejelento" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <!-- jqueryui dátum és idő http://xdsoft.net/jqplugins/datetimepicker/ -->
-    <link rel="stylesheet" type="text/css" href="/Content/jquery.datetimepicker.css"/ >
+    <!-- jqueryui dátum http://jqueryui.com/datepicker/ -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#<%=datepicker.ClientID%>").datepicker({ dateFormat: 'yy.mm.dd' }).val();
+        });
+    </script>
     <!-- css -->
     <style>
         #fent { padding-top: 20px; }
@@ -11,17 +18,30 @@
     <!-- css vége -->
     <div id="fent">
         <div class="alul">
+            <asp:Label ID="Label4" runat="server" Text="Bejelentő űrlap" Font-Bold="true" Font-Size="XX-Large"></asp:Label>
+        </div>
+        <div class="alul">
+            <asp:Label ID="hibaLabel" runat="server" Text="Label" Visible="false" ForeColor="Red" Font-Bold="true"></asp:Label>
+            </div>
+        <div class="alul">
+            <asp:Label ID="Label5" runat="server" Text="Dátum:" Width="150px"></asp:Label>
+            <asp:TextBox ID="datepicker" runat="server" CssClass="some_class" Width="100px"></asp:TextBox>
+            </div>
+        <div class="alul">
             <asp:Label ID="Label1" runat="server" Text="Folyamat kezdése:" Width="150px"></asp:Label>
-            <asp:TextBox ID="datetimepicker1" runat="server" CssClass="some_class"></asp:TextBox>
+            <asp:DropDownList ID="ora1" runat="server" Width="50px"></asp:DropDownList>
+            <asp:Label ID="Label6" runat="server" Text=":"></asp:Label>
+            <asp:DropDownList ID="perc1" runat="server" Width="50px"></asp:DropDownList>
         </div>
         <div class="alul">
             <asp:Label ID="Label2" runat="server" Text="Folyamat befejezése:" Width="150px"></asp:Label>
-            <asp:TextBox ID="datetimepicker2" runat="server" CssClass="some_class"></asp:TextBox>
+            <asp:DropDownList ID="ora2" runat="server" Width="50px"></asp:DropDownList>
+            <asp:Label ID="Label7" runat="server" Text=":"></asp:Label>
+            <asp:DropDownList ID="perc2" runat="server" Width="50px"></asp:DropDownList>
         </div>
         <div class="alul">
             <asp:Label ID="Label3" runat="server" Text="Jogcím:" Width="150px"></asp:Label>
-            <asp:DropDownList ID="DropDownList1" runat="server">
-            </asp:DropDownList><br />
+            <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList><br />
         </div>
         <asp:Button ID="save" runat="server" Text="Mentés" OnClick="save_Click" Font-Bold="true" />
         <span id="gombBeljebb">
