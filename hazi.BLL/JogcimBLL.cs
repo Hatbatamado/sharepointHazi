@@ -9,7 +9,8 @@ namespace hazi.BLL
 {
     public class JogcimBLL
     {
-        public static List<Jogcim> GetById()
+        //jogcimek kiolvasása db-ből
+        public static List<Jogcim> GetJogcimek()
         {
             List<Jogcim> jogcimek = new List<Jogcim>();
             using(hazi2Entities db = new hazi2Entities())
@@ -23,6 +24,46 @@ namespace hazi.BLL
                     jogcimek.Add(item);
                 }
                 return jogcimek;
+            }
+        }
+
+        //db-be mentés
+        public static void IdoBejelentesMentes(int? ID, DateTime Kezdeti, DateTime Vege, int JogcimId)
+        {
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                IdoBejelentes ib = null;
+                if (ID == null)
+                    ib = new IdoBejelentes();
+                else
+                {
+                    ib = (from b in db.IdoBejelentes1
+                          where b.ID == ID
+                          select b).Single();
+                }
+
+                ib.KezdetiDatum = Kezdeti;
+                ib.VegeDatum = Vege;
+                ib.Jogcim = (from b in db.Jogcims
+                             where b.ID == JogcimId
+                             select b).Single();
+
+                if (ID == null)
+                    db.IdoBejelentes1.Add(ib);
+
+                db.SaveChanges();
+            }
+        }
+
+        //DDL-be kiválasztott eleme ID-je
+        public static int GetIDbyName(string Cim)
+        {
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                var jog = (from b in db.Jogcims
+                           where b.Cim == Cim
+                           select b).Single();
+                return jog.ID;
             }
         }
     }

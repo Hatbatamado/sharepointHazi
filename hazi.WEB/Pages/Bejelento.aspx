@@ -22,6 +22,7 @@
         </div>
         <div class="alul">
             <asp:Label ID="hibaLabel" runat="server" Text="Label" Visible="false" ForeColor="Red" Font-Bold="true"></asp:Label>
+            <asp:Label ID="mentesLabel" runat="server" Text="Label" Visible="false" ForeColor="Green" Font-Bold="true"></asp:Label>
             </div>
         <div class="alul">
             <asp:Label ID="Label5" runat="server" Text="Dátum:" Width="150px"></asp:Label>
@@ -41,7 +42,7 @@
         </div>
         <div class="alul">
             <asp:Label ID="Label3" runat="server" Text="Jogcím:" Width="150px"></asp:Label>
-            <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList><br />
+            <asp:DropDownList ID="DropDownList1" runat="server" DataValueField="ID"></asp:DropDownList><br />
         </div>
         <asp:Button ID="save" runat="server" Text="Mentés" OnClick="save_Click" Font-Bold="true" />
         <span id="gombBeljebb">
