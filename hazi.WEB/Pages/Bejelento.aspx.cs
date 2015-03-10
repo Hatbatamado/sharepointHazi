@@ -172,10 +172,7 @@ namespace hazi.WEB.Pages
                     //db-be mentés
                     if (bejelentes != null)
                     {
-                        JogcimBLL.IdoBejelentesMentes(null, bejelentes.Kezdeti, bejelentes.Vege,
-                            JogcimBLL.GetIDbyName(DropDownList1.SelectedValue));
-                        mentesLabel.Visible = true;
-                        mentesLabel.Text = "A mentés sikeres!";
+                        Mentes();
                     }
                     //ennek sose szabadna lefutnia
                     else
@@ -184,6 +181,31 @@ namespace hazi.WEB.Pages
             }
             else
                 HibaUzenetFelhasznalonak(hiba);
+        }
+
+        private void Mentes()
+        {
+            JogcimBLL.IdoBejelentesMentes(null, bejelentes.Kezdeti, bejelentes.Vege,
+                            JogcimBLL.GetIDbyName(DropDownList1.SelectedValue));
+            mentesLabel.Visible = true;
+            mentesLabel.Text = "A mentés sikeres!";
+
+            //Sikeres mentés esetén a felhasználó egyszerűen visszatudjon navigálni a rendszer főoldalára
+            Label5.Visible = false;
+            datepicker.Visible = false;
+            Label1.Visible = false;
+            ora1.Visible = false;
+            Label6.Visible = false;
+            perc1.Visible = false;
+            Label2.Visible = false;
+            ora2.Visible = false;
+            Label7.Visible = false;
+            perc2.Visible = false;
+            Label3.Visible = false;
+            DropDownList1.Visible = false;
+            save.Visible = false;
+
+            cancel.Text = "Vissza";
         }
 
         protected void CustomValidatorDatum_ServerValidate(object source, ServerValidateEventArgs args)
