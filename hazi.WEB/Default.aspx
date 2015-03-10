@@ -5,7 +5,7 @@
     <section>
         <div>
             <hgroup>
-                <h2><%: Page.Title %></h2>
+                <h2>Bejelentések</h2>
             </hgroup>
             <asp:ListView ID="productList" runat="server"
                 DataKeyNames="ID" ItemType="hazi.DAL.IdoBejelentes" SelectMethod="GetIdoBejelentesek">
@@ -49,5 +49,6 @@
                 </ItemTemplate>
             </asp:ListView>
         </div>
+        <asp:Button ID="Button1" runat="server" Text="Új bejelentés" Font-Bold="true" OnClick="Button1_Click" />
     </section>
 </asp:Content>

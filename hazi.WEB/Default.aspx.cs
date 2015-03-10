@@ -22,5 +22,10 @@ namespace hazi.WEB
             IQueryable query = db.IdoBejelentes1;
             return query;
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

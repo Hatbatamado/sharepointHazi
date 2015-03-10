@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using hazi.BLL;
 using hazi.DAL;
+using System.Web.ModelBinding;
 
 namespace hazi.WEB.Pages
 {
@@ -30,6 +31,19 @@ namespace hazi.WEB.Pages
 
     public partial class Bejelento : System.Web.UI.Page
     {
+
+        public int? Id
+        {
+            get
+            {
+                return (int?)ViewState["Id"];
+            }
+            set
+            {
+                ViewState["Id"] = value;
+            }
+        }
+
         Bejelentes bejelentes = null;
         hibak hiba = hibak.nincsHiba;
 
@@ -39,6 +53,16 @@ namespace hazi.WEB.Pages
             {
                 DropDownListFeltoltes();
                 AlapAdatokFeltoltese();
+
+                if (Request.QueryString["ID"] != null)
+                {
+                    Id = Int32.Parse(Request.QueryString["ID"]);
+                    AdatokFeltolteseIdAlapjan(JogcimBLL.GetIdoBejelentesById(Id.Value));
+                }
+                else
+                {
+                    AlapErtekekBeallitasa();
+                }
             }
         }
 
@@ -52,7 +76,7 @@ namespace hazi.WEB.Pages
             }
         }
 
-        //dátum és idő mezők feltöltése és alap értékek beállítása
+        //dátum és idő mezők feltöltése
         private void AlapAdatokFeltoltese()
         {
             //órák feltöltése DropDownList-be
@@ -66,14 +90,18 @@ namespace hazi.WEB.Pages
             {
                 perc1.Items.Add(i.ToString());
                 perc2.Items.Add(i.ToString());
-            }
+            }            
+        }
 
+        //alap értékek beállítása
+        private void AlapErtekekBeallitasa()
+        {
             //Folyamat kezdése: alap értéknek a mostani idő beállítása
-            ora1.SelectedIndex = DateTime.Now.Hour - 1;
+            ora1.SelectedIndex = DateTime.Now.Hour - 1; //-1 mivel nem 0-tól indexelünk
             perc1.SelectedIndex = DateTime.Now.Minute;
 
-            //Folyamat vége: alap értéknek a mostani +1 óra idő beállítása
-            ora2.SelectedIndex = DateTime.Now.Hour;
+            //Folyamat vége: alap értéknek a mostani idő beállítása
+            ora2.SelectedIndex = DateTime.Now.Hour - 1; //-1 mivel nem 0-tól indexelünk
             perc2.SelectedIndex = DateTime.Now.Minute;
 
             //alap értéknek a mai dátum beállítása
@@ -191,6 +219,13 @@ namespace hazi.WEB.Pages
             mentesLabel.Text = "A mentés sikeres!";
 
             //Sikeres mentés esetén a felhasználó egyszerűen visszatudjon navigálni a rendszer főoldalára
+            ElemekElrejtese();
+
+            cancel.Text = "Vissza";
+        }
+
+        private void ElemekElrejtese()
+        {
             Label5.Visible = false;
             datepicker.Visible = false;
             Label1.Visible = false;
@@ -204,8 +239,6 @@ namespace hazi.WEB.Pages
             Label3.Visible = false;
             DropDownList1.Visible = false;
             save.Visible = false;
-
-            cancel.Text = "Vissza";
         }
 
         //dátum validátor
@@ -289,6 +322,25 @@ namespace hazi.WEB.Pages
                     hiba = hibak.HibasVegeErtekek;
             }
         }
+        
+        private void AdatokFeltolteseIdAlapjan(IdoBejelentes ib)
+        {
+            if (ib != null)
+            {
+                //dátum
+                datepicker.Text = DateTimeTosringMegfeleloModra(ib.KezdetiDatum);
 
+                //folyamat kezdeti ideje
+                ora1.SelectedIndex = ib.KezdetiDatum.Hour - 1; //-1 mivel nem 0-tól indexelünk
+                perc1.SelectedIndex = ib.KezdetiDatum.Minute;
+
+                //folyamat vége ideje
+                ora2.SelectedIndex = ib.VegeDatum.Hour - 1; //-1 mivel nem 0-tól indexelünk
+                perc2.SelectedIndex = ib.VegeDatum.Minute;
+
+                //jogcim kiválasztása
+                DropDownList1.SelectedIndex = ib.JogcimID - 1; //-1 mivel nem 0-tól indexelünk
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace hazi.BLL
             using(hazi2Entities db = new hazi2Entities())
             {
                 var jog = (from j in db.Jogcims
-                           orderby j.Cim
+                           orderby j.ID
                            select j);
 
                 foreach (var item in jog)
@@ -65,6 +65,22 @@ namespace hazi.BLL
                            select b).Single();
                 return jog.ID;
             }
+        }
+
+        //időbejelentések kiolvasása DB-ből
+        public static IdoBejelentes GetIdoBejelentesById(int? id)
+        {
+            if (id.HasValue && id > 0)
+            {
+                using(hazi2Entities db = new hazi2Entities())
+                {
+                    var bej = (from b in db.IdoBejelentes1
+                               where b.ID == id
+                               select b).Single();
+                    return bej;
+                }
+            }
+            return null;
         }
     }
 }
