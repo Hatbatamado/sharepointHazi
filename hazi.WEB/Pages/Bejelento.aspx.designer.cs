@@ -58,6 +58,15 @@ namespace hazi.WEB.Pages {
         protected global::System.Web.UI.WebControls.TextBox datepicker;
         
         /// <summary>
+        /// CustomValidatorDatum control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidatorDatum;
+        
+        /// <summary>
         /// Label1 control.
         /// </summary>
         /// <remarks>
@@ -94,6 +103,15 @@ namespace hazi.WEB.Pages {
         protected global::System.Web.UI.WebControls.DropDownList perc1;
         
         /// <summary>
+        /// CustomValidatorIdopont1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidatorIdopont1;
+        
+        /// <summary>
         /// Label2 control.
         /// </summary>
         /// <remarks>
@@ -128,6 +146,15 @@ namespace hazi.WEB.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList perc2;
+        
+        /// <summary>
+        /// CustomValidatorIdopont2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidatorIdopont2;
         
         /// <summary>
         /// Label3 control.

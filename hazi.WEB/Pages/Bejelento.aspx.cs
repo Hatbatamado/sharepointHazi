@@ -31,6 +31,8 @@ namespace hazi.WEB.Pages
     public partial class Bejelento : System.Web.UI.Page
     {
         Bejelentes bejelentes = null;
+        hibak hiba = hibak.nincsHiba;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -40,7 +42,7 @@ namespace hazi.WEB.Pages
             }
         }
 
-
+        //DDL feltöltése jogcímekkel
         private void DropDownListFeltoltes()
         {
             List<Jogcim> jogcimek = JogcimBLL.GetJogcimek();
@@ -50,6 +52,7 @@ namespace hazi.WEB.Pages
             }
         }
 
+        //dátum és idő mezők feltöltése és alap értékek beállítása
         private void AlapAdatokFeltoltese()
         {
             //órák feltöltése DropDownList-be
@@ -77,6 +80,7 @@ namespace hazi.WEB.Pages
             datepicker.Text = DateTimeTosringMegfeleloModra(DateTime.Now);
         }
 
+        //DateTime parse-hoz a dátum átalakítása
         private string DateTimeTosringMegfeleloModra(DateTime ido)
         {
             return ido.Year + "." + ido.Month + "." + ido.Day;
@@ -85,48 +89,14 @@ namespace hazi.WEB.Pages
         protected void cancel_Click(object sender, EventArgs e)
         {
             //Home-ra navigálás
-            HttpContext.Current.Response.Redirect("./");
+            HttpContext.Current.Response.Redirect("./../");
         }
 
         private hibak Hibakereses()
         {
-            string seged;
-            //Kiválasztott dátum dátum-e
-            DateTime datumKezdeti, datumVege;
-            if (!DateTime.TryParse(datepicker.Text, out datumKezdeti))
-                return hibak.HibasDatum;
-            else
-                datumVege = datumKezdeti;
-
-            //Kiválasztott dátum régebbi-e a mai dátumnál
-            if (IdoVizsgalat(vizsgalat.CsakDatum, DateTime.Now) > IdoVizsgalat(vizsgalat.CsakDatum, datumKezdeti))
-                return hibak.KezdetiDatumRegebbiMainal;
-
-            //Folyamat kezdeti óra és perc helyes-e
-            seged = DateTimeTosringMegfeleloModra(datumKezdeti);
-            seged += " " + ora1.SelectedItem.Text + ":" + perc1.SelectedItem.Text + ":00";
-            if (!DateTime.TryParse(seged, out datumKezdeti))
-                return hibak.HibasKezdetiIdo;
-
-            //Folyamat vége óra és perc helyes-e
-            seged = DateTimeTosringMegfeleloModra(datumVege);
-            seged += " " + ora2.SelectedItem.Text + ":" + perc2.SelectedItem.Text + ":00";
-            if (!DateTime.TryParse(seged, out datumVege))
-                return hibak.HibasVegeIdo;
-
-            //Folyamat kezdete régebbi-e a mostaninál
-            if (IdoVizsgalat(vizsgalat.MasodpercNulla, DateTime.Now) > datumKezdeti)
-                return hibak.HibasKezdetiErtekek;
-
-            //Folyamat vége régebbi-e a mostaninál
-            if (IdoVizsgalat(vizsgalat.MasodpercNulla, DateTime.Now) > datumVege)
-                return hibak.HibasVegeErtekek;
-
             //Folyamat vége a kezdeti előtt van-e vagy megegyezik-e
-            if (datumVege <= datumKezdeti)
+            if (bejelentes.Vege <= bejelentes.Kezdeti)
                 return hibak.VegeKezdetiElott;
-
-            bejelentes = new Bejelentes(datumKezdeti, datumVege);
 
             return hibak.nincsHiba;
         }
@@ -186,24 +156,112 @@ namespace hazi.WEB.Pages
         {
             //ha már volt előzőleg, egy hiba azt rejtsük el
             hibaLabel.Visible = false;
+            //ha már volt egy sikeres mentésünk és most újabb lesz, azt rejtsük el
+            mentesLabel.Visible = false;
 
-            //hibák keresése mentés előtt
-            hibak hiba = Hibakereses();
-
-            //hiba esetén a felhasználó értesítése
-            if (hiba != hibak.nincsHiba)
-                HibaUzenetFelhasznalonak(hiba);
-            else
+            if (Page.IsValid)
             {
-                //db-be mentés
-                if (bejelentes != null)
-                {
-                    JogcimBLL.IdoBejelentesMentes(null, bejelentes.Kezdeti, bejelentes.Vege,
-                        JogcimBLL.GetIDbyName(DropDownList1.SelectedValue));
-                }
-                //ennek sose szabadna lefutnia
+                //maradék hiba ellenőrzése
+                hiba = Hibakereses();
+
+                //hiba esetén a felhasználó értesítése
+                if (hiba != hibak.nincsHiba)
+                    HibaUzenetFelhasznalonak(hiba);
                 else
-                    HibaUzenetFelhasznalonak(hibak.Ismeretlen);
+                {
+                    //db-be mentés
+                    if (bejelentes != null)
+                    {
+                        JogcimBLL.IdoBejelentesMentes(null, bejelentes.Kezdeti, bejelentes.Vege,
+                            JogcimBLL.GetIDbyName(DropDownList1.SelectedValue));
+                        mentesLabel.Visible = true;
+                        mentesLabel.Text = "A mentés sikeres!";
+                    }
+                    //ennek sose szabadna lefutnia
+                    else
+                        HibaUzenetFelhasznalonak(hibak.Ismeretlen);
+                }
+            }
+            else
+                HibaUzenetFelhasznalonak(hiba);
+        }
+
+        protected void CustomValidatorDatum_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            if (hiba == hibak.nincsHiba)
+            {
+                DateTime datumKezdeti = new DateTime();
+                //Kiválasztott dátum dátum-e
+                try
+                {
+                    datumKezdeti = DateTime.Parse(datepicker.Text);
+                    bejelentes = new Bejelentes(datumKezdeti, datumKezdeti);
+                }
+                catch (Exception)
+                {
+                    hiba = hibak.HibasDatum;
+                    args.IsValid = false;
+                    return;
+                }
+
+                //Kiválasztott dátum régebbi-e a mai dátumnál
+                if (IdoVizsgalat(vizsgalat.CsakDatum, DateTime.Now) > IdoVizsgalat(vizsgalat.CsakDatum, datumKezdeti))
+                {
+                    hiba = hibak.KezdetiDatumRegebbiMainal;
+                    args.IsValid = false;
+                }
+            }
+        }
+
+        protected void CustomValidatorIdopont1_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            if (hiba == hibak.nincsHiba)
+            {
+                string seged;
+
+                //Folyamat kezdeti óra és perc helyes-e
+                seged = DateTimeTosringMegfeleloModra(bejelentes.Kezdeti);
+                seged += " " + ora1.SelectedItem.Text + ":" + perc1.SelectedItem.Text + ":00";
+                try
+                {
+                    bejelentes.Kezdeti = DateTime.Parse(seged);
+                }
+                catch (Exception)
+                {
+                    hiba = hibak.HibasKezdetiIdo;
+                    args.IsValid = false;
+                    return;
+                }
+
+                //Folyamat kezdete régebbi-e a mostaninál
+                if (IdoVizsgalat(vizsgalat.MasodpercNulla, DateTime.Now) > bejelentes.Kezdeti)
+                    hiba = hibak.HibasKezdetiErtekek;
+            }
+        }
+
+        protected void CustomValidatorIdopont2_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            if (hiba == hibak.nincsHiba)
+            {
+                string seged;
+
+                //Folyamat vége óra és perc helyes-e
+                seged = DateTimeTosringMegfeleloModra(bejelentes.Vege);
+                seged += " " + ora2.SelectedItem.Text + ":" + perc2.SelectedItem.Text + ":00";
+                try
+                {
+                    bejelentes.Vege = DateTime.Parse(seged);
+                }
+                catch (Exception)
+                {
+                    hiba = hibak.HibasVegeIdo;
+                    args.IsValid = false;
+                    return;
+                }
+
+                //Folyamat vége régebbi-e a mostaninál
+                if (IdoVizsgalat(vizsgalat.MasodpercNulla, DateTime.Now) > bejelentes.Vege)
+                    hiba = hibak.HibasVegeErtekek;
             }
         }
 

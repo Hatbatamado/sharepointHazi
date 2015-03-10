@@ -26,19 +26,22 @@
             </div>
         <div class="alul">
             <asp:Label ID="Label5" runat="server" Text="Dátum:" Width="150px"></asp:Label>
-            <asp:TextBox ID="datepicker" runat="server" CssClass="some_class" Width="100px"></asp:TextBox>
+            <asp:TextBox ID="datepicker" runat="server" Width="100px"></asp:TextBox>
+            <asp:CustomValidator EnableClientScript="false" runat="server" ID="CustomValidatorDatum" OnServerValidate="CustomValidatorDatum_ServerValidate"></asp:CustomValidator>
             </div>
         <div class="alul">
             <asp:Label ID="Label1" runat="server" Text="Folyamat kezdése:" Width="150px"></asp:Label>
             <asp:DropDownList ID="ora1" runat="server" Width="50px"></asp:DropDownList>
             <asp:Label ID="Label6" runat="server" Text=":"></asp:Label>
             <asp:DropDownList ID="perc1" runat="server" Width="50px"></asp:DropDownList>
+            <asp:CustomValidator EnableClientScript="false" runat="server" ID="CustomValidatorIdopont1" OnServerValidate="CustomValidatorIdopont1_ServerValidate"></asp:CustomValidator>
         </div>
         <div class="alul">
             <asp:Label ID="Label2" runat="server" Text="Folyamat befejezése:" Width="150px"></asp:Label>
             <asp:DropDownList ID="ora2" runat="server" Width="50px"></asp:DropDownList>
             <asp:Label ID="Label7" runat="server" Text=":"></asp:Label>
             <asp:DropDownList ID="perc2" runat="server" Width="50px"></asp:DropDownList>
+            <asp:CustomValidator EnableClientScript="false" runat="server" ID="CustomValidatorIdopont2" OnServerValidate="CustomValidatorIdopont2_ServerValidate"></asp:CustomValidator>
         </div>
         <div class="alul">
             <asp:Label ID="Label3" runat="server" Text="Jogcím:" Width="150px"></asp:Label>

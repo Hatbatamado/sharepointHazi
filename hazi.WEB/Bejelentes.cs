@@ -12,10 +12,12 @@ namespace hazi.WEB
         public DateTime Vege
         {
             get { return vege; }
+            set { vege = value; }
         }
         public DateTime Kezdeti
         {
             get { return kezdeti; }
+            set { kezdeti = value; }
         }
 
         public Bejelentes (DateTime kezdeti, DateTime vege)
