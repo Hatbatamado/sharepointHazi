@@ -4,7 +4,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <h2><%: Title %>.</h2>
-    <asp:PlaceHolder runat="server" ID="PlaceHolder1" Visible="false">
+    <asp:PlaceHolder runat="server" ID="LoginForm" Visible="false">
         <div class="row">
             <div class="col-md-8">
                 <section id="loginForm">
@@ -58,5 +58,9 @@
                 </section>
             </div>
         </div>
+    </asp:PlaceHolder>
+    <asp:PlaceHolder runat="server" ID="SucLogin" Visible="false">
+        <asp:Label ID="helloLabel" runat="server" Text="Label"></asp:Label> <br />
+        <asp:Button ID="buttonLogoff" runat="server" Text="Log off" OnClick="buttonLogoff_Click" />
     </asp:PlaceHolder>
 </asp:Content>

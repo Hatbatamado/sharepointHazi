@@ -16,13 +16,25 @@ namespace hazi.WEB.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            PlaceHolder1.Visible = false;
-            RegisterHyperLink.NavigateUrl = "Register";
-            OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
-            var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
-            if (!String.IsNullOrEmpty(returnUrl))
+            if (!IsPostBack)
             {
-                RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
+                if (!User.Identity.IsAuthenticated)
+                {
+                    LoginForm.Visible = true;
+                    RegisterHyperLink.NavigateUrl = "Register";
+                    OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
+                    var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
+                    if (!String.IsNullOrEmpty(returnUrl))
+                    {
+                        RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
+                    }
+                }
+                else
+                {
+                    LoginForm.Visible = false;
+                    SucLogin.Visible = true;
+                    helloLabel.Text = "Hello " + User.Identity.GetUserName();
+                }
             }
         }
 
@@ -44,7 +56,8 @@ namespace hazi.WEB.Account
                         RoleActions.AddToRole(user, RegisterUserAs.NormalUser, userMgr, context);
 
                     IdentityHelper.SignIn(manager, user, RememberMe.Checked);
-                    IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                    //token hiba elkerülése miatt, az oldal újratöltése
+                    Response.Redirect("./Login.aspx");
                 }
                 else
                 {
@@ -53,6 +66,13 @@ namespace hazi.WEB.Account
                 }
                 
             }
+        }
+
+        protected void buttonLogoff_Click(object sender, EventArgs e)
+        {
+            var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+            authenticationManager.SignOut();
+            Response.Redirect("./Login.aspx");
         }
     }
 }

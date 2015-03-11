@@ -13,13 +13,13 @@ namespace hazi.WEB.Account {
     public partial class Login {
         
         /// <summary>
-        /// PlaceHolder1 control.
+        /// LoginForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder1;
+        protected global::System.Web.UI.WebControls.PlaceHolder LoginForm;
         
         /// <summary>
         /// ErrorMessage control.
@@ -83,5 +83,32 @@ namespace hazi.WEB.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::hazi.WEB.Account.OpenAuthProviders OpenAuthLogin;
+        
+        /// <summary>
+        /// SucLogin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder SucLogin;
+        
+        /// <summary>
+        /// helloLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label helloLabel;
+        
+        /// <summary>
+        /// buttonLogoff control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonLogoff;
     }
 }
