@@ -3,52 +3,59 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css">
     <section>
-        <div>
-            <hgroup>
-                <h2>Bejelentések</h2>
-            </hgroup>
-            <asp:ListView ID="productList" runat="server"
-                DataKeyNames="ID" ItemType="hazi.DAL.IdoBejelentes" SelectMethod="GetIdoBejelentesek">
-                <LayoutTemplate>
-                    <table class="table table-striped table-bordered">
-                        <thead class="bg-primary">
-                            <th>Műveletek
-                            </th>
-                            <th>ID
-                            </th>
-                            <th>Kezdődátum
-                            </th>
-                            <th>Végdátum
-                            </th>
-                            <th>Jogcím
-                            </th>
-                        </thead>
-                        <tr id="itemPlaceholder" runat="server"></tr>
-                    </table>
-                </LayoutTemplate>
-                <ItemTemplate>
-                    <tr>
-                        <td>
-                            <a href="/Pages/Bejelento.aspx?id=<%#: Item.ID %>">Szerkesztés
-                            </a>
+        <asp:PlaceHolder runat="server" ID="Bejelentesek" Visible="false">
+            <div>
+                <hgroup>
+                    <h2>Bejelentések</h2>
+                </hgroup>
+                <asp:ListView ID="productList" runat="server"
+                    DataKeyNames="ID" ItemType="hazi.DAL.IdoBejelentes" SelectMethod="GetIdoBejelentesek">
+                    <LayoutTemplate>
+                        <table class="table table-striped table-bordered">
+                            <thead class="bg-primary">
+                                <th>Műveletek
+                                </th>
+                                <th>ID
+                                </th>
+                                <th>Kezdődátum
+                                </th>
+                                <th>Végdátum
+                                </th>
+                                <th>Jogcím
+                                </th>
+                                <th>Felhasználó
+                                </th>
+                            </thead>
+                            <tr id="itemPlaceholder" runat="server"></tr>
+                        </table>
+                    </LayoutTemplate>
+                    <ItemTemplate>
+                        <tr>
+                            <td>
+                                <a href="/Pages/Bejelento.aspx?id=<%#: Item.ID %>">Szerkesztés
+                                </a>
+                            </td>
+                            <td>
+                                <%#:Item.ID%> 
+                            </td>
+                            <td>
+                                <%#:Item.KezdetiDatum%>
+                            </td>
+                            <td>
+                                <%#:Item.VegeDatum%>
+                            </td>
+                            <td>
+                                <%#:Item.Jogcim.Cim%>
+                            </td>
+                            <td>
+                                <%#:Item.UserName%>
+                            </td>
+                        </tr>
                         </td>
-                        <td>
-                            <%#:Item.ID%> 
-                        </td>
-                        <td>
-                            <%#:Item.KezdetiDatum%>
-                        </td>
-                        <td>
-                            <%#:Item.VegeDatum%>
-                        </td>
-                        <td>
-                            <%#:Item.Jogcim.Cim%>
-                        </td>
-                    </tr>
-                    </td>
-                </ItemTemplate>
-            </asp:ListView>
-        </div>
-        <asp:Button ID="Button1" runat="server" Text="Új bejelentés" Font-Bold="true" OnClick="Button1_Click" />
+                    </ItemTemplate>
+                </asp:ListView>
+            </div>
+            <asp:Button ID="Button1" runat="server" Text="Új bejelentés" Font-Bold="true" OnClick="Button1_Click" />
+        </asp:PlaceHolder>
     </section>
 </asp:Content>

@@ -28,7 +28,7 @@ namespace hazi.BLL
         }
 
         //db-be mentés
-        public static void IdoBejelentesMentes(int? ID, DateTime Kezdeti, DateTime Vege, int JogcimId)
+        public static void IdoBejelentesMentes(int? ID, DateTime Kezdeti, DateTime Vege, int JogcimId, string UserName)
         {
             using (hazi2Entities db = new hazi2Entities())
             {
@@ -47,6 +47,7 @@ namespace hazi.BLL
                 ib.Jogcim = (from b in db.Jogcims
                              where b.ID == JogcimId
                              select b).Single();
+                ib.UserName = UserName;
 
                 if (ID == null)
                     db.IdoBejelentes1.Add(ib);

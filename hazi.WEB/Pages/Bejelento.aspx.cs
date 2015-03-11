@@ -52,23 +52,32 @@ namespace hazi.WEB.Pages
         {
             if (!Page.IsPostBack)
             {
-                DropDownListFeltoltes();
-                AlapAdatokFeltoltese();
-
-                if (Request.QueryString["ID"] != null)
+                if (User.Identity.IsAuthenticated)
                 {
-                    Bejelentes.UjBejelentes = false;
-                    Id = Int32.Parse(Request.QueryString["ID"]);
-                    IdoBejelentes ib = JogcimBLL.GetIdoBejelentesById(Id.Value);
-                    if (ib != null)
-                        AdatokFeltolteseIdAlapjan(ib);
+                    BejelentoForm.Visible = true;
+                    DropDownListFeltoltes();
+                    AlapAdatokFeltoltese();
+
+                    if (Request.QueryString["ID"] != null)
+                    {
+                        Bejelentes.UjBejelentes = false;
+                        Id = Int32.Parse(Request.QueryString["ID"]);
+                        IdoBejelentes ib = JogcimBLL.GetIdoBejelentesById(Id.Value);
+                        if (ib != null)
+                            AdatokFeltolteseIdAlapjan(ib);
+                        else
+                            HibaUzenetFelhasznalonak(hibak.IbNincsDBben);
+                    }
                     else
-                        HibaUzenetFelhasznalonak(hibak.IbNincsDBben);
+                    {
+                        Bejelentes.UjBejelentes = true;
+                        AlapErtekekBeallitasa();
+                    }
                 }
                 else
                 {
-                    Bejelentes.UjBejelentes = true;
-                    AlapErtekekBeallitasa();
+                    BejelentoForm.Visible = false;
+                    Response.Redirect("../Account/Login.aspx");
                 }
             }
         }
@@ -107,7 +116,7 @@ namespace hazi.WEB.Pages
             datepicker.Text = DateTimeTosringMegfeleloModra(ib.KezdetiDatum);
 
             //folyamat kezdeti ideje
-            ora1.SelectedIndex = ib.KezdetiDatum.Hour - 1; //-1 mivel nem 0-tól indexelünk
+            ora1.SelectedIndex = ib.KezdetiDatum.Hour;
             perc1.SelectedIndex = ib.KezdetiDatum.Minute;
 
             //folyamat vége ideje
@@ -256,7 +265,7 @@ namespace hazi.WEB.Pages
         private void Mentes()
         {
             JogcimBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
-                            JogcimBLL.GetIDbyName(DropDownList1.SelectedValue));
+                            JogcimBLL.GetIDbyName(DropDownList1.SelectedValue), User.Identity.Name);
             mentesLabel.Visible = true;
             mentesLabel.Text = "A mentés sikeres!";
 

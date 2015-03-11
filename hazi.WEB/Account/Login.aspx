@@ -60,7 +60,7 @@
         </div>
     </asp:PlaceHolder>
     <asp:PlaceHolder runat="server" ID="SucLogin" Visible="false">
-        <asp:Label ID="helloLabel" runat="server" Text="Label"></asp:Label> <br />
+        <asp:Label ID="helloLabel" runat="server" Text="Label"></asp:Label> <br /> <br />
         <asp:Button ID="buttonLogoff" runat="server" Text="Log off" OnClick="buttonLogoff_Click" />
     </asp:PlaceHolder>
 </asp:Content>

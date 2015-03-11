@@ -14,7 +14,16 @@ namespace hazi.WEB
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (!Page.IsPostBack)
+            {
+                if (User.Identity.IsAuthenticated)
+                    Bejelentesek.Visible = true;
+                else
+                {
+                    Bejelentesek.Visible = false;
+                    Response.Redirect("./Account/Login.aspx");
+                }
+            }
         }
 
         public IQueryable GetIdoBejelentesek()
@@ -26,6 +35,14 @@ namespace hazi.WEB
                     var db = new hazi.DAL.hazi2Entities();
                     IQueryable query = db.IdoBejelentes1;
                     return query;
+                }
+                if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.NormalUser.ToString())
+                {
+                    var db = new hazi.DAL.hazi2Entities();
+                    IQueryable query = (from b in db.IdoBejelentes1
+                                        where b.UserName == User.Identity.Name
+                                        select b);
+                    return query;                    
                 }
             }
             return null;
