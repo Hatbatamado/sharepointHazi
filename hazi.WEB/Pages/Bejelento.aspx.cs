@@ -10,6 +10,7 @@ using System.Web.ModelBinding;
 
 namespace hazi.WEB.Pages
 {
+    #region enum
     enum hibak
     {
         nincsHiba,
@@ -20,6 +21,7 @@ namespace hazi.WEB.Pages
         HibasKezdetiErtekek,
         HibasVegeErtekek,
         VegeKezdetiElott,
+        IbNincsDBben,
         Ismeretlen
     };
 
@@ -28,10 +30,10 @@ namespace hazi.WEB.Pages
         MasodpercNulla,
         CsakDatum
     };
+    #endregion
 
     public partial class Bejelento : System.Web.UI.Page
     {
-
         public int? Id
         {
             get
@@ -44,7 +46,6 @@ namespace hazi.WEB.Pages
             }
         }
 
-        Bejelentes bejelentes = null;
         hibak hiba = hibak.nincsHiba;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -56,16 +57,23 @@ namespace hazi.WEB.Pages
 
                 if (Request.QueryString["ID"] != null)
                 {
+                    Bejelentes.UjBejelentes = false;
                     Id = Int32.Parse(Request.QueryString["ID"]);
-                    AdatokFeltolteseIdAlapjan(JogcimBLL.GetIdoBejelentesById(Id.Value));
+                    IdoBejelentes ib = JogcimBLL.GetIdoBejelentesById(Id.Value);
+                    if (ib != null)
+                        AdatokFeltolteseIdAlapjan(ib);
+                    else
+                        HibaUzenetFelhasznalonak(hibak.IbNincsDBben);
                 }
                 else
                 {
+                    Bejelentes.UjBejelentes = true;
                     AlapErtekekBeallitasa();
                 }
             }
         }
 
+        #region DDL-ek feltoltese + alaperteke
         //DDL feltöltése jogcímekkel
         private void DropDownListFeltoltes()
         {
@@ -80,7 +88,7 @@ namespace hazi.WEB.Pages
         private void AlapAdatokFeltoltese()
         {
             //órák feltöltése DropDownList-be
-            for (int i = 1; i < 25; i++)
+            for (int i = 0; i < 24; i++)
             {
                 ora1.Items.Add(i.ToString());
                 ora2.Items.Add(i.ToString());
@@ -93,55 +101,51 @@ namespace hazi.WEB.Pages
             }            
         }
 
+        private void AdatokFeltolteseIdAlapjan(IdoBejelentes ib)
+        {
+            //dátum
+            datepicker.Text = DateTimeTosringMegfeleloModra(ib.KezdetiDatum);
+
+            //folyamat kezdeti ideje
+            ora1.SelectedIndex = ib.KezdetiDatum.Hour - 1; //-1 mivel nem 0-tól indexelünk
+            perc1.SelectedIndex = ib.KezdetiDatum.Minute;
+
+            //folyamat vége ideje
+            ora2.SelectedIndex = ib.VegeDatum.Hour;
+            perc2.SelectedIndex = ib.VegeDatum.Minute;
+
+            //jogcim kiválasztása
+            DropDownList1.SelectedIndex = ib.JogcimID - 1; //-1 mivel nem 0-tól indexelünk
+        }
+
         //alap értékek beállítása
         private void AlapErtekekBeallitasa()
         {
             //Folyamat kezdése: alap értéknek a mostani idő beállítása
-            ora1.SelectedIndex = DateTime.Now.Hour - 1; //-1 mivel nem 0-tól indexelünk
+            ora1.SelectedIndex = DateTime.Now.Hour;
             perc1.SelectedIndex = DateTime.Now.Minute;
 
-            //Folyamat vége: alap értéknek a mostani idő beállítása
-            ora2.SelectedIndex = DateTime.Now.Hour - 1; //-1 mivel nem 0-tól indexelünk
+            //Folyamat vége: alap értéknek a mostani idő +1 óra beállítása
+            int segedOra = DateTime.Now.Hour;
+            if ((segedOra + 1) < 24)
+                ora2.SelectedIndex = segedOra + 1;
+            else
+                ora2.SelectedIndex = segedOra - 23;
             perc2.SelectedIndex = DateTime.Now.Minute;
 
             //alap értéknek a mai dátum beállítása
             datepicker.Text = DateTimeTosringMegfeleloModra(DateTime.Now);
         }
+        #endregion
 
-        //DateTime parse-hoz a dátum átalakítása
-        private string DateTimeTosringMegfeleloModra(DateTime ido)
-        {
-            return ido.Year + "." + ido.Month + "." + ido.Day;
-        }
-
-        protected void cancel_Click(object sender, EventArgs e)
-        {
-            //Home-ra navigálás
-            HttpContext.Current.Response.Redirect("./../");
-        }
-
+        #region Maradek hiba kereses es kezeles
         private hibak Hibakereses()
         {
             //Folyamat vége a kezdeti előtt van-e vagy megegyezik-e
-            if (bejelentes.Vege <= bejelentes.Kezdeti)
+            if (Bejelentes.Vege <= Bejelentes.Kezdeti)
                 return hibak.VegeKezdetiElott;
 
             return hibak.nincsHiba;
-        }
-
-        //másodpercek nullázása
-        private DateTime IdoVizsgalat(vizsgalat v, DateTime date)
-        {
-            TimeSpan ts = new TimeSpan();
-
-            if (v == vizsgalat.MasodpercNulla)
-                ts = new TimeSpan(date.Hour, date.Minute, 0);
-            else if (v == vizsgalat.CsakDatum)
-                ts = new TimeSpan(0, 0, 0);
-
-            date = date.Date + ts;
-
-            return date;
         }
 
         //hiba esetén a felhasználó értesítése
@@ -163,21 +167,57 @@ namespace hazi.WEB.Pages
                     hibaUzenet = "A folyamat kezdeti értékei a jelenlegi időpont előttiek, így a mentés sikertelen!";
                     break;
                 case hibak.HibasVegeErtekek:
-                    hibaUzenet = "A folyamat vége értékei a jelenlegi időpont előttiek, így a mentés sikertelen!";
+                    hibaUzenet = "A folyamat vége értékei a jelenlegi időpont előttiek vagy átnyúlik a következő napra, így a mentés sikertelen!";
                     break;
                 case hibak.VegeKezdetiElott:
-                    hibaUzenet = "A folyamat vége ideje a folyamat kezdeti előtt található vagy a két időpont megegyezik, így a mentés sikertelen!";
+                    hibaUzenet = "A folyamat vége ideje a folyamat kezdeti előtt található, a két időpont megegyezik, "+
+                                    "vagy átnyúlik a következő napra, így a mentés sikertelen!";
                     break;
                 case hibak.KezdetiDatumRegebbiMainal:
                     hibaUzenet = "A kiválasztott dátum régebbi a mai dátumnál, így a mentés sikertelen!";
                     break;
-                    //ennek sose szabadna lefutnia
+                //ezeknek sose szabadna lefutnia
                 case hibak.Ismeretlen:
                     hibaUzenet = "Ismeretlen hiba történt, így a mentés sikertelen! Kérem próbálja újra!";
+                    break;
+                case hibak.IbNincsDBben:
+                    ElemekElrejtese();
+                    hibaUzenet = "A kiválasztott bejelentés nem található a db-ben!";
                     break;
             }
             hibaLabel.Visible = true;
             hibaLabel.Text = hibaUzenet;
+        }
+        #endregion
+
+        #region datum metodusok
+        //DateTime parse-hoz a dátum átalakítása
+        private string DateTimeTosringMegfeleloModra(DateTime ido)
+        {
+            return ido.Year + "." + ido.Month + "." + ido.Day;
+        }
+
+        //másodpercek nullázása
+        private DateTime IdoVizsgalat(vizsgalat v, DateTime date)
+        {
+            TimeSpan ts = new TimeSpan();
+
+            if (v == vizsgalat.MasodpercNulla)
+                ts = new TimeSpan(date.Hour, date.Minute, 0);
+            else if (v == vizsgalat.CsakDatum)
+                ts = new TimeSpan(0, 0, 0);
+
+            date = date.Date + ts;
+
+            return date;
+        }
+        #endregion
+
+        #region save / cancel klikk
+        protected void cancel_Click(object sender, EventArgs e)
+        {
+            //Home-ra navigálás
+            Response.Redirect("./../");
         }
 
         protected void save_Click(object sender, EventArgs e)
@@ -198,7 +238,7 @@ namespace hazi.WEB.Pages
                 else
                 {
                     //db-be mentés
-                    if (bejelentes != null)
+                    if (Bejelentes.Kezdeti != null && Bejelentes.Vege != null)
                     {
                         Mentes();
                     }
@@ -210,18 +250,18 @@ namespace hazi.WEB.Pages
             else
                 HibaUzenetFelhasznalonak(hiba);
         }
+        #endregion
 
+        #region Mentes + elemek elrejtese
         private void Mentes()
         {
-            JogcimBLL.IdoBejelentesMentes(null, bejelentes.Kezdeti, bejelentes.Vege,
+            JogcimBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
                             JogcimBLL.GetIDbyName(DropDownList1.SelectedValue));
             mentesLabel.Visible = true;
             mentesLabel.Text = "A mentés sikeres!";
 
             //Sikeres mentés esetén a felhasználó egyszerűen visszatudjon navigálni a rendszer főoldalára
             ElemekElrejtese();
-
-            cancel.Text = "Vissza";
         }
 
         private void ElemekElrejtese()
@@ -239,8 +279,12 @@ namespace hazi.WEB.Pages
             Label3.Visible = false;
             DropDownList1.Visible = false;
             save.Visible = false;
-        }
 
+            cancel.Text = "Vissza";
+        }
+        #endregion
+
+        #region validatorok
         //dátum validátor
         protected void CustomValidatorDatum_ServerValidate(object source, ServerValidateEventArgs args)
         {
@@ -251,7 +295,8 @@ namespace hazi.WEB.Pages
                 try
                 {
                     datumKezdeti = DateTime.Parse(datepicker.Text);
-                    bejelentes = new Bejelentes(datumKezdeti, datumKezdeti);
+                    Bejelentes.Kezdeti = datumKezdeti;
+                    Bejelentes.Vege = datumKezdeti;
                 }
                 catch (Exception)
                 {
@@ -260,8 +305,8 @@ namespace hazi.WEB.Pages
                     return;
                 }
 
-                //Kiválasztott dátum régebbi-e a mai dátumnál
-                if (IdoVizsgalat(vizsgalat.CsakDatum, DateTime.Now) > IdoVizsgalat(vizsgalat.CsakDatum, datumKezdeti))
+                //Kiválasztott dátum régebbi-e a mai dátumnál (csak új bejelentés esetén)
+                if (Bejelentes.UjBejelentes && IdoVizsgalat(vizsgalat.CsakDatum, DateTime.Now) > IdoVizsgalat(vizsgalat.CsakDatum, datumKezdeti))
                 {
                     hiba = hibak.KezdetiDatumRegebbiMainal;
                     args.IsValid = false;
@@ -277,11 +322,11 @@ namespace hazi.WEB.Pages
                 string seged;
 
                 //Folyamat kezdeti óra és perc helyes-e
-                seged = DateTimeTosringMegfeleloModra(bejelentes.Kezdeti);
+                seged = DateTimeTosringMegfeleloModra(Bejelentes.Kezdeti);
                 seged += " " + ora1.SelectedItem.Text + ":" + perc1.SelectedItem.Text + ":00";
                 try
                 {
-                    bejelentes.Kezdeti = DateTime.Parse(seged);
+                    Bejelentes.Kezdeti = DateTime.Parse(seged);
                 }
                 catch (Exception)
                 {
@@ -290,9 +335,12 @@ namespace hazi.WEB.Pages
                     return;
                 }
 
-                //Folyamat kezdete régebbi-e a mostaninál
-                if (IdoVizsgalat(vizsgalat.MasodpercNulla, DateTime.Now) > bejelentes.Kezdeti)
+                //Folyamat kezdete régebbi-e a mostaninál (csak új bejelentés esetén)
+                if (Bejelentes.UjBejelentes && IdoVizsgalat(vizsgalat.MasodpercNulla, DateTime.Now) > Bejelentes.Kezdeti)
+                {
                     hiba = hibak.HibasKezdetiErtekek;
+                    args.IsValid = false;
+                }
             }
         }
 
@@ -304,11 +352,11 @@ namespace hazi.WEB.Pages
                 string seged;
 
                 //Folyamat vége óra és perc helyes-e
-                seged = DateTimeTosringMegfeleloModra(bejelentes.Vege);
+                seged = DateTimeTosringMegfeleloModra(Bejelentes.Vege);
                 seged += " " + ora2.SelectedItem.Text + ":" + perc2.SelectedItem.Text + ":00";
                 try
                 {
-                    bejelentes.Vege = DateTime.Parse(seged);
+                    Bejelentes.Vege = DateTime.Parse(seged);
                 }
                 catch (Exception)
                 {
@@ -317,30 +365,14 @@ namespace hazi.WEB.Pages
                     return;
                 }
 
-                //Folyamat vége régebbi-e a mostaninál
-                if (IdoVizsgalat(vizsgalat.MasodpercNulla, DateTime.Now) > bejelentes.Vege)
+                //Folyamat vége régebbi-e a mostaninál (csak új bejelentés esetén)
+                if (Bejelentes.UjBejelentes && IdoVizsgalat(vizsgalat.MasodpercNulla, DateTime.Now) > Bejelentes.Vege)
+                {
                     hiba = hibak.HibasVegeErtekek;
+                    args.IsValid = false;
+                }
             }
         }
-        
-        private void AdatokFeltolteseIdAlapjan(IdoBejelentes ib)
-        {
-            if (ib != null)
-            {
-                //dátum
-                datepicker.Text = DateTimeTosringMegfeleloModra(ib.KezdetiDatum);
-
-                //folyamat kezdeti ideje
-                ora1.SelectedIndex = ib.KezdetiDatum.Hour - 1; //-1 mivel nem 0-tól indexelünk
-                perc1.SelectedIndex = ib.KezdetiDatum.Minute;
-
-                //folyamat vége ideje
-                ora2.SelectedIndex = ib.VegeDatum.Hour - 1; //-1 mivel nem 0-tól indexelünk
-                perc2.SelectedIndex = ib.VegeDatum.Minute;
-
-                //jogcim kiválasztása
-                DropDownList1.SelectedIndex = ib.JogcimID - 1; //-1 mivel nem 0-tól indexelünk
-            }
-        }
+        #endregion
     }
 }

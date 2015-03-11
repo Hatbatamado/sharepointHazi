@@ -49,7 +49,7 @@
         </div>
         <asp:Button ID="save" runat="server" Text="Mentés" OnClick="save_Click" Font-Bold="true" />
         <span id="gombBeljebb">
-            <asp:Button ID="cancel" runat="server" Text="Mégse" OnClick="cancel_Click" />
+            <asp:Button ID="cancel" runat="server" Text="Mégse" OnClick="cancel_Click" CausesValidation="false" />
         </span>
     </div>
     <script src="/Scripts/jquery.js"></script>

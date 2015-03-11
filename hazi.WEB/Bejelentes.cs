@@ -7,23 +7,28 @@ namespace hazi.WEB
 {
     public class Bejelentes
     {
-        DateTime kezdeti, vege;
+        //az oldal újratöltések / validátorok miatt példányosítással elveszne a bool értéke
+        //ezért statikus változóként így megmarad
+        static bool ujBejelentes;
+        static DateTime kezdeti;
+        static DateTime vege;
 
-        public DateTime Vege
+        public static DateTime Vege
         {
-            get { return vege; }
-            set { vege = value; }
-        }
-        public DateTime Kezdeti
-        {
-            get { return kezdeti; }
-            set { kezdeti = value; }
+            get { return Bejelentes.vege; }
+            set { Bejelentes.vege = value; }
         }
 
-        public Bejelentes (DateTime kezdeti, DateTime vege)
+        public static DateTime Kezdeti
         {
-            this.kezdeti = kezdeti;
-            this.vege = vege;
+            get { return Bejelentes.kezdeti; }
+            set { Bejelentes.kezdeti = value; }
+        }
+
+        public static bool UjBejelentes
+        {
+            get { return Bejelentes.ujBejelentes; }
+            set { Bejelentes.ujBejelentes = value; }
         }
     }
 }
