@@ -19,6 +19,7 @@ namespace hazi.DAL
         public System.DateTime VegeDatum { get; set; }
         public int JogcimID { get; set; }
         public string UserName { get; set; }
+        public string LastEdit { get; set; }
     
         public virtual Jogcim Jogcim { get; set; }
     }

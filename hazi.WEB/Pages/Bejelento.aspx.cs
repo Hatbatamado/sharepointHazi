@@ -264,8 +264,13 @@ namespace hazi.WEB.Pages
         #region Mentes + elemek elrejtese
         private void Mentes()
         {
+            string ujBejelentoUser;
+            if (Bejelentes.UjBejelentes)
+                ujBejelentoUser = User.Identity.Name;
+            else
+                ujBejelentoUser = "";
             JogcimBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
-                            JogcimBLL.GetIDbyName(DropDownList1.SelectedValue), User.Identity.Name);
+                            JogcimBLL.GetIDbyName(DropDownList1.SelectedValue), ujBejelentoUser, User.Identity.Name);
             mentesLabel.Visible = true;
             mentesLabel.Text = "A mentés sikeres!";
 

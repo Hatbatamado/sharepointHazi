@@ -25,6 +25,8 @@
                                 </th>
                                 <th>Felhasználó
                                 </th>
+                                <th>Utoljára Módosítva
+                                </th>
                             </thead>
                             <tr id="itemPlaceholder" runat="server"></tr>
                         </table>
@@ -49,6 +51,9 @@
                             </td>
                             <td>
                                 <%#:Item.UserName%>
+                            </td>
+                            <td>
+                                <%#:Item.LastEdit%>
                             </td>
                         </tr>
                         </td>
