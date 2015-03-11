@@ -16,6 +16,7 @@ namespace hazi.WEB.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            PlaceHolder1.Visible = false;
             RegisterHyperLink.NavigateUrl = "Register";
             OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
             var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
@@ -50,6 +51,7 @@ namespace hazi.WEB.Account
                     FailureText.Text = "Invalid username or password.";
                     ErrorMessage.Visible = true;
                 }
+                
             }
         }
     }
