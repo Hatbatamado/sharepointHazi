@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hazi.WEB.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,9 @@ namespace hazi.WEB
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            RoleActions roleA = new RoleActions();
+            roleA.createUserAs("Aladar", "Password1!", RegisterUserAs.Admin);
         }
     }
 }

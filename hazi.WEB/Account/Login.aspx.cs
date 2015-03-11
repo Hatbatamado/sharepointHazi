@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using hazi.WEB.Models;
+using System.Collections.Generic;
+using hazi.WEB.Logic;
 
 namespace hazi.WEB.Account
 {
@@ -27,11 +29,19 @@ namespace hazi.WEB.Account
         {
             if (IsValid)
             {
-                // Validate the user password
+                Models.ApplicationDbContext context = new ApplicationDbContext();
+                var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
                 var manager = new UserManager();
-                ApplicationUser user = manager.Find(UserName.Text, Password.Text);
+
+                ApplicationUser user = userMgr.Find(UserName.Text, Password.Text);
                 if (user != null)
                 {
+                    //Felhasználóhoz való szerepkör megkeresése
+                    IList<string> roles = userMgr.GetRoles(user.Id);
+                    //Ha nincs, akkor adja hozzá a user-t, a NormalUser-ekhez
+                    if (roles.Count == 0)
+                        RoleActions.AddToRole(user, RegisterUserAs.NormalUser, userMgr, context);
+
                     IdentityHelper.SignIn(manager, user, RememberMe.Checked);
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                 }

@@ -4,6 +4,7 @@ hazi.DAL/bin
 hazi.DAL/obj
 hazi.BLL/bin
 hazi.BLL/obj
+hazi.WEB/App_Data/
 
 *.suo
 *.user

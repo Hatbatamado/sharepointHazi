@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using hazi.WEB.Models;
+using hazi.WEB.Logic;
 
 namespace hazi.WEB.Account
 {
@@ -13,18 +14,12 @@ namespace hazi.WEB.Account
     {
         protected void CreateUser_Click(object sender, EventArgs e)
         {
-            var manager = new UserManager();
-            var user = new ApplicationUser() { UserName = UserName.Text };
-            IdentityResult result = manager.Create(user, Password.Text);
-            if (result.Succeeded)
-            {
-                IdentityHelper.SignIn(manager, user, isPersistent: false);
+            RoleActions roleA = new RoleActions();
+            string error = roleA.createUserAs(UserName.Text, Password.Text, RegisterUserAs.NormalUser);
+            if (error != "")
+                ErrorMessage.Text = error;
+            else
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
-            }
-            else 
-            {
-                ErrorMessage.Text = result.Errors.FirstOrDefault();
-            }
         }
     }
 }
