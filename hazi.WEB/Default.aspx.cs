@@ -1,4 +1,5 @@
 ﻿using hazi.DAL;
+using hazi.WEB.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,16 @@ namespace hazi.WEB
 
         public IQueryable GetIdoBejelentesek()
         {
-            var db = new hazi.DAL.hazi2Entities();
-            IQueryable query = db.IdoBejelentes1;
-            return query;
+            if (User.Identity.IsAuthenticated)
+            {
+                if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+                {
+                    var db = new hazi.DAL.hazi2Entities();
+                    IQueryable query = db.IdoBejelentes1;
+                    return query;
+                }
+            }
+            return null;
         }
 
         protected void Button1_Click(object sender, EventArgs e)

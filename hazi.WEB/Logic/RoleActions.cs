@@ -77,5 +77,17 @@ namespace hazi.WEB.Logic
 
             IdUserResult = userMgr.AddToRole(user.Id, role.ToString());
         }
+
+        //szerepkör lekérdezés
+        internal static string GetRole(string userName)
+        {
+            Models.ApplicationDbContext context = new ApplicationDbContext();
+            var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            IList<string> roles = userMgr.GetRoles(userMgr.FindByName(userName).Id);
+            if (roles.Count != 0)
+                return roles.ElementAt(0);
+            else
+                return "";
+        }
     }
 }

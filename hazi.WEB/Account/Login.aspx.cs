@@ -64,7 +64,6 @@ namespace hazi.WEB.Account
                     FailureText.Text = "Invalid username or password.";
                     ErrorMessage.Visible = true;
                 }
-                
             }
         }
 
