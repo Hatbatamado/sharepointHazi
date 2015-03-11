@@ -1,7 +1,2 @@
-A feladat megoldása során a kódot a githubra is felraktam, hogy esetleges probléma esetén könnyen visszatudjak állni a régebbi verzióra:
-1. házi:
+A feladat megoldása során a kódot a githubra is felraktam, hogy esetleges probléma esetén könnyen vissza tudjak állni a régebbi verzióra:
 https://github.com/Hatbatamado/sharepointHazi
-2. házi:
-https://github.com/Hatbatamado/sharepointHazi/tree/hazi2
-
-TODO: 2 branch helyett 1 solution-be minden, mapákkal elválasztva
