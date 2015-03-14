@@ -27,6 +27,8 @@
                                 </th>
                                 <th>Utoljára Módosítva
                                 </th>
+                                <th>Törlés
+                                </th>
                             </thead>
                             <tr id="itemPlaceholder" runat="server"></tr>
                         </table>
@@ -55,8 +57,10 @@
                             <td>
                                 <%#:Item.LastEdit%>
                             </td>
+                            <td>
+                                <asp:CheckBox id="Remove" runat="server"></asp:CheckBox>
+                            </td>
                         </tr>
-                        </td>
                     </ItemTemplate>
                 </asp:ListView>
             </div>
