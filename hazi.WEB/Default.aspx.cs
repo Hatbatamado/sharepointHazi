@@ -21,7 +21,7 @@ namespace hazi.WEB
                 else
                 {
                     Bejelentesek.Visible = false;
-                    Response.Redirect("./Account/Login.aspx");
+                    Response.Redirect("/Account/Login.aspx");
                 }
             }
         }

@@ -57,7 +57,7 @@ namespace hazi.WEB.Account
 
                     IdentityHelper.SignIn(manager, user, RememberMe.Checked);
                     //token hiba elkerülése miatt, az oldal újratöltése
-                    Response.Redirect("./Login.aspx");
+                    Response.Redirect("/Login.aspx");
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace hazi.WEB.Account
         {
             var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
             authenticationManager.SignOut();
-            Response.Redirect("./Login.aspx");
+            Response.Redirect("/Login.aspx");
         }
     }
 }
