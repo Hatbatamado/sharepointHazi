@@ -22,6 +22,7 @@ namespace hazi.WEB.Pages
         HibasVegeErtekek,
         VegeKezdetiElott,
         IbNincsDBben,
+        NemEngedelyezettEleres,
         Ismeretlen
     };
 
@@ -63,10 +64,12 @@ namespace hazi.WEB.Pages
                         Bejelentes.UjBejelentes = false;
                         Id = Int32.Parse(Request.QueryString["ID"]);
                         IdoBejelentes ib = JogcimBLL.GetIdoBejelentesById(Id.Value);
-                        if (ib != null)
+                        if (ib == null)
+                            HibaUzenetFelhasznalonak(hibak.IbNincsDBben);
+                        else if (User.IsInRole("NormalUser") && ib.UserName == User.Identity.Name || User.IsInRole("Admin"))
                             AdatokFeltolteseIdAlapjan(ib);
                         else
-                            HibaUzenetFelhasznalonak(hibak.IbNincsDBben);
+                            HibaUzenetFelhasznalonak(hibak.NemEngedelyezettEleres);
                     }
                     else
                     {
@@ -184,6 +187,9 @@ namespace hazi.WEB.Pages
                     break;
                 case hibak.KezdetiDatumRegebbiMainal:
                     hibaUzenet = "A kiválasztott dátum régebbi a mai dátumnál, így a mentés sikertelen!";
+                    break;
+                case hibak.NemEngedelyezettEleres:
+                    hibaUzenet = "Az oldal megtekintéséhez nincs jogosultsága";
                     break;
                 //ezeknek sose szabadna lefutnia
                 case hibak.Ismeretlen:
