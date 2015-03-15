@@ -22,7 +22,7 @@ namespace hazi.WEB.Account
                 {
                     LoginForm.Visible = true;
                     RegisterHyperLink.NavigateUrl = "Register";
-                    OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
+                    //OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
                     var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
                     if (!String.IsNullOrEmpty(returnUrl))
                     {
@@ -57,7 +57,7 @@ namespace hazi.WEB.Account
 
                     IdentityHelper.SignIn(manager, user, RememberMe.Checked);
                     //token hiba elkerülése miatt, az oldal újratöltése
-                    Response.Redirect("/Login.aspx");
+                    Response.Redirect("/Account/Login.aspx");
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace hazi.WEB.Account
         {
             var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
             authenticationManager.SignOut();
-            Response.Redirect("/Login.aspx");
+            Response.Redirect("/Account/Login.aspx");
         }
     }
 }

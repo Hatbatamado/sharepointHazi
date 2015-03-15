@@ -76,15 +76,6 @@ namespace hazi.WEB.Account {
         protected global::System.Web.UI.WebControls.HyperLink RegisterHyperLink;
         
         /// <summary>
-        /// OpenAuthLogin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::hazi.WEB.Account.OpenAuthProviders OpenAuthLogin;
-        
-        /// <summary>
         /// SucLogin control.
         /// </summary>
         /// <remarks>
