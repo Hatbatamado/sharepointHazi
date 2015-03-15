@@ -32,17 +32,21 @@ namespace hazi.WEB
             {
                 if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
                 {
-                    var db = new hazi.DAL.hazi2Entities();
-                    IQueryable query = db.IdoBejelentes1;
-                    return query;
+                    using (hazi2Entities db = new hazi2Entities())
+                    {
+                        IQueryable query = db.IdoBejelentes1;
+                        return query;
+                    }
                 }
                 if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.NormalUser.ToString())
                 {
-                    var db = new hazi.DAL.hazi2Entities();
-                    IQueryable query = (from b in db.IdoBejelentes1
-                                        where b.UserName == User.Identity.Name
-                                        select b);
-                    return query;                    
+                    using (hazi2Entities db = new hazi2Entities())
+                    {
+                        IQueryable query = (from b in db.IdoBejelentes1
+                                            where b.UserName == User.Identity.Name
+                                            select b);
+                        return query;
+                    }
                 }
             }
             return null;
