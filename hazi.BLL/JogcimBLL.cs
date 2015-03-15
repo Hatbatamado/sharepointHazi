@@ -27,6 +27,18 @@ namespace hazi.BLL
             }
         }
 
+        //jogcim kiolvasása ID alapján
+        public static string GetJogcimById(int id)
+        {
+            using(hazi2Entities db = new hazi2Entities())
+            {
+                var jogcim = (from j in db.Jogcims
+                              where j.ID == id
+                              select j).Single();
+                return jogcim.Cim;
+            }
+        }
+
         //db-be mentés
         public static void IdoBejelentesMentes(int? ID, DateTime Kezdeti, DateTime Vege, int JogcimId, string UserName, string LastEditUser)
         {

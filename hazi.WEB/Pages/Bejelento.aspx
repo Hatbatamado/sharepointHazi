@@ -1,16 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Bejelento.aspx.cs" Inherits="hazi.WEB.Pages.Bejelento" %>
+<%@ MasterType VirtualPath="~/Site.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:PlaceHolder runat="server" ID="BejelentoForm" Visible="false">
-        <!-- jqueryui dátum http://jqueryui.com/datepicker/ -->
+        <!-- http://jqueryui.com/datepicker/ -->
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-        <script>
-            $(function () {
-                $("#<%=datepicker.ClientID%>").datepicker({ dateFormat: 'yy.mm.dd' }).val();
-        });
-        </script>
         <!-- css -->
         <style>
             #fent {
@@ -62,10 +56,12 @@
                 <asp:Button ID="cancel" runat="server" Text="Mégse" OnClick="cancel_Click" CausesValidation="false" />
             </span>
         </div>
-        <script src="/Scripts/jquery.js"></script>
-        <script src="/Scripts/jquery.datetimepicker.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
         <script>
-            $('.some_class').datetimepicker().attr('readonly', 'readonly');
+            $(function () {
+                $("#<%=datepicker.ClientID%>").datepicker({ dateFormat: 'yy.mm.dd' }).val();
+            });
         </script>
     </asp:PlaceHolder>
 </asp:Content>

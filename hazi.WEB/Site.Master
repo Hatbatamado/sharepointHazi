@@ -11,8 +11,13 @@
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <style>
+        #Uzenet{
+            padding-top: 20px;
+        }
+    </style>
 
 </head>
 <body>
@@ -75,9 +80,13 @@
             </div>
         </div>
         <div class="container body-content">
+            <div id="Uzenet">
+                <asp:Label ID="UzenetFelhasznalonak" runat="server" Text="" Visible="false" ForeColor="Red" Font-Bold="true"></asp:Label>
+            </div>
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />
+
             <footer>
                 <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
             </footer>

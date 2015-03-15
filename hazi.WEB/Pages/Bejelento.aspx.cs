@@ -80,7 +80,7 @@ namespace hazi.WEB.Pages
                 else
                 {
                     BejelentoForm.Visible = false;
-                    Response.Redirect("../Account/Login.aspx");
+                    Response.Redirect("/Account/Login.aspx");
                 }
             }
         }
@@ -102,14 +102,14 @@ namespace hazi.WEB.Pages
             //órák feltöltése DropDownList-be
             for (int i = 0; i < 24; i++)
             {
-                ora1.Items.Add(i.ToString());
-                ora2.Items.Add(i.ToString());
+                ora1.Items.Add(i.ToString("00"));
+                ora2.Items.Add(i.ToString("00"));
             }
             //percek feltöltése DropDownList-be 
             for (int i = 0; i < 60; i++)
             {
-                perc1.Items.Add(i.ToString());
-                perc2.Items.Add(i.ToString());
+                perc1.Items.Add(i.ToString("00"));
+                perc2.Items.Add(i.ToString("00"));
             }            
         }
 
@@ -127,7 +127,7 @@ namespace hazi.WEB.Pages
             perc2.SelectedIndex = ib.VegeDatum.Minute;
 
             //jogcim kiválasztása
-            DropDownList1.SelectedIndex = ib.JogcimID - 1; //-1 mivel nem 0-tól indexelünk
+            DropDownList1.SelectedValue = JogcimBLL.GetJogcimById(ib.JogcimID);
         }
 
         //alap értékek beállítása
@@ -200,8 +200,8 @@ namespace hazi.WEB.Pages
                     hibaUzenet = "A kiválasztott bejelentés nem található a db-ben!";
                     break;
             }
-            hibaLabel.Visible = true;
-            hibaLabel.Text = hibaUzenet;
+            Master.Uzenet.Visible = true;
+            Master.Uzenet.Text = hibaUzenet;
         }
         #endregion
 
@@ -232,13 +232,13 @@ namespace hazi.WEB.Pages
         protected void cancel_Click(object sender, EventArgs e)
         {
             //Home-ra navigálás
-            Response.Redirect("./../");
+            Response.Redirect("/Default.aspx");
         }
 
         protected void save_Click(object sender, EventArgs e)
         {
             //ha már volt előzőleg, egy hiba azt rejtsük el
-            hibaLabel.Visible = false;
+            Master.Uzenet.Visible = false;
             //ha már volt egy sikeres mentésünk és most újabb lesz, azt rejtsük el
             mentesLabel.Visible = false;
 

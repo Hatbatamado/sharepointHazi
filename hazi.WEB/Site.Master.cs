@@ -14,6 +14,17 @@ namespace hazi.WEB
         private const string AntiXsrfTokenKey = "__AntiXsrfToken";
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
+        public Label Uzenet
+        {
+            get
+            {
+                return UzenetFelhasznalonak;
+            }
+            set
+            {
+                UzenetFelhasznalonak = value;
+            }
+        }
 
         protected void Page_Init(object sender, EventArgs e)
         {

@@ -11,7 +11,12 @@ namespace hazi.WEB.Pages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            string errorMsg = Request.QueryString["msg"];
+            if (errorMsg == "404")
+            {
+                Master.Uzenet.Visible = true;
+                Master.Uzenet.Text = "404 - A keresett oldal nem található!";
+            }
         }
     }
 }
