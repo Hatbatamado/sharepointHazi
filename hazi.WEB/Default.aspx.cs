@@ -26,7 +26,7 @@ namespace hazi.WEB
             }
         }
 
-        public IQueryable GetIdoBejelentesek()
+        public List<UjBejelentes> GetIdoBejelentesek()
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -34,19 +34,40 @@ namespace hazi.WEB
                 {
                     using (hazi2Entities db = new hazi2Entities())
                     {
-                        IQueryable query = db.IdoBejelentes1;
-                        return query;
+                        return (from b in db.IdoBejelentes1
+                                join p in db.Jogcims on b.JogcimID equals p.ID
+                                select new UjBejelentes
+                                {
+                                    ID = b.ID,
+                                    KezdetiDatum = b.KezdetiDatum,
+                                    VegeDatum = b.VegeDatum,
+                                    JogcimID = b.JogcimID,
+                                    UserName = b.UserName,
+                                    LastEdit = b.LastEdit,
+                                    JogcimNev = p.Cim
+                                }).ToList();
                     }
                 }
                 if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.NormalUser.ToString())
                 {
                     using (hazi2Entities db = new hazi2Entities())
                     {
-                        IQueryable query = (from b in db.IdoBejelentes1
-                                            where b.UserName == User.Identity.Name
-                                            select b);
-                        return query;
-                    }
+
+
+                        return (from b in db.IdoBejelentes1
+                                join p in db.Jogcims on b.JogcimID equals p.ID
+                                where b.UserName == User.Identity.Name
+                                select new UjBejelentes
+                                {
+                                    ID = b.ID,
+                                    KezdetiDatum = b.KezdetiDatum,
+                                    VegeDatum = b.VegeDatum,
+                                    JogcimID = b.JogcimID,
+                                    UserName = b.UserName,
+                                    LastEdit = b.LastEdit,
+                                    JogcimNev = p.Cim
+                                }).ToList();                              
+                    }                    
                 }
             }
             return null;

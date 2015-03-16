@@ -18,23 +18,24 @@ namespace hazi.WEB.Account
         {
             if (!IsPostBack)
             {
-                if (!User.Identity.IsAuthenticated)
+                RegisterHyperLink.NavigateUrl = "Register";
+                //OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
+                var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
+                if (!String.IsNullOrEmpty(returnUrl))
                 {
-                    LoginForm.Visible = true;
-                    RegisterHyperLink.NavigateUrl = "Register";
-                    //OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
-                    var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
-                    if (!String.IsNullOrEmpty(returnUrl))
-                    {
-                        RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
-                    }
+                    RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
                 }
-                else
-                {
-                    LoginForm.Visible = false;
-                    SucLogin.Visible = true;
-                    helloLabel.Text = "Hello " + User.Identity.GetUserName();
-                }
+            }
+            if (!User.Identity.IsAuthenticated || Request["__EVENTARGUMENT"] == "SikeresKilepes")
+            {
+                LoginForm.Visible = true;
+                SucLogin.Visible = false;
+            }
+            else if (User.Identity.IsAuthenticated || Request["__EVENTARGUMENT"] == "SikeresBelepes")
+            {
+                LoginForm.Visible = false;
+                SucLogin.Visible = true;
+                helloLabel.Text = "Hello " + User.Identity.GetUserName();
             }
         }
 
@@ -56,8 +57,7 @@ namespace hazi.WEB.Account
                         RoleActions.AddToRole(user, RegisterUserAs.NormalUser, userMgr, context);
 
                     IdentityHelper.SignIn(manager, user, RememberMe.Checked);
-                    //token hiba elkerülése miatt, az oldal újratöltése
-                    Response.Redirect("/Account/Login.aspx");
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "asd", "Belepes();", true);
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace hazi.WEB.Account
         {
             var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
             authenticationManager.SignOut();
-            Response.Redirect("/Account/Login.aspx");
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "asd", "Kilepes();", true);
         }
     }
 }

@@ -9,7 +9,7 @@
                     <h2>Bejelentések</h2>
                 </hgroup>
                 <asp:ListView ID="productList" runat="server"
-                    DataKeyNames="ID" ItemType="hazi.DAL.IdoBejelentes" SelectMethod="GetIdoBejelentesek">
+                    DataKeyNames="ID" ItemType="hazi.DAL.UjBejelentes" SelectMethod="GetIdoBejelentesek">
                     <LayoutTemplate>
                         <table class="table table-striped table-bordered">
                             <thead class="bg-primary">
@@ -49,7 +49,7 @@
                                 <%#:Item.VegeDatum%>
                             </td>
                             <td>
-                                <%#:Item.Jogcim.Cim%>
+                                <%#:Item.JogcimNev%>
                             </td>
                             <td>
                                 <%#:Item.UserName%>
