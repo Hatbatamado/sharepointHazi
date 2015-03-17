@@ -9,6 +9,7 @@ namespace hazi.WEB.Logic
     {
         NincsTorlesiKerelem,
         RegisztraltKerelem,
-        ElfogadottKerelem
+        ElfogadottKerelem,
+        Torles
     }
 }

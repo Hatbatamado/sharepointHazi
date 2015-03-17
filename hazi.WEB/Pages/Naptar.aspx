@@ -39,7 +39,8 @@
             events.push({
                 title: this.title,
                 start: this.start,
-                end: this.end
+                end: this.end,
+                color: this.color
             });
         });
     }

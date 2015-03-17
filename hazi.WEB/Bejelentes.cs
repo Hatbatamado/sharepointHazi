@@ -34,6 +34,7 @@ namespace hazi.WEB
             set { Bejelentes.ujBejelentes = value; }
         }
 
+
         public static List<UjBejelentes> GetIdoBejelentesek(string role, string name, DateTime start, DateTime end)
         {
             string admin = RegisterUserAs.Admin.ToString();
@@ -42,6 +43,7 @@ namespace hazi.WEB
             if (start == DateTime.MinValue || end == DateTime.MinValue)
             {
                 //Admin összes bejelentés listás nézetben
+                //minden törlési státusszal rendelkezőt megjelenítűnk
                 if (role == admin)
                 {
                     using (hazi2Entities db = new hazi2Entities())
@@ -57,7 +59,8 @@ namespace hazi.WEB
                                                                JogcimID = b.JogcimID,
                                                                UserName = b.UserName,
                                                                LastEdit = b.LastEdit,
-                                                               JogcimNev = p.Cim
+                                                               JogcimNev = p.Cim,
+                                                               TorlesStatus = b.TorlesStatus
                                                            }).ToList();
 
                         foreach (UjBejelentes item in bejelentesek)
@@ -70,6 +73,8 @@ namespace hazi.WEB
                                 new ListItem { Value = TorlesStatus.RegisztraltKerelem.ToString(), Text = TorlesStatus.RegisztraltKerelem.ToString() });
                             item.StatusList.Add(
                                 new ListItem { Value = TorlesStatus.NincsTorlesiKerelem.ToString(), Text = TorlesStatus.NincsTorlesiKerelem.ToString() });
+                            item.StatusList.Add(
+                                new ListItem { Value = TorlesStatus.Torles.ToString(), Text = TorlesStatus.Torles.ToString() });
 
                             //db-ben statusz nélküli elemek kapnak nincs törlési kérelem státuszt
                             if (item.TorlesStatus == null)
@@ -82,11 +87,14 @@ namespace hazi.WEB
                 else if (role == normal)
                 {
                     //NormalUser összes bejelentés listás nézetben
+                    //csak azokat listázzuk ki, aminek a státuszát még a felhasználó nem állította át
                     using (hazi2Entities db = new hazi2Entities())
                     {
+                        string segedStatus = TorlesStatus.NincsTorlesiKerelem.ToString();
                         List<UjBejelentes> bejelentesek = (from b in db.IdoBejelentes1
                                                            join p in db.Jogcims on b.JogcimID equals p.ID
-                                                           where b.UserName == name
+                                                           where b.UserName == name && (b.TorlesStatus == segedStatus ||
+                                                           b.TorlesStatus == null)
                                                            select new UjBejelentes
                                                            {
                                                                ID = b.ID,
@@ -104,10 +112,6 @@ namespace hazi.WEB
                         {
                             item.StatusList = new List<ListItem>();
                             item.StatusList.Add(
-                                new ListItem { Value = TorlesStatus.ElfogadottKerelem.ToString(), Text = TorlesStatus.ElfogadottKerelem.ToString() });
-                            item.StatusList.Add(
-                                new ListItem { Value = TorlesStatus.RegisztraltKerelem.ToString(), Text = TorlesStatus.RegisztraltKerelem.ToString() });
-                            item.StatusList.Add(
                                 new ListItem { Value = TorlesStatus.NincsTorlesiKerelem.ToString(), Text = TorlesStatus.NincsTorlesiKerelem.ToString() });
 
                             //db-ben statusz nélküli elemek kapnak nincs törlési kérelem státuszt
@@ -122,6 +126,9 @@ namespace hazi.WEB
             else
             {
                 //Admin megadott időszakon belüli jelentések naptári nézetben
+                //minden törlési státusszal rendelkezőt megjelenítűnk
+                //így az admin naptári nézett alapján is meg tudja nézni,
+                //hogy hol találhatóak a felhasználó által törlésre kért bejelentések
                 if (role == admin)
                 {
                     using (hazi2Entities db = new hazi2Entities())
@@ -144,11 +151,14 @@ namespace hazi.WEB
                 else if (role == normal)
                 {
                     //NormalUser megadott időszakon belüli jelentések naptári nézetben
+                    //csak azokat listázzuk ki, aminek a státuszát még a felhasználó nem állította át
                     using (hazi2Entities db = new hazi2Entities())
                     {
-                        return (from b in db.IdoBejelentes1
+                        string segedStatus = TorlesStatus.NincsTorlesiKerelem.ToString();
+                        var bejelentesek = (from b in db.IdoBejelentes1
                                 join p in db.Jogcims on b.JogcimID equals p.ID
-                                where b.UserName == name && b.KezdetiDatum >= start && b.VegeDatum <= end
+                                where (b.UserName == name && b.KezdetiDatum >= start
+                                && b.VegeDatum <= end) && (b.TorlesStatus == segedStatus || b.TorlesStatus == null)
                                 select new UjBejelentes
                                 {
                                     ID = b.ID,
@@ -157,8 +167,11 @@ namespace hazi.WEB
                                     JogcimID = b.JogcimID,
                                     UserName = b.UserName,
                                     LastEdit = b.LastEdit,
-                                    JogcimNev = p.Cim
+                                    JogcimNev = p.Cim,
+                                    TorlesStatus = b.TorlesStatus
                                 }).ToList();
+
+                        return bejelentesek;
                     }
                 }
             }

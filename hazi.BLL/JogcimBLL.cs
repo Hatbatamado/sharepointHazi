@@ -40,7 +40,8 @@ namespace hazi.BLL
         }
 
         //db-be mentés
-        public static void IdoBejelentesMentes(int? ID, DateTime Kezdeti, DateTime Vege, int JogcimId, string UserName, string LastEditUser)
+        public static void IdoBejelentesMentes(int? ID, DateTime Kezdeti, DateTime Vege,
+            int JogcimId, string UserName, string LastEditUser, string torlesStatus)
         {
             using (hazi2Entities db = new hazi2Entities())
             {
@@ -65,6 +66,11 @@ namespace hazi.BLL
 
                 if (ID == null)
                     db.IdoBejelentes1.Add(ib);
+
+                if (torlesStatus == string.Empty)
+                    ib.TorlesStatus = "NincsTorlesiKerelem";
+                else
+                    ib.TorlesStatus = torlesStatus;
 
                 db.SaveChanges();
             }
@@ -96,6 +102,62 @@ namespace hazi.BLL
                 }
             }
             return null;
+        }
+
+        //admini törlés db-ből bármelyik bejelentést
+        public static string IdoBejelentesTorles(int? id)
+        {
+            if (id.HasValue && id > 0)
+            {
+                using (hazi2Entities db = new hazi2Entities())
+                {
+                    try
+                    {
+                        var torolni = (from b in db.IdoBejelentes1
+                                       where b.ID == id
+                                       select b).FirstOrDefault();
+                        if (torolni != null)
+                        {
+                            db.IdoBejelentes1.Remove(torolni);
+                            db.SaveChanges();
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        return "A törlés sikertelen";
+                    }
+                }
+            }
+            return string.Empty;
+        }
+
+        //admini törlés db-ből felhasználó által kért bejelentést
+        public static string IdoBejelentesTorles(int? id, string status)
+        {
+            if (id.HasValue && id > 0)
+            {
+                using (hazi2Entities db = new hazi2Entities())
+                {
+                    try
+                    {
+                        var torolni = (from b in db.IdoBejelentes1
+                                       where b.ID == id && b.TorlesStatus == status
+                                       select b).FirstOrDefault();
+                        if (torolni != null)
+                        {
+                            db.IdoBejelentes1.Remove(torolni);
+                            db.SaveChanges();
+                        }
+                        else
+                            return "A felhasználó nem kérte a(z) "+ id + " ID-jű jelentésnek a törlését, így a törlés sikertelen";
+                    }
+                    catch (Exception)
+                    {
+                        return "Hiba történt a törlés közben";
+                    }
+                }
+            }
+            return string.Empty;
         }
     }
 }

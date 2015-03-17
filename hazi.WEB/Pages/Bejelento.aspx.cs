@@ -279,7 +279,8 @@ namespace hazi.WEB.Pages
             else
                 ujBejelentoUser = "";
             JogcimBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
-                            JogcimBLL.GetIDbyName(DropDownList1.SelectedValue), ujBejelentoUser, User.Identity.Name);
+                            JogcimBLL.GetIDbyName(DropDownList1.SelectedValue),
+                            ujBejelentoUser, User.Identity.Name, TorlesStatus.NincsTorlesiKerelem.ToString());
             mentesLabel.Visible = true;
             mentesLabel.Text = "A mentés sikeres!";
 
