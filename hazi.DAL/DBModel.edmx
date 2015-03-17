@@ -15,6 +15,7 @@
           <Property Name="JogcimID" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastEdit" Type="nvarchar" MaxLength="50" />
+          <Property Name="TorlesStatus" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Jogcim">
           <Key>
@@ -58,6 +59,7 @@
           <NavigationProperty Name="Jogcim" Relationship="Self.FK_IdoBejelentes_Jogcim" FromRole="IdoBejelentes" ToRole="Jogcim" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastEdit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TorlesStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Jogcim">
           <Key>
@@ -96,6 +98,7 @@
           <EntitySetMapping Name="IdoBejelentes1">
             <EntityTypeMapping TypeName="hazi2Model.IdoBejelentes">
               <MappingFragment StoreEntitySet="IdoBejelentes">
+                <ScalarProperty Name="TorlesStatus" ColumnName="TorlesStatus" />
                 <ScalarProperty Name="LastEdit" ColumnName="LastEdit" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

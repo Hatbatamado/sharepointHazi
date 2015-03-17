@@ -10,12 +10,6 @@ using System.Web.UI.WebControls;
 
 namespace hazi.WEB
 {
-    enum TorlesStatus
-    {
-        Regisztralt,
-        Elfogadott
-    }
-
     public partial class _Default : Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -24,11 +18,11 @@ namespace hazi.WEB
             {
                 if (User.Identity.IsAuthenticated)
                 {
-                    Bejelentesek.Visible = true;
                     List<UjBejelentes> lista = GetIdoBejelentesek();
                     bejelentesekLista.DataSource = lista;
                     bejelentesekLista.DataBind();
 
+                    Bejelentesek.Visible = true;
                     //ha újból futattjuk és cookie-val bent vagyunk,
                     //akkor a User.IsInRole szerint nem vagyunk bent az adott szerepkörben
                     //emiatt az egész alkalmazásban lecseréltem
@@ -47,7 +41,7 @@ namespace hazi.WEB
                             bejelentesekLista.Rows[i].FindControl("Remove").Visible = true;
                             bejelentesekLista.Rows[i].FindControl("StatusDDL").Visible = false;
                         }
-                    } 
+                    }                   
                 }
                 else
                 {

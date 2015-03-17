@@ -7,7 +7,8 @@
         .Torles {
             float: right;
         }
-        .linkek{
+
+        .linkek {
             text-decoration: underline;
         }
     </style>
@@ -24,7 +25,7 @@
                     </hgroup>
                     <asp:GridView ID="bejelentesekLista" runat="server" AutoGenerateColumns="False"
                         ShowFooter="True" GridLines="Vertical" CellPadding="4" ItemType="hazi.DAL.UjBejelentes"
-                         HeaderStyle-BackColor="DarkBlue" HeaderStyle-ForeColor="White" CssClass="table table-bordered">
+                        HeaderStyle-BackColor="DarkBlue" HeaderStyle-ForeColor="White" CssClass="table table-bordered">
                         <Columns>
                             <asp:TemplateField HeaderText="Műveletek">
                                 <ItemTemplate>
@@ -39,8 +40,12 @@
                             <asp:BoundField DataField="LastEdit" HeaderText="Utoljára Módosítva" />
                             <asp:TemplateField HeaderText="Törlés">
                                 <ItemTemplate>
-                                    <asp:CheckBox ID="Remove" runat="server"></asp:CheckBox>
-                                    <asp:DropDownList runat="server" ID="StatusDDL"></asp:DropDownList>
+                                    <asp:CheckBox ID="Remove" runat="server" Visible="false"></asp:CheckBox>
+                                    <asp:DropDownList runat="server" ID="StatusDDL"
+                                        SelectedValue='<%# Eval("TorlesStatus") %>'
+                                        DataSource='<%# Eval("StatusList") %>'
+                                        DataTextField="Text" DataValueField="Value" Visible="false">
+                                    </asp:DropDownList>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

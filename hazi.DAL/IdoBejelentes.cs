@@ -11,6 +11,7 @@ namespace hazi.DAL
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
     
     public partial class IdoBejelentes
     {
@@ -20,6 +21,7 @@ namespace hazi.DAL
         public int JogcimID { get; set; }
         public string UserName { get; set; }
         public string LastEdit { get; set; }
+        public string TorlesStatus { get; set; }
     
         public virtual Jogcim Jogcim { get; set; }
     }

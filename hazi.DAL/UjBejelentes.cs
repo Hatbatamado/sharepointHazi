@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.UI.WebControls;
 
 namespace hazi.DAL
 {
@@ -15,5 +18,9 @@ namespace hazi.DAL
         public string UserName { get; set; }
         public string LastEdit { get; set; }
         public string JogcimNev { get; set; }
+        public string TorlesStatus { get; set; }
+
+        [NotMapped]
+        public List<ListItem> StatusList { get; set; }
     }
 }
