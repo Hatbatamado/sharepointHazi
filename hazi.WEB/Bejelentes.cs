@@ -75,6 +75,8 @@ namespace hazi.WEB
                                 new ListItem { Value = TorlesStatus.NincsTorlesiKerelem.ToString(), Text = TorlesStatus.NincsTorlesiKerelem.ToString() });
                             item.StatusList.Add(
                                 new ListItem { Value = TorlesStatus.Torles.ToString(), Text = TorlesStatus.Torles.ToString() });
+                            item.StatusList.Add(
+                                new ListItem { Value = TorlesStatus.Elutasitott.ToString(), Text = TorlesStatus.Elutasitott.ToString() });
 
                             //db-ben statusz nélküli elemek kapnak nincs törlési kérelem státuszt
                             if (item.TorlesStatus == null)

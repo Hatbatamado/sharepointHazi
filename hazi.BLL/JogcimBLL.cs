@@ -159,5 +159,23 @@ namespace hazi.BLL
             }
             return string.Empty;
         }
-    }
+
+        //törlés elutasítva, bejegyzés újra megjelenítése a felhasználónak
+        public static void TorlesElutasitva(int? id, string status, string ujStatus)
+        {
+            if (id.HasValue && id > 0)
+            {
+                using (hazi2Entities db = new hazi2Entities())
+                {
+                    IdoBejelentes ib = (from b in db.IdoBejelentes1
+                                        where b.ID == id && b.TorlesStatus == status
+                                        select b).Single();
+                    
+                    ib.TorlesStatus = ujStatus;
+
+                    db.SaveChanges();
+                }
+            }
+        }
+    } 
 }

@@ -87,6 +87,7 @@ namespace hazi.WEB
                     {
                         //mivel adminként bármelyik bejelentést törölhetjük,
                         //nem csak a felhasználó által kért bejelentéseket, ezért van erre a részre szükség
+
                         IOrderedDictionary rowValues = new OrderedDictionary();
                         rowValues = Utility.GetValues(bejelentesekLista.Rows[i]);
 
@@ -95,6 +96,18 @@ namespace hazi.WEB
                         sikeresTorles = JogcimBLL.IdoBejelentesTorles(id);
                         if (sikeresTorles != string.Empty) break;
                     }
+                    else if ((bejelentesekLista.Rows[i].FindControl("StatusDDL")as DropDownList).
+                        SelectedValue == TorlesStatus.Elutasitott.ToString())
+                    {
+                        IOrderedDictionary rowValues = new OrderedDictionary();
+                        rowValues = Utility.GetValues(bejelentesekLista.Rows[i]);
+
+                        int id = Convert.ToInt32(rowValues["ID"]);
+
+                        JogcimBLL.TorlesElutasitva(id, TorlesStatus.RegisztraltKerelem.ToString(),
+                                                    TorlesStatus.NincsTorlesiKerelem.ToString());
+                    }
+
                 } 
                 AdatokUjraToltese(sikeresTorles);
             }

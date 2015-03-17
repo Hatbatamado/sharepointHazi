@@ -10,6 +10,7 @@ namespace hazi.WEB.Logic
         NincsTorlesiKerelem,
         RegisztraltKerelem,
         ElfogadottKerelem,
-        Torles
+        Torles,
+        Elutasitott
     }
 }
