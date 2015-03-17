@@ -20,7 +20,7 @@
         events: function (start, end, timezone, callback) {
             $.ajax({
                 type: "POST",
-                url: "Services.asmx/GetEvents",
+                url: "Services.asmx/GetEventsBetween",
                 data: "{ start: '" + start.toString() + "', end: '" + end.toString() + "' }",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",

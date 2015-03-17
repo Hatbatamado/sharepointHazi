@@ -8,7 +8,7 @@ using System.Web;
 
 namespace hazi.WEB.Logic
 {
-    enum RegisterUserAs
+    public enum RegisterUserAs
     {
         Admin,
         NormalUser

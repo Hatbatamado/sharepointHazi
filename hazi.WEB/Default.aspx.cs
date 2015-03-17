@@ -28,46 +28,20 @@ namespace hazi.WEB
 
         public List<UjBejelentes> GetIdoBejelentesek()
         {
+            string admin = RegisterUserAs.Admin.ToString();
+            string normal = RegisterUserAs.NormalUser.ToString();
+
             if (User.Identity.IsAuthenticated)
             {
-                if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+                if (RoleActions.GetRole(User.Identity.Name) == admin)
                 {
-                    using (hazi2Entities db = new hazi2Entities())
-                    {
-                        return (from b in db.IdoBejelentes1
-                                join p in db.Jogcims on b.JogcimID equals p.ID
-                                select new UjBejelentes
-                                {
-                                    ID = b.ID,
-                                    KezdetiDatum = b.KezdetiDatum,
-                                    VegeDatum = b.VegeDatum,
-                                    JogcimID = b.JogcimID,
-                                    UserName = b.UserName,
-                                    LastEdit = b.LastEdit,
-                                    JogcimNev = p.Cim
-                                }).ToList();
-                    }
+                    return Bejelentes.GetIdoBejelentesek(admin,"",
+                        DateTime.MinValue, DateTime.MinValue);
                 }
-                if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.NormalUser.ToString())
+                if (RoleActions.GetRole(User.Identity.Name) == normal)
                 {
-                    using (hazi2Entities db = new hazi2Entities())
-                    {
-
-
-                        return (from b in db.IdoBejelentes1
-                                join p in db.Jogcims on b.JogcimID equals p.ID
-                                where b.UserName == User.Identity.Name
-                                select new UjBejelentes
-                                {
-                                    ID = b.ID,
-                                    KezdetiDatum = b.KezdetiDatum,
-                                    VegeDatum = b.VegeDatum,
-                                    JogcimID = b.JogcimID,
-                                    UserName = b.UserName,
-                                    LastEdit = b.LastEdit,
-                                    JogcimNev = p.Cim
-                                }).ToList();                              
-                    }                    
+                    return Bejelentes.GetIdoBejelentesek(normal,
+                        User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
                 }
             }
             return null;
