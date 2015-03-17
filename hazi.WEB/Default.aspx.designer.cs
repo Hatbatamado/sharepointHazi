@@ -22,21 +22,30 @@ namespace hazi.WEB {
         protected global::System.Web.UI.WebControls.PlaceHolder Bejelentesek;
         
         /// <summary>
-        /// productList control.
+        /// bejelentesekLista control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView productList;
+        protected global::System.Web.UI.WebControls.GridView bejelentesekLista;
         
         /// <summary>
-        /// Button1 control.
+        /// Ujbejelentes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button Ujbejelentes;
+        
+        /// <summary>
+        /// BejelentesTorles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BejelentesTorles;
     }
 }

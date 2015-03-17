@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using hazi.BLL;
 using hazi.DAL;
 using System.Web.ModelBinding;
+using hazi.WEB.Logic;
 
 namespace hazi.WEB.Pages
 {
@@ -66,8 +67,10 @@ namespace hazi.WEB.Pages
                         IdoBejelentes ib = JogcimBLL.GetIdoBejelentesById(Id.Value);
                         if (ib == null)
                             HibaUzenetFelhasznalonak(hibak.IbNincsDBben);
-                        else if (User.IsInRole("NormalUser") && ib.UserName == User.Identity.Name || User.IsInRole("Admin"))
-                            AdatokFeltolteseIdAlapjan(ib);
+                        else if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.NormalUser.ToString() &&
+                            ib.UserName == User.Identity.Name ||
+                            RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+                                AdatokFeltolteseIdAlapjan(ib);
                         else
                             HibaUzenetFelhasznalonak(hibak.NemEngedelyezettEleres);
                     }

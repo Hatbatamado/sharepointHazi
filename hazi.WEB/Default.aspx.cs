@@ -10,6 +10,12 @@ using System.Web.UI.WebControls;
 
 namespace hazi.WEB
 {
+    enum TorlesStatus
+    {
+        Regisztralt,
+        Elfogadott
+    }
+
     public partial class _Default : Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -17,7 +23,32 @@ namespace hazi.WEB
             if (!Page.IsPostBack)
             {
                 if (User.Identity.IsAuthenticated)
+                {
                     Bejelentesek.Visible = true;
+                    List<UjBejelentes> lista = GetIdoBejelentesek();
+                    bejelentesekLista.DataSource = lista;
+                    bejelentesekLista.DataBind();
+
+                    //ha újból futattjuk és cookie-val bent vagyunk,
+                    //akkor a User.IsInRole szerint nem vagyunk bent az adott szerepkörben
+                    //emiatt az egész alkalmazásban lecseréltem
+                    if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+                    {
+                        for (int i = 0; i < bejelentesekLista.Rows.Count; i++)
+                        {
+                            bejelentesekLista.Rows[i].FindControl("Remove").Visible = false;
+                            bejelentesekLista.Rows[i].FindControl("StatusDDL").Visible = true;
+                        }
+                    }
+                    else if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.NormalUser.ToString())
+                    {
+                        for (int i = 0; i < bejelentesekLista.Rows.Count; i++)
+                        {
+                            bejelentesekLista.Rows[i].FindControl("Remove").Visible = true;
+                            bejelentesekLista.Rows[i].FindControl("StatusDDL").Visible = false;
+                        }
+                    } 
+                }
                 else
                 {
                     Bejelentesek.Visible = false;
@@ -47,9 +78,14 @@ namespace hazi.WEB
             return null;
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void Ujbejelentes_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Pages/Bejelento");
+        }
+
+        protected void BejelentesTorles_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
