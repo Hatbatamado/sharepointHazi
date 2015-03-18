@@ -200,7 +200,7 @@ namespace hazi.WEB.Pages
                     break;
                 case hibak.IbNincsDBben:
                     ElemekElrejtese();
-                    hibaUzenet = "A kiválasztott bejelentés nem található a db-ben!";
+                    hibaUzenet = "A kiválasztott elem nem található a db-ben!";
                     break;
             }
             Master.Uzenet.Visible = true;

@@ -17,6 +17,8 @@ namespace hazi.WEB.Pages
                 Response.StatusCode = 404;
                 Response.End();
             }
+            //ControlCollection asd = Parent.Controls;
+            int a = 0;
         }
     }
 }

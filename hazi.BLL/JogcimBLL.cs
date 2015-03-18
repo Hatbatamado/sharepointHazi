@@ -32,10 +32,17 @@ namespace hazi.BLL
         {
             using(hazi2Entities db = new hazi2Entities())
             {
-                var jogcim = (from j in db.Jogcims
-                              where j.ID == id
-                              select j).Single();
-                return jogcim.Cim;
+                try
+                {
+                    var jogcim = (from j in db.Jogcims
+                                  where j.ID == id
+                                  select j).Single();
+                    return jogcim.Cim;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
         }
 
@@ -95,10 +102,17 @@ namespace hazi.BLL
             {
                 using(hazi2Entities db = new hazi2Entities())
                 {
-                    var bej = (from b in db.IdoBejelentes1
-                               where b.ID == id
-                               select b).Single();
-                    return bej;
+                    try
+                    {
+                        var bej = (from b in db.IdoBejelentes1
+                                   where b.ID == id
+                                   select b).Single();
+                        return bej;
+                    }
+                    catch (Exception)
+                    {
+                        return null;
+                    }
                 }
             }
             return null;
@@ -193,13 +207,20 @@ namespace hazi.BLL
             {
                 using (hazi2Entities db = new hazi2Entities())
                 {
-                    IdoBejelentes ib = (from b in db.IdoBejelentes1
-                                        where b.ID == id
-                                        select b).Single();
-                    
-                    ib.TorlesStatus = status;
+                    try
+                    {
+                        IdoBejelentes ib = (from b in db.IdoBejelentes1
+                                            where b.ID == id
+                                            select b).Single();
 
-                    db.SaveChanges();
+                        ib.TorlesStatus = status;
+
+                        db.SaveChanges();
+                    }
+                    catch (Exception)
+                    {
+                        return;
+                    }
                 }
             }
         }
