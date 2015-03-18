@@ -63,25 +63,7 @@ namespace hazi.WEB
                                                                TorlesStatus = b.TorlesStatus
                                                            }).ToList();
 
-                        foreach (UjBejelentes item in bejelentesek)
-                        {
-                            //DDL lista elemek
-                            item.StatusList = new List<ListItem>();
-                            item.StatusList.Add(
-                                new ListItem { Value = TorlesStatus.ElfogadottKerelem.ToString(), Text = TorlesStatus.ElfogadottKerelem.ToString() });
-                            item.StatusList.Add(
-                                new ListItem { Value = TorlesStatus.RegisztraltKerelem.ToString(), Text = TorlesStatus.RegisztraltKerelem.ToString() });
-                            item.StatusList.Add(
-                                new ListItem { Value = TorlesStatus.NincsTorlesiKerelem.ToString(), Text = TorlesStatus.NincsTorlesiKerelem.ToString() });
-                            item.StatusList.Add(
-                                new ListItem { Value = TorlesStatus.Torles.ToString(), Text = TorlesStatus.Torles.ToString() });
-                            item.StatusList.Add(
-                                new ListItem { Value = TorlesStatus.Elutasitott.ToString(), Text = TorlesStatus.Elutasitott.ToString() });
-
-                            //db-ben statusz nélküli elemek kapnak nincs törlési kérelem státuszt
-                            if (item.TorlesStatus == null)
-                                item.TorlesStatus = TorlesStatus.NincsTorlesiKerelem.ToString();
-                        }
+                        DDLFeltoltese(bejelentesek);
 
                         return bejelentesek;
                     }
@@ -112,7 +94,7 @@ namespace hazi.WEB
                         {
                             item.StatusList = new List<ListItem>();
                             item.StatusList.Add(
-                                new ListItem { Value = TorlesStatus.NincsTorlesiKerelem.ToString(), Text = TorlesStatus.NincsTorlesiKerelem.ToString() });
+                                new ListItem { Value = TorlesStatus.NincsTorlesiKerelem.ToString(), Text = "Nincs törlési kérelem" });
 
                             //db-ben statusz nélküli elemek kapnak nincs törlési kérelem státuszt
                             if (item.TorlesStatus == null)
@@ -178,15 +160,40 @@ namespace hazi.WEB
             return null;
         }
 
-        //listás nézet szűrővel
-        public static List<UjBejelentes> GetIdoBejelentesByFilerJogcim(string jogcim, string role, string username)
+        //listás nézet szűrővel jogcimre, csak adminnak
+        public static List<UjBejelentes> GetIdoBejelentesByFilerJogcim(string jogcim)
         {
-            if (role == admin)
+            using (hazi2Entities db = new hazi2Entities())
             {
-                using (hazi2Entities db = new hazi2Entities())
+                var bejelentesek = (from b in db.IdoBejelentes1
+                                    where b.Jogcim.Cim.Contains(jogcim)
+                                    select new UjBejelentes
+                                    {
+                                        ID = b.ID,
+                                        KezdetiDatum = b.KezdetiDatum,
+                                        VegeDatum = b.VegeDatum,
+                                        JogcimID = b.JogcimID,
+                                        UserName = b.UserName,
+                                        LastEdit = b.LastEdit,
+                                        JogcimNev = b.Jogcim.Cim,
+                                        TorlesStatus = b.TorlesStatus
+                                    }).ToList();
+
+                DDLFeltoltese(bejelentesek);
+
+                return bejelentesek;
+            }
+        }
+
+        //listás nézet szűrővel törlés státuszra, csak adminnak
+        public static List<UjBejelentes> GetIdoBejelentesByFilerTorlesStatus(string torles)
+        {
+            using (hazi2Entities db = new hazi2Entities())
+            { //minden törlés és státusz nélküli
+                if (torles == TorlesStatus.NincsTorlesiKerelem.ToString())
                 {
                     var bejelentesek = (from b in db.IdoBejelentes1
-                                        where b.Jogcim.Cim.Contains(jogcim)
+                                        where b.TorlesStatus == torles || b.TorlesStatus == null
                                         select new UjBejelentes
                                         {
                                             ID = b.ID,
@@ -195,22 +202,88 @@ namespace hazi.WEB
                                             JogcimID = b.JogcimID,
                                             UserName = b.UserName,
                                             LastEdit = b.LastEdit,
-                                            JogcimNev = b.Jogcim.Cim
+                                            JogcimNev = b.Jogcim.Cim,
+                                            TorlesStatus = b.TorlesStatus
                                         }).ToList();
 
-                    DDLFeltoltese(bejelentesek, role);
+                    DDLFeltoltese(bejelentesek);
+
+                    return bejelentesek;
+                }
+                else
+                { //csak a megadott státuszú jelentések
+                    var bejelentesek = (from b in db.IdoBejelentes1
+                                        where b.TorlesStatus == torles
+                                        select new UjBejelentes
+                                        {
+                                            ID = b.ID,
+                                            KezdetiDatum = b.KezdetiDatum,
+                                            VegeDatum = b.VegeDatum,
+                                            JogcimID = b.JogcimID,
+                                            UserName = b.UserName,
+                                            LastEdit = b.LastEdit,
+                                            JogcimNev = b.Jogcim.Cim,
+                                            TorlesStatus = b.TorlesStatus
+                                        }).ToList();
+
+                    DDLFeltoltese(bejelentesek);
 
                     return bejelentesek;
                 }
             }
-            else if (role == normal)
-            {
-
-            }
-            return null;
         }
 
-        private static void DDLFeltoltese(List<UjBejelentes> bejelentesek, string role)
+        //listás nézet szűrővel felhasználóra, csak adminnak
+        public static List<UjBejelentes> GetIdoBejelentesByFilerLastEdit(string username)
+        {
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                var bejelentesek = (from b in db.IdoBejelentes1
+                                    where b.UserName.Contains(username)
+                                    select new UjBejelentes
+                                    {
+                                        ID = b.ID,
+                                        KezdetiDatum = b.KezdetiDatum,
+                                        VegeDatum = b.VegeDatum,
+                                        JogcimID = b.JogcimID,
+                                        UserName = b.UserName,
+                                        LastEdit = b.LastEdit,
+                                        JogcimNev = b.Jogcim.Cim,
+                                        TorlesStatus = b.TorlesStatus
+                                    }).ToList();
+
+                DDLFeltoltese(bejelentesek);
+
+                return bejelentesek;
+            }
+        }
+
+        //listás nézet szűrővel lasteditre, csak adminnak
+        public static List<UjBejelentes> GetIdoBejelentesByFilerFelhasznalo(string lastedit)
+        {
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                var bejelentesek = (from b in db.IdoBejelentes1
+                                    where b.LastEdit.Contains(lastedit)
+                                    select new UjBejelentes
+                                    {
+                                        ID = b.ID,
+                                        KezdetiDatum = b.KezdetiDatum,
+                                        VegeDatum = b.VegeDatum,
+                                        JogcimID = b.JogcimID,
+                                        UserName = b.UserName,
+                                        LastEdit = b.LastEdit,
+                                        JogcimNev = b.Jogcim.Cim,
+                                        TorlesStatus = b.TorlesStatus
+                                    }).ToList();
+
+                DDLFeltoltese(bejelentesek);
+
+                return bejelentesek;
+            }
+        }
+
+        private static void DDLFeltoltese(List<UjBejelentes> bejelentesek)
         {
             //mivel a normál user és az admin ugyanazt az oldalt használja
             //ezért, hogy ne szálljon el a program a DDL rész miatt, normal usernek is be kell állítani
@@ -219,20 +292,15 @@ namespace hazi.WEB
                 //DDL lista elemek
                 item.StatusList = new List<ListItem>();
                 item.StatusList.Add(
-                    new ListItem { Value = TorlesStatus.NincsTorlesiKerelem.ToString(), Text = TorlesStatus.NincsTorlesiKerelem.ToString() });
-                
-                if (role == admin)
-                {
+                    new ListItem { Value = TorlesStatus.NincsTorlesiKerelem.ToString(), Text = "Nincs törlési kérelem" });
                     item.StatusList.Add(
-                        new ListItem { Value = TorlesStatus.ElfogadottKerelem.ToString(), Text = TorlesStatus.ElfogadottKerelem.ToString() });
+                        new ListItem { Value = TorlesStatus.ElfogadottKerelem.ToString(), Text = "Elfogadott kérelem" });
                     item.StatusList.Add(
-                        new ListItem { Value = TorlesStatus.RegisztraltKerelem.ToString(), Text = TorlesStatus.RegisztraltKerelem.ToString() });
-
+                        new ListItem { Value = TorlesStatus.RegisztraltKerelem.ToString(), Text = "Regisztrált kérelem" });
                     item.StatusList.Add(
-                        new ListItem { Value = TorlesStatus.Torles.ToString(), Text = TorlesStatus.Torles.ToString() });
+                        new ListItem { Value = TorlesStatus.Torles.ToString(), Text = "Törlés" });
                     item.StatusList.Add(
-                        new ListItem { Value = TorlesStatus.Elutasitott.ToString(), Text = TorlesStatus.Elutasitott.ToString() });
-                }
+                        new ListItem { Value = TorlesStatus.Elutasitott.ToString(), Text = "Elutasított" });
 
                 //db-ben statusz nélküli elemek kapnak nincs törlési kérelem státuszt
                 if (item.TorlesStatus == null)

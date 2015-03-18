@@ -179,17 +179,17 @@ namespace hazi.WEB.Pages
                     hibaUzenet = "Hibás a folyamat vége óra / perc értéke, így a mentés sikertelen!";
                     break;
                 case hibak.HibasKezdetiErtekek:
-                    hibaUzenet = "A folyamat kezdeti értékei a jelenlegi időpont előttiek, így a mentés sikertelen!";
+                    hibaUzenet = "Múltbeli folyamat rögzítése nem engedélyezett!A folyamat kezdeti értékei a jelenlegi időpont előttiek, így a mentés sikertelen!";
                     break;
                 case hibak.HibasVegeErtekek:
-                    hibaUzenet = "A folyamat vége értékei a jelenlegi időpont előttiek vagy átnyúlik a következő napra, így a mentés sikertelen!";
+                    hibaUzenet = "Múltbeli / 2 napos folyamat rögzítése nem engedélyezett! A folyamat vége értékei a jelenlegi időpont előttiek vagy átnyúlik a következő napra, így a mentés sikertelen!";
                     break;
                 case hibak.VegeKezdetiElott:
                     hibaUzenet = "A folyamat vége ideje a folyamat kezdeti előtt található, a két időpont megegyezik, "+
                                     "vagy átnyúlik a következő napra, így a mentés sikertelen!";
                     break;
                 case hibak.KezdetiDatumRegebbiMainal:
-                    hibaUzenet = "A kiválasztott dátum régebbi a mai dátumnál, így a mentés sikertelen!";
+                    hibaUzenet = "Múltbeli folyamat rögzítése nem engedélyezett! A kiválasztott dátum régebbi a mai dátumnál, így a mentés sikertelen!";
                     break;
                 case hibak.NemEngedelyezettEleres:
                     hibaUzenet = "Az oldal megtekintéséhez nincs jogosultsága";

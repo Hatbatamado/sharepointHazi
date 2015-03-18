@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="hazi.WEB._Default" %>
-
 <%@ MasterType VirtualPath="~/Site.Master" %>
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
@@ -29,6 +29,11 @@
                             <asp:GridView ID="bejelentesekLista" runat="server" AutoGenerateColumns="False"
                                 ShowFooter="True" GridLines="Vertical" CellPadding="4" ItemType="hazi.DAL.UjBejelentes"
                                 HeaderStyle-BackColor="DarkBlue" HeaderStyle-ForeColor="White" CssClass="table table-bordered">
+                                <EmptyDataTemplate>
+                                    Nem található (a szűrő által megadott) bejelentés a db-ben
+                                    <br />
+                                     <asp:Button ID="Vissza" runat="server" Text="Vissza" Font-Bold="true" OnClick="Vissza_Click"/>
+                                </EmptyDataTemplate>
                                 <Columns>
                                     <asp:TemplateField HeaderText="Műveletek">
                                         <ItemTemplate>
@@ -36,31 +41,13 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
-                                    <asp:TemplateField>
-                                        <HeaderTemplate>
-                                            <asp:Label ID="kezedetiLabel" runat="server" Text="Kezdeti dátum"></asp:Label>
-                                            <br />
-                                            <input id="vegeDatumFilter" type="text" runat="server" onkeyup="FilterByJogcim();" style="width: 125px;" />
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="kezdetidatum" runat="server" Text='<%# Eval("KezdetiDatum")%>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <HeaderTemplate>
-                                            <asp:Label ID="vegeLabel" runat="server" Text="Végdátum"></asp:Label>
-                                            <br />
-                                            <input id="vegeDatumFilter" type="text" runat="server" onkeyup="FilterByJogcim();" style="width: 125px;" />
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="vegdatum" runat="server" Text='<%# Eval("VegeDatum")%>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="kezdetidatum" HeaderText="Kezdeti dátum" SortExpression="ID" />
+                                    <asp:BoundField DataField="VegeDatum" HeaderText="Végdátum" SortExpression="ID" />
                                     <asp:TemplateField>
                                         <HeaderTemplate>
                                             <asp:Label ID="jogcimLabel" runat="server" Text="Jogcím"></asp:Label>
                                             <br />
-                                            <input id="vegeDatumFilter" type="text" runat="server" onkeyup="FilterByJogcim();" style="width: 150px;" />
+                                            <input id="jogcimFilter" type="text" runat="server" onkeyup="FilterByJogcim();" style="width: 150px; color:black;" />
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="jogcim" runat="server" Text='<%# Eval("JogcimNev")%>'></asp:Label>
@@ -70,7 +57,7 @@
                                         <HeaderTemplate>
                                             <asp:Label ID="felhasznaloLabel" runat="server" Text="Felhasználó"></asp:Label>
                                             <br />
-                                            <input id="vegeDatumFilter" type="text" runat="server" onkeyup="FilterByJogcim();" style="width: 125px;" />
+                                           <input id="usernameFilter" type="text" runat="server" onkeyup="FilterByFelhasznalo();" style="width: 150px; color:black;" />
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="username" runat="server" Text='<%# Eval("UserName")%>'></asp:Label>
@@ -80,13 +67,18 @@
                                         <HeaderTemplate>
                                             <asp:Label ID="lasteditLabel" runat="server" Text="Utoljára Módosítva"></asp:Label>
                                             <br />
-                                            <input id="vegeDatumFilter" type="text" runat="server" onkeyup="FilterByJogcim();" style="width: 125px;" />
+                                            <input id="lasteditFilter" type="text" runat="server" onkeyup="FilterByLastedit();" style="width: 150px; color:black;" />
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="lastedit" runat="server" Text='<%# Eval("LastEdit")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Törlés">
+                                    <asp:TemplateField>
+                                        <HeaderTemplate>
+                                            <asp:Label ID="TorlesLabel" runat="server" Text="Törlés"></asp:Label>
+                                            <br />
+                                            <asp:DropDownList ID="DDLTorles" runat="server" ForeColor="Black" onchange="FilterByTorlesStatus();"></asp:DropDownList>
+                                        </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:CheckBox ID="Remove" runat="server" Visible="false"></asp:CheckBox>
                                             <asp:DropDownList runat="server" ID="StatusDDL"
@@ -126,6 +118,12 @@
         }
         function FilterByFelhasznalo() {
             __doPostBack('<%= MainUpdatePanel.ClientID %>', 'FilterByFelhasznalo');
+        }
+        function FilterByLastedit() {
+            __doPostBack('<%= MainUpdatePanel.ClientID %>', 'FilterByLastedit');
+        }
+        function FilterByTorlesStatus() {
+            __doPostBack('<%= MainUpdatePanel.ClientID %>', 'FilterByTorlesStatus');
         }
     </script>
 </asp:Content>

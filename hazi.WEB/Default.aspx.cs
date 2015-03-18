@@ -39,10 +39,67 @@ namespace hazi.WEB
             }
             if (Request["__EVENTARGUMENT"] == "FilterByJogcim")
             {
-                //bejelentesekLista.DataSource = Bejelentes.GetIdoBejelentesByFilerJogcim(jogcimFiler.Value,
-                //    RoleActions.GetRole(User.Identity.Name), User.Identity.Name);
-                //bejelentesekLista.DataBind();
-                //MegfeleloMezokMegjelenitese(string.Empty);
+                string text = (bejelentesekLista.HeaderRow.FindControl("jogcimFilter") as System.Web.UI.HtmlControls.HtmlInputText).Value;
+                List<UjBejelentes> lista = Bejelentes.GetIdoBejelentesByFilerJogcim(text);
+
+                GridFeltoles(lista, text, "jogcimFilter");
+            }
+            else if (Request["__EVENTARGUMENT"] == "FilterByFelhasznalo")
+            {
+                string text = (bejelentesekLista.HeaderRow.FindControl("usernameFilter") as System.Web.UI.HtmlControls.HtmlInputText).Value;
+                List<UjBejelentes> lista;
+                if (text != "")
+                    lista = Bejelentes.GetIdoBejelentesByFilerFelhasznalo(text);
+                else //ha még van a db-ben olyan bejelentés, aminek nincs "gazdája"
+                    lista = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                                                    User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+
+                GridFeltoles(lista, text, "usernameFilter");
+            }
+            else if (Request["__EVENTARGUMENT"] == "FilterByLastedit")
+            {
+                string text = (bejelentesekLista.HeaderRow.FindControl("lasteditFilter") as System.Web.UI.HtmlControls.HtmlInputText).Value;
+                List<UjBejelentes> lista;
+                if (text != "")
+                    lista = Bejelentes.GetIdoBejelentesByFilerLastEdit(text);
+                else //ha még van a db-ben olyan bejelentés, aminek létrehozásakor és utána nem kapott értéket lastedit-re
+                    lista = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                                                    User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+
+                GridFeltoles(lista, text, "lasteditFilter");
+            }
+            else if (Request["__EVENTARGUMENT"] == "FilterByTorlesStatus")
+            {
+                string text = (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList).SelectedValue;
+
+                List<UjBejelentes> lista;
+                if (text != "")
+                    lista = Bejelentes.GetIdoBejelentesByFilerTorlesStatus(text);
+                else //ha az összes jelentést látni akarjuk
+                    lista = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                                                    User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+
+                GridFeltoles(lista, text, "DDLTorles");
+            }
+        }
+
+        private void GridFeltoles(List<UjBejelentes> lista, string txt, string control)
+        {
+            //null értéknél nem sikerült rájönni, hogyan tűntessem el az oldalról a 2 gombot,
+            //így maradt ez az empty datás verzió
+            bejelentesekLista.DataSource = lista;
+            bejelentesekLista.DataBind();
+
+            MegfeleloMezokMegjelenitese(string.Empty);
+            if (control != "DDLTorles")
+            {
+                (bejelentesekLista.HeaderRow.FindControl(control) as System.Web.UI.HtmlControls.HtmlInputText).Value = txt;
+
+                TextBoxFocus(control);
+            }
+            else if (control == "DDLTorles")
+            {
+                (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList).SelectedValue = txt;
             }
         }
 
@@ -152,6 +209,17 @@ namespace hazi.WEB
                     bejelentesekLista.Rows[i].FindControl("Remove").Visible = true;
                     bejelentesekLista.Rows[i].FindControl("StatusDDL").Visible = false;
                 }
+                (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList).Visible = false;
+                (bejelentesekLista.HeaderRow.FindControl("lasteditFilter") as System.Web.UI.HtmlControls.HtmlInputText).Visible = false;
+                (bejelentesekLista.HeaderRow.FindControl("usernameFilter") as System.Web.UI.HtmlControls.HtmlInputText).Visible = false;
+                (bejelentesekLista.HeaderRow.FindControl("jogcimFilter") as System.Web.UI.HtmlControls.HtmlInputText).Visible = false;
+            }
+            if ((bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList).Items.Count == 0)
+            {
+                DropDownList ddlTorles = (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList);
+                ddlTorles.Items.Add(new ListItem());
+                ddlTorles.Items.Add("Nincs törlési kérelem");
+                ddlTorles.Items.Add("Regisztrált kérelem");
             }
 
             if (uzenet != string.Empty)
@@ -159,6 +227,18 @@ namespace hazi.WEB
                 Master.Uzenet.Visible = true;
                 Master.Uzenet.Text = uzenet;
             }
+        }
+
+        private void TextBoxFocus(string control)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(),
+                "tmp2", "var t2 =     document.getElementById('MainContent_bejelentesekLista_" + control + "');" +
+            "t2.focus();t2.value = t2.value;", true);
+        }
+
+        protected void Vissza_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Default.aspx");
         }
     }
 }
