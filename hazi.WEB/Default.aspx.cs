@@ -4,6 +4,7 @@ using hazi.WEB.Logic;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.ModelBinding;
@@ -25,7 +26,10 @@ namespace hazi.WEB
                 {
                     
                     Bejelentesek.Visible = true;
-                    AdatokUjraToltese(string.Empty);                                       
+                    bejelentesekLista.DataSource = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                                                    User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+                    bejelentesekLista.DataBind();
+                    MegfeleloMezokMegjelenitese(string.Empty);                                       
                 }
                 else
                 {
@@ -33,24 +37,13 @@ namespace hazi.WEB
                     Response.Redirect("/Account/Login.aspx");
                 }
             }
-        }
-
-        public List<UjBejelentes> GetIdoBejelentesek()
-        {
-            if (User.Identity.IsAuthenticated)
+            if (Request["__EVENTARGUMENT"] == "FilterByJogcim")
             {
-                if (RoleActions.GetRole(User.Identity.Name) == admin)
-                {
-                    return Bejelentes.GetIdoBejelentesek(admin,"",
-                        DateTime.MinValue, DateTime.MinValue);
-                }
-                else if (RoleActions.GetRole(User.Identity.Name) == normal)
-                {
-                    return Bejelentes.GetIdoBejelentesek(normal,
-                        User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
-                }
+                //bejelentesekLista.DataSource = Bejelentes.GetIdoBejelentesByFilerJogcim(jogcimFiler.Value,
+                //    RoleActions.GetRole(User.Identity.Name), User.Identity.Name);
+                //bejelentesekLista.DataBind();
+                //MegfeleloMezokMegjelenitese(string.Empty);
             }
-            return null;
         }
 
         protected void Ujbejelentes_Click(object sender, EventArgs e)
@@ -68,12 +61,13 @@ namespace hazi.WEB
             if (RoleActions.GetRole(User.Identity.Name) == admin)
             {
                 string sikeresTorles = string.Empty;
-                //Admin felhaszbáló által kért bejelentést töröl
+                
                 for (int i = 0; i < bejelentesekLista.Rows.Count; i++)
                 {
                     if ((bejelentesekLista.Rows[i].FindControl("StatusDDL")as DropDownList).
                         SelectedValue == TorlesStatus.ElfogadottKerelem.ToString())
                     {
+                        //Admin felhaszbáló által kért bejelentést töröl
                         IOrderedDictionary rowValues = new OrderedDictionary();
                         rowValues = Utility.GetValues(bejelentesekLista.Rows[i]);
 
@@ -87,7 +81,6 @@ namespace hazi.WEB
                     {
                         //mivel adminként bármelyik bejelentést törölhetjük,
                         //nem csak a felhasználó által kért bejelentéseket, ezért van erre a részre szükség
-
                         IOrderedDictionary rowValues = new OrderedDictionary();
                         rowValues = Utility.GetValues(bejelentesekLista.Rows[i]);
 
@@ -99,17 +92,22 @@ namespace hazi.WEB
                     else if ((bejelentesekLista.Rows[i].FindControl("StatusDDL")as DropDownList).
                         SelectedValue == TorlesStatus.Elutasitott.ToString())
                     {
+                        //törlési kérelem elutasítása
                         IOrderedDictionary rowValues = new OrderedDictionary();
                         rowValues = Utility.GetValues(bejelentesekLista.Rows[i]);
 
                         int id = Convert.ToInt32(rowValues["ID"]);
 
-                        JogcimBLL.TorlesElutasitva(id, TorlesStatus.RegisztraltKerelem.ToString(),
+                        sikeresTorles = JogcimBLL.TorlesElutasitva(id, TorlesStatus.RegisztraltKerelem.ToString(),
                                                     TorlesStatus.NincsTorlesiKerelem.ToString());
+                        if (sikeresTorles != string.Empty) break;
                     }
 
-                } 
-                AdatokUjraToltese(sikeresTorles);
+                }
+                bejelentesekLista.DataSource = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                                                    User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+                bejelentesekLista.DataBind();
+                MegfeleloMezokMegjelenitese(sikeresTorles);
             }
             else if (RoleActions.GetRole(User.Identity.Name) == normal)
             {
@@ -122,28 +120,19 @@ namespace hazi.WEB
                         rowValues = Utility.GetValues(bejelentesekLista.Rows[i]);
 
                         int id = Convert.ToInt32(rowValues["ID"]);
-                        DateTime kezdeti = DateTime.Parse(rowValues["KezdetiDatum"].ToString());
-                        DateTime vege = DateTime.Parse(rowValues["VegeDatum"].ToString());
-                        int jogid = JogcimBLL.GetIDbyName(rowValues["JogcimNev"].ToString());
-                        string username = rowValues["UserName"].ToString();
-                        
-                        string lastedit = string.Empty;
-                        if (rowValues["LastEdit"] != null)
-                            lastedit = rowValues["LastEdit"].ToString();
 
-                        JogcimBLL.IdoBejelentesMentes(id, kezdeti, vege, jogid, username, lastedit,
-                            TorlesStatus.RegisztraltKerelem.ToString());
+                        JogcimBLL.TorlesRegisztracio(id, TorlesStatus.RegisztraltKerelem.ToString());
                     }
                 }
-                AdatokUjraToltese(string.Empty);
+                bejelentesekLista.DataSource = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                                                    User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+                bejelentesekLista.DataBind();
+                MegfeleloMezokMegjelenitese(string.Empty);
             }
         }
 
-        private void AdatokUjraToltese(string uzenet)
+        private void MegfeleloMezokMegjelenitese(string uzenet)
         {
-            bejelentesekLista.DataSource = GetIdoBejelentesek();
-            bejelentesekLista.DataBind();
-
             //ha újból futattjuk és cookie-val bent vagyunk,
             //akkor a User.IsInRole szerint nem vagyunk bent az adott szerepkörben
             //emiatt az egész alkalmazásban lecseréltem

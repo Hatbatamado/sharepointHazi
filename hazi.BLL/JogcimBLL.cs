@@ -161,17 +161,43 @@ namespace hazi.BLL
         }
 
         //törlés elutasítva, bejegyzés újra megjelenítése a felhasználónak
-        public static void TorlesElutasitva(int? id, string status, string ujStatus)
+        public static string TorlesElutasitva(int? id, string status, string ujStatus)
+        {
+            if (id.HasValue && id > 0)
+            {
+                using (hazi2Entities db = new hazi2Entities())
+                {
+                    try
+                    {
+                        IdoBejelentes ib = (from b in db.IdoBejelentes1
+                                            where b.ID == id && b.TorlesStatus == status
+                                            select b).Single();
+
+                        ib.TorlesStatus = ujStatus;
+
+                        db.SaveChanges();
+                    }
+                    catch (Exception)
+                    {
+                        return "A felhasználó nem kérte a(z)" + id + " ID-jű bejelentés törlésését, így azt nem lehet elutasítani";
+                    }
+                }
+            }
+            return string.Empty;
+        }
+
+        //felhasználó törlésre regisztrál egy bejelentést
+        public static void TorlesRegisztracio(int? id, string status)
         {
             if (id.HasValue && id > 0)
             {
                 using (hazi2Entities db = new hazi2Entities())
                 {
                     IdoBejelentes ib = (from b in db.IdoBejelentes1
-                                        where b.ID == id && b.TorlesStatus == status
+                                        where b.ID == id
                                         select b).Single();
                     
-                    ib.TorlesStatus = ujStatus;
+                    ib.TorlesStatus = status;
 
                     db.SaveChanges();
                 }
