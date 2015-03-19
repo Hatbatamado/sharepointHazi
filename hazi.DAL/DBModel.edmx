@@ -14,8 +14,10 @@
           <Property Name="VegeDatum" Type="datetime" Nullable="false" />
           <Property Name="JogcimID" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
-          <Property Name="LastEdit" Type="nvarchar" MaxLength="50" />
+          <Property Name="UtolsoModosito" Type="nvarchar" MaxLength="50" />
           <Property Name="TorlesStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="UtolsoModositas" Type="datetime" />
+          <Property Name="Statusz" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Jogcim">
           <Key>
@@ -60,6 +62,9 @@
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastEdit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TorlesStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UtolsoModosito" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UtolsoModositas" Type="DateTime" Precision="3" />
+          <Property Name="Statusz" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Jogcim">
           <Key>
@@ -98,8 +103,10 @@
           <EntitySetMapping Name="IdoBejelentes1">
             <EntityTypeMapping TypeName="hazi2Model.IdoBejelentes">
               <MappingFragment StoreEntitySet="IdoBejelentes">
+                <ScalarProperty Name="Statusz" ColumnName="Statusz" />
+                <ScalarProperty Name="UtolsoModositas" ColumnName="UtolsoModositas" />
+                <ScalarProperty Name="UtolsoModosito" ColumnName="UtolsoModosito" />
                 <ScalarProperty Name="TorlesStatus" ColumnName="TorlesStatus" />
-                <ScalarProperty Name="LastEdit" ColumnName="LastEdit" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="KezdetiDatum" ColumnName="KezdetiDatum" />
