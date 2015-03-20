@@ -9,6 +9,9 @@ using System.Web.UI;
 using hazi.WEB.Models;
 using System.Collections.Generic;
 using hazi.WEB.Logic;
+using System.Web.Security;
+using System.Web.UI.WebControls;
+using System.Collections.Specialized;
 
 namespace hazi.WEB.Account
 {
@@ -25,6 +28,11 @@ namespace hazi.WEB.Account
                 {
                     RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
                 }
+                if (User.Identity.IsAuthenticated && RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+                {
+                    Felhasznalok.DataSource = UsersBLL.UserList();
+                    Felhasznalok.DataBind();
+                }
             }
             if (!User.Identity.IsAuthenticated || Request["__EVENTARGUMENT"] == "SikeresKilepes")
             {
@@ -36,6 +44,9 @@ namespace hazi.WEB.Account
                 LoginForm.Visible = false;
                 SucLogin.Visible = true;
                 helloLabel.Text = "Hello " + User.Identity.GetUserName();
+                //todo gomb ide
+                Felhasznalok.DataSource = UsersBLL.UserList();
+                Felhasznalok.DataBind();
             }
         }
 
@@ -46,7 +57,6 @@ namespace hazi.WEB.Account
                 Models.ApplicationDbContext context = new ApplicationDbContext();
                 var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
                 var manager = new UserManager();
-
                 ApplicationUser user = userMgr.Find(UserName.Text, Password.Text);
                 if (user != null)
                 {
@@ -72,6 +82,19 @@ namespace hazi.WEB.Account
             var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
             authenticationManager.SignOut();
             ScriptManager.RegisterStartupScript(this, this.GetType(), "asd", "Kilepes();", true);
+        }
+
+        protected void Mentes_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Felhasznalok.Rows.Count; i++)
+            {
+                IOrderedDictionary rowValues = new OrderedDictionary();
+                rowValues = Utility.GetValues(Felhasznalok.Rows[i]);
+                string ddlValue = (Felhasznalok.Rows[i].FindControl("SzerepkorDDL") as DropDownList).SelectedValue;
+
+                //string vissza = RoleActions.ChangeRole(rowValues["Name"].ToString(), rowValues["Role"].ToString(),
+                //    ;
+            }
         }
     }
 }

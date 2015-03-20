@@ -41,8 +41,8 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
-                                    <asp:BoundField DataField="kezdetidatum" HeaderText="Kezdeti dátum" SortExpression="ID" />
-                                    <asp:BoundField DataField="VegeDatum" HeaderText="Végdátum" SortExpression="ID" />
+                                    <asp:BoundField DataField="kezdetidatum" HeaderText="Kezdeti dátum" />
+                                    <asp:BoundField DataField="VegeDatum" HeaderText="Végdátum" />
                                     <asp:TemplateField>
                                         <HeaderTemplate>
                                             <asp:Label ID="jogcimLabel" runat="server" Text="Jogcím"></asp:Label>

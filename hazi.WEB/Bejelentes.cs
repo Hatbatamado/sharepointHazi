@@ -58,9 +58,9 @@ namespace hazi.WEB
                                                                VegeDatum = b.VegeDatum,
                                                                JogcimID = b.JogcimID,
                                                                UserName = b.UserName,
-                                                               LastEdit = b.LastEdit,
+                                                               LastEdit = b.UtolsoModosito,
                                                                JogcimNev = p.Cim,
-                                                               TorlesStatus = b.TorlesStatus
+                                                               TorlesStatus = b.Statusz
                                                            }).ToList();
 
                         DDLFeltoltese(bejelentesek);
@@ -77,8 +77,8 @@ namespace hazi.WEB
                         string segedStatus = TorlesStatus.NincsTorlesiKerelem.ToString();
                         List<UjBejelentes> bejelentesek = (from b in db.IdoBejelentes1
                                                            join p in db.Jogcims on b.JogcimID equals p.ID
-                                                           where b.UserName == name && (b.TorlesStatus == segedStatus ||
-                                                           b.TorlesStatus == null)
+                                                           where b.UserName == name && (b.Statusz == segedStatus ||
+                                                           b.Statusz == null)
                                                            select new UjBejelentes
                                                            {
                                                                ID = b.ID,
@@ -86,7 +86,7 @@ namespace hazi.WEB
                                                                VegeDatum = b.VegeDatum,
                                                                JogcimID = b.JogcimID,
                                                                UserName = b.UserName,
-                                                               LastEdit = b.LastEdit,
+                                                               LastEdit = b.UtolsoModosito,
                                                                JogcimNev = p.Cim
                                                            }).ToList();
                         
@@ -125,7 +125,7 @@ namespace hazi.WEB
                                     VegeDatum = b.VegeDatum,
                                     JogcimID = b.JogcimID,
                                     UserName = b.UserName,
-                                    LastEdit = b.LastEdit,
+                                    LastEdit = b.UtolsoModosito,
                                     JogcimNev = p.Cim
                                 }).ToList();
                     }
@@ -140,7 +140,7 @@ namespace hazi.WEB
                         var bejelentesek = (from b in db.IdoBejelentes1
                                 join p in db.Jogcims on b.JogcimID equals p.ID
                                 where (b.UserName == name && b.KezdetiDatum >= start
-                                && b.VegeDatum <= end) && (b.TorlesStatus == segedStatus || b.TorlesStatus == null)
+                                && b.VegeDatum <= end) && (b.Statusz == segedStatus || b.Statusz == null)
                                 select new UjBejelentes
                                 {
                                     ID = b.ID,
@@ -148,9 +148,9 @@ namespace hazi.WEB
                                     VegeDatum = b.VegeDatum,
                                     JogcimID = b.JogcimID,
                                     UserName = b.UserName,
-                                    LastEdit = b.LastEdit,
+                                    LastEdit = b.UtolsoModosito,
                                     JogcimNev = p.Cim,
-                                    TorlesStatus = b.TorlesStatus
+                                    TorlesStatus = b.Statusz
                                 }).ToList();
 
                         return bejelentesek;
@@ -174,9 +174,9 @@ namespace hazi.WEB
                                         VegeDatum = b.VegeDatum,
                                         JogcimID = b.JogcimID,
                                         UserName = b.UserName,
-                                        LastEdit = b.LastEdit,
+                                        LastEdit = b.UtolsoModosito,
                                         JogcimNev = b.Jogcim.Cim,
-                                        TorlesStatus = b.TorlesStatus
+                                        TorlesStatus = b.Statusz
                                     }).ToList();
 
                 DDLFeltoltese(bejelentesek);
@@ -193,7 +193,7 @@ namespace hazi.WEB
                 if (torles == TorlesStatus.NincsTorlesiKerelem.ToString())
                 {
                     var bejelentesek = (from b in db.IdoBejelentes1
-                                        where b.TorlesStatus == torles || b.TorlesStatus == null
+                                        where b.Statusz == torles || b.Statusz == null
                                         select new UjBejelentes
                                         {
                                             ID = b.ID,
@@ -201,9 +201,9 @@ namespace hazi.WEB
                                             VegeDatum = b.VegeDatum,
                                             JogcimID = b.JogcimID,
                                             UserName = b.UserName,
-                                            LastEdit = b.LastEdit,
+                                            LastEdit = b.UtolsoModosito,
                                             JogcimNev = b.Jogcim.Cim,
-                                            TorlesStatus = b.TorlesStatus
+                                            TorlesStatus = b.Statusz
                                         }).ToList();
 
                     DDLFeltoltese(bejelentesek);
@@ -213,7 +213,7 @@ namespace hazi.WEB
                 else
                 { //csak a megadott státuszú jelentések
                     var bejelentesek = (from b in db.IdoBejelentes1
-                                        where b.TorlesStatus == torles
+                                        where b.Statusz == torles
                                         select new UjBejelentes
                                         {
                                             ID = b.ID,
@@ -221,9 +221,9 @@ namespace hazi.WEB
                                             VegeDatum = b.VegeDatum,
                                             JogcimID = b.JogcimID,
                                             UserName = b.UserName,
-                                            LastEdit = b.LastEdit,
+                                            LastEdit = b.UtolsoModosito,
                                             JogcimNev = b.Jogcim.Cim,
-                                            TorlesStatus = b.TorlesStatus
+                                            TorlesStatus = b.Statusz
                                         }).ToList();
 
                     DDLFeltoltese(bejelentesek);
@@ -247,9 +247,9 @@ namespace hazi.WEB
                                         VegeDatum = b.VegeDatum,
                                         JogcimID = b.JogcimID,
                                         UserName = b.UserName,
-                                        LastEdit = b.LastEdit,
+                                        LastEdit = b.UtolsoModosito,
                                         JogcimNev = b.Jogcim.Cim,
-                                        TorlesStatus = b.TorlesStatus
+                                        TorlesStatus = b.Statusz
                                     }).ToList();
 
                 DDLFeltoltese(bejelentesek);
@@ -264,7 +264,7 @@ namespace hazi.WEB
             using (hazi2Entities db = new hazi2Entities())
             {
                 var bejelentesek = (from b in db.IdoBejelentes1
-                                    where b.LastEdit.Contains(lastedit)
+                                    where b.UtolsoModosito.Contains(lastedit)
                                     select new UjBejelentes
                                     {
                                         ID = b.ID,
@@ -272,9 +272,9 @@ namespace hazi.WEB
                                         VegeDatum = b.VegeDatum,
                                         JogcimID = b.JogcimID,
                                         UserName = b.UserName,
-                                        LastEdit = b.LastEdit,
+                                        LastEdit = b.UtolsoModosito,
                                         JogcimNev = b.Jogcim.Cim,
-                                        TorlesStatus = b.TorlesStatus
+                                        TorlesStatus = b.Statusz
                                     }).ToList();
 
                 DDLFeltoltese(bejelentesek);

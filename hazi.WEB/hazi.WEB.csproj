@@ -254,7 +254,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Bejelentes.cs" />
     <Compile Include="Logic\RoleActions.cs" />
-    <Compile Include="Logic\TorlesStatus.cs" />
+    <Compile Include="Logic\Statusz.cs" />
+    <Compile Include="Logic\Users.cs" />
+    <Compile Include="Logic\UsersBLL.cs" />
     <Compile Include="Logic\Utility.cs" />
     <Compile Include="Pages\About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>

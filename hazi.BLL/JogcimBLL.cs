@@ -69,15 +69,15 @@ namespace hazi.BLL
                              select b).Single();
                 if (UserName != "")
                     ib.UserName = UserName;
-                ib.LastEdit = LastEditUser;
+                ib.UtolsoModosito = LastEditUser;
 
                 if (ID == null)
                     db.IdoBejelentes1.Add(ib);
 
                 if (torlesStatus == string.Empty)
-                    ib.TorlesStatus = "NincsTorlesiKerelem";
+                    ib.Statusz = "NincsTorlesiKerelem";
                 else
-                    ib.TorlesStatus = torlesStatus;
+                    ib.Statusz = torlesStatus;
 
                 db.SaveChanges();
             }
@@ -155,7 +155,7 @@ namespace hazi.BLL
                     try
                     {
                         var torolni = (from b in db.IdoBejelentes1
-                                       where b.ID == id && b.TorlesStatus == status
+                                       where b.ID == id && b.Statusz == status
                                        select b).FirstOrDefault();
                         if (torolni != null)
                         {
@@ -184,10 +184,10 @@ namespace hazi.BLL
                     try
                     {
                         IdoBejelentes ib = (from b in db.IdoBejelentes1
-                                            where b.ID == id && b.TorlesStatus == status
+                                            where b.ID == id && b.Statusz == status
                                             select b).Single();
 
-                        ib.TorlesStatus = ujStatus;
+                        ib.Statusz = ujStatus;
 
                         db.SaveChanges();
                     }
@@ -213,7 +213,7 @@ namespace hazi.BLL
                                             where b.ID == id
                                             select b).Single();
 
-                        ib.TorlesStatus = status;
+                        ib.Statusz = status;
 
                         db.SaveChanges();
                     }

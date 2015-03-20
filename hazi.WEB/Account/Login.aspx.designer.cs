@@ -110,5 +110,35 @@ namespace hazi.WEB.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button buttonLogoff;
+        
+        /// <summary>
+        /// Felhasznalok control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView Felhasznalok;
+        
+        /// <summary>
+        /// Mentes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Mentes;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new hazi.WEB.SiteMaster Master {
+            get {
+                return ((hazi.WEB.SiteMaster)(base.Master));
+            }
+        }
     }
 }

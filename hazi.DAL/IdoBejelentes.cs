@@ -19,8 +19,6 @@ namespace hazi.DAL
         public System.DateTime VegeDatum { get; set; }
         public int JogcimID { get; set; }
         public string UserName { get; set; }
-        public string LastEdit { get; set; }
-        public string TorlesStatus { get; set; }
         public string UtolsoModosito { get; set; }
         public Nullable<System.DateTime> UtolsoModositas { get; set; }
         public string Statusz { get; set; }

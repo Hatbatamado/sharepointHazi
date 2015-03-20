@@ -25,7 +25,7 @@ namespace hazi.DAL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<IdoBejelentes> IdoBejelentes1 { get; set; }
         public virtual DbSet<Jogcim> Jogcims { get; set; }
+        public virtual DbSet<IdoBejelentes> IdoBejelentes1 { get; set; }
     }
 }

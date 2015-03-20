@@ -15,9 +15,8 @@
           <Property Name="JogcimID" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="UtolsoModosito" Type="nvarchar" MaxLength="50" />
-          <Property Name="TorlesStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="UtolsoModositas" Type="datetime" />
-          <Property Name="Statusz" Type="nvarchar" MaxLength="50" />
+          <Property Name="Statusz" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Jogcim">
           <Key>
@@ -50,6 +49,22 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="hazi2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Jogcim">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cim" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="IdoBejelentes" Relationship="hazi2Model.FK_IdoBejelentes_Jogcim" FromRole="Jogcim" ToRole="IdoBejelente" />
+        </EntityType>
+        <EntityContainer Name="hazi2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Jogcims" EntityType="Self.Jogcim" />
+          <EntitySet Name="IdoBejelentes1" EntityType="hazi2Model.IdoBejelentes" />
+          <AssociationSet Name="FK_IdoBejelentes_Jogcim" Association="hazi2Model.FK_IdoBejelentes_Jogcim">
+            <End Role="Jogcim" EntitySet="Jogcims" />
+            <End Role="IdoBejelente" EntitySet="IdoBejelentes1" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="IdoBejelentes">
           <Key>
             <PropertyRef Name="ID" />
@@ -58,68 +73,49 @@
           <Property Name="KezdetiDatum" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="VegeDatum" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="JogcimID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Jogcim" Relationship="Self.FK_IdoBejelentes_Jogcim" FromRole="IdoBejelentes" ToRole="Jogcim" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LastEdit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TorlesStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UtolsoModosito" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UtolsoModositas" Type="DateTime" Precision="3" />
-          <Property Name="Statusz" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Jogcim">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Cim" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="IdoBejelentes" Relationship="Self.FK_IdoBejelentes_Jogcim" FromRole="Jogcim" ToRole="IdoBejelentes" />
+          <Property Name="Statusz" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Jogcim" Relationship="hazi2Model.FK_IdoBejelentes_Jogcim" FromRole="IdoBejelente" ToRole="Jogcim" />
         </EntityType>
         <Association Name="FK_IdoBejelentes_Jogcim">
-          <End Role="Jogcim" Type="Self.Jogcim" Multiplicity="1" />
-          <End Role="IdoBejelentes" Type="hazi2Model.IdoBejelentes" Multiplicity="*" />
+          <End Type="hazi2Model.Jogcim" Role="Jogcim" Multiplicity="1" />
+          <End Type="hazi2Model.IdoBejelentes" Role="IdoBejelente" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Jogcim">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="IdoBejelentes">
+            <Dependent Role="IdoBejelente">
               <PropertyRef Name="JogcimID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="hazi2Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="IdoBejelentes1" EntityType="hazi2Model.IdoBejelentes" />
-          <EntitySet Name="Jogcims" EntityType="Self.Jogcim" />
-          <AssociationSet Name="FK_IdoBejelentes_Jogcim" Association="Self.FK_IdoBejelentes_Jogcim">
-            <End Role="Jogcim" EntitySet="Jogcims" />
-            <End Role="IdoBejelentes" EntitySet="IdoBejelentes1" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="hazi2ModelStoreContainer" CdmEntityContainer="hazi2Entities">
+          <EntitySetMapping Name="Jogcims">
+            <EntityTypeMapping TypeName="hazi2Model.Jogcim">
+              <MappingFragment StoreEntitySet="Jogcim">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Cim" ColumnName="Cim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="IdoBejelentes1">
             <EntityTypeMapping TypeName="hazi2Model.IdoBejelentes">
               <MappingFragment StoreEntitySet="IdoBejelentes">
                 <ScalarProperty Name="Statusz" ColumnName="Statusz" />
                 <ScalarProperty Name="UtolsoModositas" ColumnName="UtolsoModositas" />
                 <ScalarProperty Name="UtolsoModosito" ColumnName="UtolsoModosito" />
-                <ScalarProperty Name="TorlesStatus" ColumnName="TorlesStatus" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="KezdetiDatum" ColumnName="KezdetiDatum" />
-                <ScalarProperty Name="VegeDatum" ColumnName="VegeDatum" />
                 <ScalarProperty Name="JogcimID" ColumnName="JogcimID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Jogcims">
-            <EntityTypeMapping TypeName="hazi2Model.Jogcim">
-              <MappingFragment StoreEntitySet="Jogcim">
+                <ScalarProperty Name="VegeDatum" ColumnName="VegeDatum" />
+                <ScalarProperty Name="KezdetiDatum" ColumnName="KezdetiDatum" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Cim" ColumnName="Cim" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

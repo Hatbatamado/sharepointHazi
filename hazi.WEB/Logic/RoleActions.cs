@@ -89,5 +89,27 @@ namespace hazi.WEB.Logic
             else
                 return "";
         }
+
+
+        internal static string ChangeRole(string name, string oldRole, string newRole)
+        {
+            if (oldRole != newRole)
+            {
+                Models.ApplicationDbContext context = new ApplicationDbContext();
+                var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                IdentityResult IdUserResult;
+
+                try
+                {
+                    ApplicationUser user = userMgr.FindByName(name);
+
+                    IdUserResult = userMgr.RemoveFromRole(user.Id, oldRole);
+                    IdUserResult = userMgr.AddToRole(user.Id, newRole);
+                    return string.Empty;
+                }
+                catch (Exception) { return "Hiba történt a szerepkör változtatás során"; }
+            }
+            return string.Empty;
+        }
     }
 }
