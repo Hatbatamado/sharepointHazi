@@ -12,5 +12,12 @@ namespace hazi.WEB.Logic
         ElfogadottKerelem,
         Torles,
         Elutasitott
-    }
+    };
+
+    public enum JovaHagyasStatus
+    {
+        Rogzitve,
+        Elutasitva,
+        Jovahagyva
+    };
 }

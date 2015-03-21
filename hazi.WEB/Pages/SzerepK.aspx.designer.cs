@@ -7,36 +7,39 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace hazi.WEB {
+namespace hazi.WEB.Pages {
     
     
-    public partial class SiteMaster {
+    public partial class SzerepK {
         
         /// <summary>
-        /// SzerepKor control.
+        /// Felhasznalok control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor SzerepKor;
+        protected global::System.Web.UI.WebControls.GridView Felhasznalok;
         
         /// <summary>
-        /// UzenetFelhasznalonak control.
+        /// Mentes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label UzenetFelhasznalonak;
+        protected global::System.Web.UI.WebControls.Button Mentes;
         
         /// <summary>
-        /// MainContent control.
+        /// Master property.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Auto-generated property.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        public new hazi.WEB.SiteMaster Master {
+            get {
+                return ((hazi.WEB.SiteMaster)(base.Master));
+            }
+        }
     }
 }

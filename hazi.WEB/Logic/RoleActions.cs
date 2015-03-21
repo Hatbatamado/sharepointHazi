@@ -11,7 +11,8 @@ namespace hazi.WEB.Logic
     public enum RegisterUserAs
     {
         Admin,
-        NormalUser
+        NormalUser,
+        Jovahagyok
     }
 
     public class RoleActions
@@ -61,11 +62,14 @@ namespace hazi.WEB.Logic
         }
 
         //Adott user, adott szerepkörhöz való rendelése
-        internal static void AddToRole(ApplicationUser user, RegisterUserAs role,
-            UserManager<ApplicationUser> userMgr, Models.ApplicationDbContext context)
+        internal static void AddToRole(string name, RegisterUserAs role)
         {
             IdentityResult IdRoleResult;
             IdentityResult IdUserResult;
+            Models.ApplicationDbContext context = new ApplicationDbContext();
+            var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+            ApplicationUser user = userMgr.FindByName(name);
 
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleMgr = new RoleManager<IdentityRole>(roleStore);
@@ -81,35 +85,46 @@ namespace hazi.WEB.Logic
         //szerepkör lekérdezés
         internal static string GetRole(string userName)
         {
-            Models.ApplicationDbContext context = new ApplicationDbContext();
-            var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            IList<string> roles = userMgr.GetRoles(userMgr.FindByName(userName).Id);
-            if (roles.Count != 0)
-                return roles.ElementAt(0);
-            else
-                return "";
+            try
+            {
+                Models.ApplicationDbContext context = new ApplicationDbContext();
+                var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                IList<string> roles = userMgr.GetRoles(userMgr.FindByName(userName).Id);
+                if (roles.Count != 0)
+                    return roles.ElementAt(0);
+                else
+                    return string.Empty;
+            }
+            catch (NullReferenceException) { return string.Empty; }
         }
 
 
         internal static string ChangeRole(string name, string oldRole, string newRole)
         {
-            if (oldRole != newRole)
+            IdentityResult IdUserResult;
+            IdentityResult IdRoleResult;
+            Models.ApplicationDbContext context = new ApplicationDbContext();
+            
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleMgr = new RoleManager<IdentityRole>(roleStore);
+
+            if (!roleMgr.RoleExists(newRole.ToString()))
             {
-                Models.ApplicationDbContext context = new ApplicationDbContext();
-                var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                IdentityResult IdUserResult;
-
-                try
-                {
-                    ApplicationUser user = userMgr.FindByName(name);
-
-                    IdUserResult = userMgr.RemoveFromRole(user.Id, oldRole);
-                    IdUserResult = userMgr.AddToRole(user.Id, newRole);
-                    return string.Empty;
-                }
-                catch (Exception) { return "Hiba történt a szerepkör változtatás során"; }
+                IdRoleResult = roleMgr.Create(new IdentityRole { Name = newRole.ToString() });
             }
-            return string.Empty;
+
+            var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            
+
+            try
+            {
+                ApplicationUser user = userMgr.FindByName(name);
+
+                IdUserResult = userMgr.RemoveFromRole(user.Id, oldRole);
+                IdUserResult = userMgr.AddToRole(user.Id, newRole);
+                return string.Empty;
+            }
+            catch (Exception) { return "Hiba történt a szerepkör változtatás során"; }
         }
     }
 }

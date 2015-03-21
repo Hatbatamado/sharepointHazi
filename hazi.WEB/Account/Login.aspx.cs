@@ -8,10 +8,9 @@ using System.Web;
 using System.Web.UI;
 using hazi.WEB.Models;
 using System.Collections.Generic;
-using hazi.WEB.Logic;
 using System.Web.Security;
 using System.Web.UI.WebControls;
-using System.Collections.Specialized;
+using hazi.WEB.Logic;
 
 namespace hazi.WEB.Account
 {
@@ -28,26 +27,42 @@ namespace hazi.WEB.Account
                 {
                     RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
                 }
-                if (User.Identity.IsAuthenticated && RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+                if (User.Identity.IsAuthenticated)
                 {
-                    Felhasznalok.DataSource = UsersBLL.UserList();
-                    Felhasznalok.DataBind();
+                    SikerBelep();
+                }
+                else
+                {
+                    SikerKilep();
                 }
             }
-            if (!User.Identity.IsAuthenticated || Request["__EVENTARGUMENT"] == "SikeresKilepes")
+            if (Request["__EVENTARGUMENT"] == "SikeresKilepes")
             {
-                LoginForm.Visible = true;
-                SucLogin.Visible = false;
+                SikerKilep();
             }
-            else if (User.Identity.IsAuthenticated || Request["__EVENTARGUMENT"] == "SikeresBelepes")
+            else if (Request["__EVENTARGUMENT"] == "SikeresBelepes")
             {
-                LoginForm.Visible = false;
-                SucLogin.Visible = true;
-                helloLabel.Text = "Hello " + User.Identity.GetUserName();
-                //todo gomb ide
-                Felhasznalok.DataSource = UsersBLL.UserList();
-                Felhasznalok.DataBind();
+                SikerBelep();
             }
+        }
+
+        private void SikerBelep()
+        {
+            LoginForm.Visible = false;
+            SucLogin.Visible = true;
+            helloLabel.Text = "Hello " + User.Identity.Name;
+            //oldal betöltése hiánya miatt nem látszódik fent a link az oldalra
+            if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+                SzerepB.Visible = true;
+        }
+
+        private void SikerKilep()
+        {
+            LoginForm.Visible = true;
+            SucLogin.Visible = false;
+            //oldal betöltése hiánya miatt nem látszódik fent a link az oldalra
+            if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+                SzerepB.Visible = false;
         }
 
         protected void LogIn(object sender, EventArgs e)
@@ -64,7 +79,7 @@ namespace hazi.WEB.Account
                     IList<string> roles = userMgr.GetRoles(user.Id);
                     //Ha nincs, akkor adja hozzá a user-t, a NormalUser-ekhez
                     if (roles.Count == 0)
-                        RoleActions.AddToRole(user, RegisterUserAs.NormalUser, userMgr, context);
+                        RoleActions.AddToRole(user.UserName, RegisterUserAs.NormalUser);
 
                     IdentityHelper.SignIn(manager, user, RememberMe.Checked);
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "asd", "Belepes();", true);
@@ -84,17 +99,9 @@ namespace hazi.WEB.Account
             ScriptManager.RegisterStartupScript(this, this.GetType(), "asd", "Kilepes();", true);
         }
 
-        protected void Mentes_Click(object sender, EventArgs e)
+        protected void SzerepB_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < Felhasznalok.Rows.Count; i++)
-            {
-                IOrderedDictionary rowValues = new OrderedDictionary();
-                rowValues = Utility.GetValues(Felhasznalok.Rows[i]);
-                string ddlValue = (Felhasznalok.Rows[i].FindControl("SzerepkorDDL") as DropDownList).SelectedValue;
-
-                //string vissza = RoleActions.ChangeRole(rowValues["Name"].ToString(), rowValues["Role"].ToString(),
-                //    ;
-            }
+            Response.Redirect("/Pages/SzerepK");
         }
     }
 }

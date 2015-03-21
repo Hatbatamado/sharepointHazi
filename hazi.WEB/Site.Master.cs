@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hazi.WEB.Logic;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -79,7 +80,8 @@ namespace hazi.WEB
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (RoleActions.GetRole(HttpContext.Current.User.Identity.Name) == RegisterUserAs.Admin.ToString())
+                SzerepKor.Visible = true;
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)

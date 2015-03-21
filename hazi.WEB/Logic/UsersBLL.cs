@@ -26,6 +26,7 @@ namespace hazi.WEB.Logic
                 user.RoleList = new List<ListItem>();
                 user.RoleList.Add(new ListItem { Value = RegisterUserAs.Admin.ToString(), Text = RegisterUserAs.Admin.ToString() });
                 user.RoleList.Add(new ListItem { Value = RegisterUserAs.NormalUser.ToString(), Text = RegisterUserAs.NormalUser.ToString() });
+                user.RoleList.Add(new ListItem { Value = RegisterUserAs.Jovahagyok.ToString(), Text = RegisterUserAs.Jovahagyok.ToString() });
                 user.Role = RoleActions.GetRole(user.Name);                
             }
 
