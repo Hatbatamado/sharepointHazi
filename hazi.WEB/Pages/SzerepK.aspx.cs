@@ -47,13 +47,18 @@ namespace hazi.WEB.Pages
                 //magunkat nem tudjuk megváltoztatni
                 if (rowValues["Name"].ToString() != User.Identity.Name)
                 {
+                    string lofasz = rowValues["Name"].ToString();
+                    string role = rowValues["Role"].ToString();
                     if (rowValues["Role"].ToString() != ddlValue)
                         uzenet = RoleActions.ChangeRole(rowValues["Name"].ToString(), rowValues["Role"].ToString(), ddlValue);
                 }
                 else
                 {
-                    uzenet = "Saját szerepkört nem lehet változtatni!";
-                    break;
+                    if (rowValues["Role"].ToString() != ddlValue)
+                    {
+                        uzenet = "Saját szerepkört nem lehet változtatni!";
+                        break;
+                    }
                 }
             }
 
