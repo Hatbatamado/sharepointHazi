@@ -47,12 +47,14 @@ namespace hazi.WEB.Pages
                 rowValues = Utility.GetValues(Jovahagyas.Rows[i]);
 
                 string ddlSelected = (Jovahagyas.Rows[i].FindControl("StatuszDDL") as DropDownList).SelectedValue;
+                int id = Convert.ToInt32(rowValues["ID"]);
 
                 if (rowValues["JovaStatus"].ToString() != ddlSelected)
-                    JovahagyBLL.JovahagyasMentes(Convert.ToInt32(rowValues["ID"]), ddlSelected);
+                    JovahagyBLL.JovahagyasMentes(id, ddlSelected);                
             }
 
             List<UjBejelentes> lista = JovahagyBLL.GetJovahagyAll();
+            Jovahagyas.DataSource = lista;
             Jovahagyas.DataBind();
         }
     }

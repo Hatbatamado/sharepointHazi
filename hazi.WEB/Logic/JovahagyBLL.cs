@@ -128,7 +128,7 @@ namespace hazi.WEB.Logic
                     {
                         JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Jovahagyva.ToString());
                     }
-                } //TODO csak törlési kérelem
+                }
                 else
                 {
                     if (!AdminListasNezet)

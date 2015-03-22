@@ -16,6 +16,7 @@
         <ul>
             <li><a href="#tabs-1">Bejelentések (lista)</a></li>
             <li><a href="/Pages/Naptar.aspx">Bejelentések (naptár)</a></li>
+            <li><a href="/Pages/Osszegzes.aspx">Összegzés (hó)</a></li>
         </ul>
         <div id="tabs-1">
             <div>

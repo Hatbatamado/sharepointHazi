@@ -10,36 +10,33 @@
 namespace hazi.WEB.Pages {
     
     
-    public partial class OsszegzoForm {
+    public partial class Osszegzes {
         
         /// <summary>
-        /// Jovahagyas control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView Jovahagyas;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// Mentes control.
+        /// Uzenet control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Mentes;
+        protected global::System.Web.UI.WebControls.Label Uzenet;
         
         /// <summary>
-        /// Master property.
+        /// OsszegzesGV control.
         /// </summary>
         /// <remarks>
-        /// Auto-generated property.
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        public new hazi.WEB.SiteMaster Master {
-            get {
-                return ((hazi.WEB.SiteMaster)(base.Master));
-            }
-        }
+        protected global::System.Web.UI.WebControls.GridView OsszegzesGV;
     }
 }

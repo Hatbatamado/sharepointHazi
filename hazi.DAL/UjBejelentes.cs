@@ -25,6 +25,9 @@ namespace hazi.DAL
         public Ido Ido { get; set; }
         public double OsszIdo { get; set; }
         public int HanyadikHet { get; set; }
+        public double OsszRogzitet { get; set; }
+        public double OsszJovahagyott { get; set; }
+        public double OsszElutasitott { get; set; }
 
         [NotMapped]
         public List<ListItem> JovaStatuszList { get; set; }

@@ -78,18 +78,7 @@ namespace hazi.BLL
                 if (torlesStatus == string.Empty)
                     ib.Statusz = "NincsTorlesiKerelem";
                 else
-                {
-                    if (ib.Statusz != null)
-                    {
-                        string[] seged = ib.Statusz.Split('&');
-                        if (seged.Length > 1)
-                        {
-                            ib.Statusz = torlesStatus + "&" + seged[1];
-                        }
-                    }
-                    else
-                        ib.Statusz = torlesStatus;
-                }
+                    ib.Statusz = torlesStatus;          
 
                 db.SaveChanges();
             }
@@ -218,7 +207,10 @@ namespace hazi.BLL
                                             select b).Single();
                         
                         string[] seged = ib.Statusz.Split('&');
-                        ib.Statusz = ujStatus + "&" + seged[1];
+                        if (seged.Length > 1)
+                            ib.Statusz = ujStatus + "&" + seged[1];
+                        else
+                            ib.Statusz = ujStatus;
 
                         db.SaveChanges();
                     }

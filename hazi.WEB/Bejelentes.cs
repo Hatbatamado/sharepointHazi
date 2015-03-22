@@ -157,8 +157,6 @@ namespace hazi.WEB
                                     Statusz = b.Statusz,
                                 }).ToList();
 
-                        int d = 0;// Statuszok(bejelentesek);
-
                         return bejelentesek;
                     }
                 }
