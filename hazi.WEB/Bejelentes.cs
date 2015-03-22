@@ -144,7 +144,7 @@ namespace hazi.WEB
                         string segedStatus = TorlesStatus.NincsTorlesiKerelem.ToString();
                         var bejelentesek = (from b in db.IdoBejelentes1
                                 where (b.UserName == name && b.KezdetiDatum >= start
-                                && b.VegeDatum <= end) && (b.Statusz == segedStatus || b.Statusz == null)
+                                && b.VegeDatum <= end) && (b.Statusz.Contains(segedStatus) || b.Statusz == null)
                                 select new UjBejelentes
                                 {
                                     ID = b.ID,

@@ -185,7 +185,7 @@ namespace hazi.BLL
                     try
                     {
                         var torolni = (from b in db.IdoBejelentes1
-                                       where b.ID == id && b.Statusz == status
+                                       where b.ID == id && b.Statusz.Contains(status)
                                        select b).FirstOrDefault();
                         if (torolni != null)
                         {
@@ -214,10 +214,11 @@ namespace hazi.BLL
                     try
                     {
                         IdoBejelentes ib = (from b in db.IdoBejelentes1
-                                            where b.ID == id && b.Statusz == status
+                                            where b.ID == id && b.Statusz.Contains(status)
                                             select b).Single();
-
-                        ib.Statusz = ujStatus;
+                        
+                        string[] seged = ib.Statusz.Split('&');
+                        ib.Statusz = ujStatus + "&" + seged[1];
 
                         db.SaveChanges();
                     }

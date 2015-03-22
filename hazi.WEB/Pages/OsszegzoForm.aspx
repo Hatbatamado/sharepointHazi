@@ -32,7 +32,7 @@
         </Columns>
         <EmptyDataTemplate>
             Nem található elbírálandó jelentés a db-ben
-                                    <br />
+            <br />
         </EmptyDataTemplate>
     </asp:GridView>
     <asp:Button ID="Mentes" runat="server" Text="Mentes" Font-Bold="true" CssClass="Mentes" OnClick="Mentes_Click" />
