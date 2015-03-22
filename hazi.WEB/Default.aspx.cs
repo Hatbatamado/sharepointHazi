@@ -17,6 +17,7 @@ namespace hazi.WEB
     {
         private string admin = RegisterUserAs.Admin.ToString();
         private string normal = RegisterUserAs.NormalUser.ToString();
+        private string jovahagy = RegisterUserAs.Jovahagyok.ToString();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,12 +25,14 @@ namespace hazi.WEB
             {
                 if (User.Identity.IsAuthenticated)
                 {
-                    
+
                     Bejelentesek.Visible = true;
-                    bejelentesekLista.DataSource = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                    List<UjBejelentes> lista = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
                                                     User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+
+                    bejelentesekLista.DataSource = lista;
                     bejelentesekLista.DataBind();
-                    MegfeleloMezokMegjelenitese(string.Empty);                                       
+                    MegfeleloMezokMegjelenitese(string.Empty);
                 }
                 else
                 {
@@ -70,7 +73,7 @@ namespace hazi.WEB
             }
             else if (Request["__EVENTARGUMENT"] == "FilterByTorlesStatus")
             {
-                string text = (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList).SelectedValue;
+                string text = (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList).SelectedItem.Value;
 
                 List<UjBejelentes> lista;
                 if (text != "")
@@ -118,10 +121,10 @@ namespace hazi.WEB
             if (RoleActions.GetRole(User.Identity.Name) == admin)
             {
                 string sikeresTorles = string.Empty;
-                
+
                 for (int i = 0; i < bejelentesekLista.Rows.Count; i++)
                 {
-                    if ((bejelentesekLista.Rows[i].FindControl("StatusDDL")as DropDownList).
+                    if ((bejelentesekLista.Rows[i].FindControl("StatusDDL") as DropDownList).
                         SelectedValue == TorlesStatus.ElfogadottKerelem.ToString())
                     {
                         //Admin felhaszbáló által kért bejelentést töröl
@@ -129,11 +132,11 @@ namespace hazi.WEB
                         rowValues = Utility.GetValues(bejelentesekLista.Rows[i]);
 
                         int id = Convert.ToInt32(rowValues["ID"]);
-                        sikeresTorles = JogcimBLL.IdoBejelentesTorles(id, 
+                        sikeresTorles = JogcimBLL.IdoBejelentesTorles(id,
                                                     TorlesStatus.RegisztraltKerelem.ToString());
                         if (sikeresTorles != string.Empty) break;
                     }
-                    else if ((bejelentesekLista.Rows[i].FindControl("StatusDDL")as DropDownList).
+                    else if ((bejelentesekLista.Rows[i].FindControl("StatusDDL") as DropDownList).
                         SelectedValue == TorlesStatus.Torles.ToString())
                     {
                         //mivel adminként bármelyik bejelentést törölhetjük,
@@ -146,7 +149,7 @@ namespace hazi.WEB
                         sikeresTorles = JogcimBLL.IdoBejelentesTorles(id);
                         if (sikeresTorles != string.Empty) break;
                     }
-                    else if ((bejelentesekLista.Rows[i].FindControl("StatusDDL")as DropDownList).
+                    else if ((bejelentesekLista.Rows[i].FindControl("StatusDDL") as DropDownList).
                         SelectedValue == TorlesStatus.Elutasitott.ToString())
                     {
                         //törlési kérelem elutasítása
@@ -166,7 +169,7 @@ namespace hazi.WEB
                 bejelentesekLista.DataBind();
                 MegfeleloMezokMegjelenitese(sikeresTorles);
             }
-            else if (RoleActions.GetRole(User.Identity.Name) == normal)
+            else if (RoleActions.GetRole(User.Identity.Name) == normal || RoleActions.GetRole(User.Identity.Name) == jovahagy)
             {
                 //NormalUser törlésre regisztrál bejelentést
                 for (int i = 0; i < bejelentesekLista.Rows.Count; i++)
@@ -202,7 +205,7 @@ namespace hazi.WEB
                 }
                 BejelentesTorles.Text = "Mentés";
             }
-            else if (RoleActions.GetRole(User.Identity.Name) == normal)
+            else if (RoleActions.GetRole(User.Identity.Name) == normal || RoleActions.GetRole(User.Identity.Name) == jovahagy)
             {
                 for (int i = 0; i < bejelentesekLista.Rows.Count; i++)
                 {
@@ -218,8 +221,8 @@ namespace hazi.WEB
             {
                 DropDownList ddlTorles = (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList);
                 ddlTorles.Items.Add(new ListItem());
-                ddlTorles.Items.Add("Nincs törlési kérelem");
-                ddlTorles.Items.Add("Regisztrált kérelem");
+                ddlTorles.Items.Add(new ListItem() { Text = "Nincs törlési kérelem", Value = TorlesStatus.NincsTorlesiKerelem.ToString() });
+                ddlTorles.Items.Add(new ListItem() { Text = "Regisztrált kérelem", Value = TorlesStatus.RegisztraltKerelem.ToString() });
             }
 
             if (uzenet != string.Empty)

@@ -281,6 +281,10 @@ namespace hazi.WEB.Pages
             JogcimBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
                             JogcimBLL.GetIDbyName(DropDownList1.SelectedValue),
                             ujBejelentoUser, User.Identity.Name, TorlesStatus.NincsTorlesiKerelem.ToString());
+
+            //jóváhagyásos státuszok megfelelő beállítása:
+            JovahagyBLL.GetJovahagyAll();
+
             mentesLabel.Visible = true;
             mentesLabel.Text = "A mentés sikeres!";
 

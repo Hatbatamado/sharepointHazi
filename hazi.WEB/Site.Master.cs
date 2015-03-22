@@ -81,7 +81,12 @@ namespace hazi.WEB
         protected void Page_Load(object sender, EventArgs e)
         {
             if (RoleActions.GetRole(HttpContext.Current.User.Identity.Name) == RegisterUserAs.Admin.ToString())
+            {
                 SzerepKor.Visible = true;
+                OsszegzoForm.Visible = true;
+            }
+            else if (RoleActions.GetRole(HttpContext.Current.User.Identity.Name) == RegisterUserAs.Jovahagyok.ToString())
+                OsszegzoForm.Visible = true;
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)

@@ -8,7 +8,6 @@
         .Torles {
             float: right;
         }
-
         .linkek {
             text-decoration: underline;
         }
@@ -47,7 +46,7 @@
                                         <HeaderTemplate>
                                             <asp:Label ID="jogcimLabel" runat="server" Text="Jogcím"></asp:Label>
                                             <br />
-                                            <input id="jogcimFilter" type="text" runat="server" onkeyup="FilterByJogcim();" style="width: 150px; color:black;" />
+                                            <input id="jogcimFilter" type="text" runat="server" onkeyup="FilterByJogcim();" style="width: 100px; color:black;" />
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="jogcim" runat="server" Text='<%# Eval("JogcimNev")%>'></asp:Label>
@@ -57,7 +56,7 @@
                                         <HeaderTemplate>
                                             <asp:Label ID="felhasznaloLabel" runat="server" Text="Felhasználó"></asp:Label>
                                             <br />
-                                           <input id="usernameFilter" type="text" runat="server" onkeyup="FilterByFelhasznalo();" style="width: 150px; color:black;" />
+                                           <input id="usernameFilter" type="text" runat="server" onkeyup="FilterByFelhasznalo();" style="width: 100px; color:black;" />
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="username" runat="server" Text='<%# Eval("UserName")%>'></asp:Label>
@@ -65,26 +64,28 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField>
                                         <HeaderTemplate>
-                                            <asp:Label ID="lasteditLabel" runat="server" Text="Utoljára Módosítva"></asp:Label>
+                                            <asp:Label ID="lasteditLabel" runat="server" Text="Utolsó módosító"></asp:Label>
                                             <br />
-                                            <input id="lasteditFilter" type="text" runat="server" onkeyup="FilterByLastedit();" style="width: 150px; color:black;" />
+                                            <input id="lasteditFilter" type="text" runat="server" onkeyup="FilterByLastedit();" style="width: 100px; color:black;" />
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="lastedit" runat="server" Text='<%# Eval("LastEdit")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <asp:BoundField DataField="LastEditTime" HeaderText="Utoljára módosítva" />
+                                    <asp:BoundField DataField="JovaStatus" HeaderText="Státusz" />
                                     <asp:TemplateField>
                                         <HeaderTemplate>
                                             <asp:Label ID="TorlesLabel" runat="server" Text="Törlés"></asp:Label>
                                             <br />
-                                            <asp:DropDownList ID="DDLTorles" runat="server" ForeColor="Black" onchange="FilterByTorlesStatus();"></asp:DropDownList>
+                                            <asp:DropDownList ID="DDLTorles" runat="server" ForeColor="Black" onchange="FilterByTorlesStatus();" Width="100px"></asp:DropDownList>
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:CheckBox ID="Remove" runat="server" Visible="false"></asp:CheckBox>
                                             <asp:DropDownList runat="server" ID="StatusDDL"
                                                 SelectedValue='<%# Eval("TorlesStatus") %>'
-                                                DataSource='<%# Eval("StatusList") %>'
-                                                DataTextField="Text" DataValueField="Value" Visible="false">
+                                                DataSource='<%# Eval("TorlesStatuszList") %>'
+                                                DataTextField="Text" DataValueField="Value" Visible="false" Width="100px">
                                             </asp:DropDownList>
                                         </ItemTemplate>
                                     </asp:TemplateField>
@@ -112,7 +113,6 @@
                 }
             });
         });
-
         function FilterByJogcim() {
             __doPostBack('<%= MainUpdatePanel.ClientID %>', 'FilterByJogcim');
         }

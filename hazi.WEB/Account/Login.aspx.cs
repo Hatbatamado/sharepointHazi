@@ -53,7 +53,12 @@ namespace hazi.WEB.Account
             helloLabel.Text = "Hello " + User.Identity.Name;
             //oldal betöltése hiánya miatt nem látszódik fent a link az oldalra
             if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+            {
                 SzerepB.Visible = true;
+                OsszegB.Visible = true;
+            }
+            else if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Jovahagyok.ToString())
+                OsszegB.Visible = true;
         }
 
         private void SikerKilep()
@@ -62,7 +67,12 @@ namespace hazi.WEB.Account
             SucLogin.Visible = false;
             //oldal betöltése hiánya miatt nem látszódik fent a link az oldalra
             if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+            {
                 SzerepB.Visible = false;
+                OsszegB.Visible = false;
+            }
+            else if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Jovahagyok.ToString())
+                OsszegB.Visible = false;
         }
 
         protected void LogIn(object sender, EventArgs e)
@@ -102,6 +112,11 @@ namespace hazi.WEB.Account
         protected void SzerepB_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Pages/SzerepK");
+        }
+
+        protected void OsszegB_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Pages/OsszegzoForm");
         }
     }
 }

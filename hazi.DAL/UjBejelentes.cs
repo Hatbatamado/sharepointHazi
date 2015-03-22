@@ -17,10 +17,18 @@ namespace hazi.DAL
         public int JogcimID { get; set; }
         public string UserName { get; set; }
         public string LastEdit { get; set; }
+        public System.DateTime LastEditTime { get; set; }
         public string JogcimNev { get; set; }
         public string TorlesStatus { get; set; }
+        public string JovaStatus { get; set; }
+        public string Statusz { get; set; }
+        public Ido Ido { get; set; }
+        public double OsszIdo { get; set; }
+        public int HanyadikHet { get; set; }
 
         [NotMapped]
-        public List<ListItem> StatusList { get; set; }
+        public List<ListItem> JovaStatuszList { get; set; }
+        [NotMapped]
+        public List<ListItem> TorlesStatuszList { get; set; }
     }
 }

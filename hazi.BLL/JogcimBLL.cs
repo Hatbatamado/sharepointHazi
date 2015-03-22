@@ -70,6 +70,7 @@ namespace hazi.BLL
                 if (UserName != "")
                     ib.UserName = UserName;
                 ib.UtolsoModosito = LastEditUser;
+                ib.UtolsoModositas = DateTime.Now;
 
                 if (ID == null)
                     db.IdoBejelentes1.Add(ib);
@@ -77,9 +78,37 @@ namespace hazi.BLL
                 if (torlesStatus == string.Empty)
                     ib.Statusz = "NincsTorlesiKerelem";
                 else
-                    ib.Statusz = torlesStatus;
-
+                {
+                    if (ib.Statusz != null)
+                    {
+                        string[] seged = ib.Statusz.Split('&');
+                        if (seged.Length > 1)
+                        {
+                            ib.Statusz = torlesStatus + "&" + seged[1];
+                        }
+                    }
+                    else
+                        ib.Statusz = torlesStatus;
+                }
+                DefaultDelete();
                 db.SaveChanges();
+            }
+        }
+
+        public static void DefaultDelete()
+        {
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                try
+                {
+                    var query = (from b in db.IdoBejelentes1
+                                 where b.ID == 0
+                                 select b).Single();
+
+                    db.IdoBejelentes1.Remove(query);
+                    db.SaveChanges();
+                }
+                catch (Exception) { }
             }
         }
 
