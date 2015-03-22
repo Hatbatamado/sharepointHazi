@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hazi.WEB.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,9 +14,7 @@ namespace hazi.WEB.Pages
         {
             if (!User.Identity.IsAuthenticated)
             {
-                Response.Clear();
-                Response.StatusCode = 404;
-                Response.End();
+                Error404.HibaDobas(Response);
             }
         }
     }

@@ -64,15 +64,15 @@ namespace hazi.WEB.Pages
                     {
                         Bejelentes.UjBejelentes = false;
                         Id = Int32.Parse(Request.QueryString["ID"]);
-                        IdoBejelentes ib = JogcimBLL.GetIdoBejelentesById(Id.Value);
+                        IdoBejelentes ib;
+                        if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+                            ib = JogcimBLL.GetIdoBejelentesById(Id.Value, true, string.Empty);
+                        else
+                            ib = JogcimBLL.GetIdoBejelentesById(Id.Value, false, User.Identity.Name);
                         if (ib == null)
                             HibaUzenetFelhasznalonak(hibak.IbNincsDBben);
-                        else if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.NormalUser.ToString() &&
-                            ib.UserName == User.Identity.Name ||
-                            RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
-                                AdatokFeltolteseIdAlapjan(ib);
                         else
-                            HibaUzenetFelhasznalonak(hibak.NemEngedelyezettEleres);
+                            AdatokFeltolteseIdAlapjan(ib);
                     }
                     else
                     {
@@ -191,16 +191,13 @@ namespace hazi.WEB.Pages
                 case hibak.KezdetiDatumRegebbiMainal:
                     hibaUzenet = "Múltbeli folyamat rögzítése nem engedélyezett! A kiválasztott dátum régebbi a mai dátumnál, így a mentés sikertelen!";
                     break;
-                case hibak.NemEngedelyezettEleres:
-                    hibaUzenet = "Az oldal megtekintéséhez nincs jogosultsága";
-                    break;
                 //ezeknek sose szabadna lefutnia
                 case hibak.Ismeretlen:
                     hibaUzenet = "Ismeretlen hiba történt, így a mentés sikertelen! Kérem próbálja újra!";
                     break;
                 case hibak.IbNincsDBben:
                     ElemekElrejtese();
-                    hibaUzenet = "A kiválasztott elem nem található a db-ben!";
+                    hibaUzenet = "A kiválasztott elem nem található a db-ben! Vagy nincs megtekintési joga a megadott bejelentésehez!";
                     break;
             }
             Master.Uzenet.Visible = true;

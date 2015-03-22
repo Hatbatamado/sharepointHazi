@@ -24,9 +24,7 @@ namespace hazi.WEB.Pages
                 }
                 else
                 {
-                    Response.Clear();
-                    Response.StatusCode = 404;
-                    Response.End();
+                    Error404.HibaDobas(Response);
                 }
             }
         }

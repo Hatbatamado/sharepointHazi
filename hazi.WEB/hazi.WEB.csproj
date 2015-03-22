@@ -255,6 +255,7 @@
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Bejelentes.cs" />
+    <Compile Include="Logic\Error404.cs" />
     <Compile Include="Logic\JovahagyBLL.cs" />
     <Compile Include="Logic\RoleActions.cs" />
     <Compile Include="Logic\Statusz.cs" />

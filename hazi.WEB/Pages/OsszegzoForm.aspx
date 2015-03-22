@@ -10,11 +10,12 @@
         CellPadding="4" ItemType="hazi.DAL.UjBejelentes" HeaderStyle-BackColor="DarkBlue"
         HeaderStyle-ForeColor="White" CssClass="table table-bordered" Visible="false">
         <Columns>
-            <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
+            <asp:BoundField DataField="ID" HeaderText="ID" />
+            <asp:BoundField DataField="HanyadikHet" HeaderText="Hét" SortExpression="HanyadikHet" />
             <asp:BoundField DataField="UserName" HeaderText="Felhasználó" />
             <asp:BoundField DataField="JogcimNev" HeaderText="Jogcím" />
             <asp:BoundField DataField="Ido" HeaderText="Idő" />
-            <asp:BoundField DataField="OsszIdo" HeaderText="Össz idő / hét" />
+            <asp:BoundField DataField="OsszIdo" HeaderText="Jelenlét idő / hét" />
             <asp:BoundField DataField="JovaStatus" HeaderText="Státusz" />
             <asp:TemplateField>
                 <HeaderTemplate>

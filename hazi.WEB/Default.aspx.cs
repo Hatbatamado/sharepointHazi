@@ -198,26 +198,50 @@ namespace hazi.WEB
             //emiatt az egész alkalmazásban lecseréltem
             if (RoleActions.GetRole(User.Identity.Name) == admin)
             {
-                for (int i = 0; i < bejelentesekLista.Rows.Count; i++)
+                if (bejelentesekLista.Rows.Count > 0)
                 {
-                    bejelentesekLista.Rows[i].FindControl("Remove").Visible = false;
-                    bejelentesekLista.Rows[i].FindControl("StatusDDL").Visible = true;
+                    for (int i = 0; i < bejelentesekLista.Rows.Count; i++)
+                    {
+                        bejelentesekLista.Rows[i].FindControl("Remove").Visible = false;
+                        bejelentesekLista.Rows[i].FindControl("StatusDDL").Visible = true;
+                    }
+                    BejelentesTorles.Text = "Mentés";
                 }
-                BejelentesTorles.Text = "Mentés";
+                else
+                    BejelentesTorles.Visible = false;
             }
             else if (RoleActions.GetRole(User.Identity.Name) == normal || RoleActions.GetRole(User.Identity.Name) == jovahagy)
             {
-                for (int i = 0; i < bejelentesekLista.Rows.Count; i++)
+                if (bejelentesekLista.HeaderRow != null)
                 {
-                    bejelentesekLista.Rows[i].FindControl("Remove").Visible = true;
-                    bejelentesekLista.Rows[i].FindControl("StatusDDL").Visible = false;
+                    if (bejelentesekLista.Rows.Count != 0)
+                    {
+                        for (int i = 0; i < bejelentesekLista.Rows.Count; i++)
+                        {
+                            bejelentesekLista.Rows[i].FindControl("Remove").Visible = true;
+                            bejelentesekLista.Rows[i].FindControl("StatusDDL").Visible = false;
+                        }
+
+                        (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList).Visible = false;
+                        (bejelentesekLista.HeaderRow.FindControl("lasteditFilter") as System.Web.UI.HtmlControls.HtmlInputText).Visible = false;
+                        (bejelentesekLista.HeaderRow.FindControl("usernameFilter") as System.Web.UI.HtmlControls.HtmlInputText).Visible = false;
+                        (bejelentesekLista.HeaderRow.FindControl("jogcimFilter") as System.Web.UI.HtmlControls.HtmlInputText).Visible = false;
+
+                        BejelentesTorles.Visible = true;
+                    }
+                    else
+                        BejelentesTorles.Visible = false;
                 }
-                (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList).Visible = false;
-                (bejelentesekLista.HeaderRow.FindControl("lasteditFilter") as System.Web.UI.HtmlControls.HtmlInputText).Visible = false;
-                (bejelentesekLista.HeaderRow.FindControl("usernameFilter") as System.Web.UI.HtmlControls.HtmlInputText).Visible = false;
-                (bejelentesekLista.HeaderRow.FindControl("jogcimFilter") as System.Web.UI.HtmlControls.HtmlInputText).Visible = false;
+                else
+                    BejelentesTorles.Visible = false;
             }
-            if ((bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList).Items.Count == 0)
+            Control DDLTorles = null;
+            try
+            {
+                DDLTorles = bejelentesekLista.HeaderRow.FindControl("DDLTorles");
+            }
+            catch (NullReferenceException) { }
+            if (DDLTorles != null && (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList).Items.Count == 0)
             {
                 DropDownList ddlTorles = (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList);
                 ddlTorles.Items.Add(new ListItem());

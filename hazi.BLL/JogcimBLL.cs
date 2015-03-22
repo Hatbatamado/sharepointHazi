@@ -90,25 +90,8 @@ namespace hazi.BLL
                     else
                         ib.Statusz = torlesStatus;
                 }
-                DefaultDelete();
+
                 db.SaveChanges();
-            }
-        }
-
-        public static void DefaultDelete()
-        {
-            using (hazi2Entities db = new hazi2Entities())
-            {
-                try
-                {
-                    var query = (from b in db.IdoBejelentes1
-                                 where b.ID == 0
-                                 select b).Single();
-
-                    db.IdoBejelentes1.Remove(query);
-                    db.SaveChanges();
-                }
-                catch (Exception) { }
             }
         }
 
@@ -125,22 +108,40 @@ namespace hazi.BLL
         }
 
         //időbejelentések kiolvasása DB-ből
-        public static IdoBejelentes GetIdoBejelentesById(int? id)
+        public static IdoBejelentes GetIdoBejelentesById(int? id, bool mind, string name)
         {
             if (id.HasValue && id > 0)
             {
                 using(hazi2Entities db = new hazi2Entities())
                 {
-                    try
+                    if (mind)
                     {
-                        var bej = (from b in db.IdoBejelentes1
-                                   where b.ID == id
-                                   select b).Single();
-                        return bej;
+                        try
+                        {
+                            var bej = (from b in db.IdoBejelentes1
+                                       where b.ID == id
+                                       select b).Single();
+                            return bej;
+                        }
+                        catch (Exception)
+                        {
+                            return null;
+                        }
                     }
-                    catch (Exception)
+                    else
                     {
-                        return null;
+                        try
+                        {
+                            var bej = (from b in db.IdoBejelentes1
+                                       where b.ID == id &&
+                                       !b.Statusz.Contains("RegisztraltKerelem") && b.UserName == name
+                                       select b).Single();
+                            return bej;
+                        }
+                        catch (Exception)
+                        {
+                            return null;
+                        }
                     }
                 }
             }

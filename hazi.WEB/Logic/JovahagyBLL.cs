@@ -15,7 +15,9 @@ namespace hazi.WEB.Logic
             List<UjBejelentes> lista;
             using (hazi2Entities db = new hazi2Entities())
             {
+
                 lista = (from b in db.IdoBejelentes1
+                         where !b.Statusz.Contains("RegisztraltKerelem")
                          select new UjBejelentes
                          {
                              ID = b.ID,
@@ -28,6 +30,7 @@ namespace hazi.WEB.Logic
                              LastEditTime = b.UtolsoModositas.HasValue ? b.UtolsoModositas.Value : DateTime.MinValue,
                              JogcimID = b.JogcimID,
                          }).ToList();
+
             }
 
             foreach (UjBejelentes item in lista)
@@ -48,7 +51,7 @@ namespace hazi.WEB.Logic
 
             UsersOsszIdohoz(lista);
 
-            StatuszBeallitasok(lista);
+            StatuszBeallitasok(lista, false);
 
             return lista;
         }
@@ -67,17 +70,17 @@ namespace hazi.WEB.Logic
             return string.Empty;
         }
 
-        public static void StatuszBeallitasok(List<UjBejelentes> lista)
+        public static void StatuszBeallitasok(List<UjBejelentes> lista, bool AdminListasNezet)
         {
             int i = 0;
             while (i < lista.Count && lista.Count != 0)
             {
-                StatuszVizsgalat(lista[i], lista, ref i);
+                StatuszVizsgalat(lista[i], lista, ref i, AdminListasNezet);
                 i++;
             }
         }
 
-        private static void StatuszVizsgalat(UjBejelentes item, List<UjBejelentes> lista, ref int i)
+        private static void StatuszVizsgalat(UjBejelentes item, List<UjBejelentes> lista, ref int i, bool AdminListasNezet)
         {
             string[] seged;
             if (item.Statusz != null)
@@ -92,33 +95,52 @@ namespace hazi.WEB.Logic
                 {
                     if (item.JogcimNev == "Rendes szabadság")
                     {
-                        UjStatusz(item.ID, seged[0] + "&" + JovaHagyasStatus.Rogzitve.ToString());
-                        item.Statusz = JovaHagyasStatus.Rogzitve.ToString();
+                        JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Rogzitve.ToString());                      
                     }
                     else if (item.JogcimNev == "Jelenlét")
                     {
                         if (item.OsszIdo < 40)
                         {
-                            UjStatusz(item.ID, seged[0] + "&" + JovaHagyasStatus.Jovahagyva.ToString());
-                            item.Statusz = JovaHagyasStatus.Jovahagyva.ToString();
+                            if (item.OsszIdo != 0)
+                            {
+                                JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Jovahagyva.ToString());
+                            }
+                            else
+                            {
+                                foreach (UjBejelentes ujb in lista)
+                                {
+                                    if (item.UserName == ujb.UserName)
+                                        ujb.Ido = new Ido(ujb.KezdetiDatum, ujb.VegeDatum);
+                                }
+                                OsszIdo(lista, item.UserName);
+                                if (item.OsszIdo < 40)
+                                    JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Jovahagyva.ToString());
+                                else
+                                    JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Rogzitve.ToString());
+                            }
                         }
                         else
                         {
-                            UjStatusz(item.ID, seged[0] + "&" + JovaHagyasStatus.Rogzitve.ToString());
-                            item.Statusz = JovaHagyasStatus.Rogzitve.ToString();
+                            JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Rogzitve.ToString());
                         }
                     }
                     else
                     {
-                        UjStatusz(item.ID, seged[0] + "&" + JovaHagyasStatus.Jovahagyva.ToString());
-                        item.Statusz = JovaHagyasStatus.Jovahagyva.ToString();
+                        JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Jovahagyva.ToString());
                     }
                 } //TODO csak törlési kérelem
                 else
                 {
-                    lista.Remove(item);
-                    if (lista.Count != 0)
-                        i--;
+                    if (!AdminListasNezet)
+                    {
+                        lista.Remove(item);
+                        if (lista.Count != 0 && i != lista.Count)
+                            i--;
+                    }
+                    else
+                    {
+                        item.TorlesStatus = seged[0];
+                    }
                 }
             }
             else //ha van 2 fajta státusz
@@ -127,7 +149,16 @@ namespace hazi.WEB.Logic
                 {
                     item.JovaStatus = seged[1];
                 }
+                item.TorlesStatus = seged[0];
             }
+        }
+
+        private static void JovahagyStatuszBeallit(UjBejelentes item, string torlesStatusz, string jovaStatusz)
+        {
+            item.Statusz = torlesStatusz + "&" + jovaStatusz;
+            UjStatusz(item.ID, item.Statusz);
+            item.TorlesStatus = torlesStatusz;
+            item.JovaStatus = jovaStatusz;
         }
 
         private static void UjStatusz(int? id, string ujStatusz)

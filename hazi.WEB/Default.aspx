@@ -26,7 +26,7 @@
                     <ContentTemplate>
                         <asp:PlaceHolder runat="server" ID="Bejelentesek" Visible="false">
                             <asp:GridView ID="bejelentesekLista" runat="server" AutoGenerateColumns="False"
-                                ShowFooter="True" GridLines="Vertical" CellPadding="4" ItemType="hazi.DAL.UjBejelentes"
+                                GridLines="Vertical" CellPadding="4" ItemType="hazi.DAL.UjBejelentes"
                                 HeaderStyle-BackColor="DarkBlue" HeaderStyle-ForeColor="White" CssClass="table table-bordered">
                                 <EmptyDataTemplate>
                                     Nem található (a szűrő által megadott) bejelentés a db-ben
