@@ -29,17 +29,5 @@ namespace hazi.WEB.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Mentes;
-        
-        /// <summary>
-        /// Master property.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated property.
-        /// </remarks>
-        public new hazi.WEB.SiteMaster Master {
-            get {
-                return ((hazi.WEB.SiteMaster)(base.Master));
-            }
-        }
     }
 }

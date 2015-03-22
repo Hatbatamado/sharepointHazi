@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="OsszegzoForm.aspx.cs" Inherits="hazi.WEB.Pages.OsszegzoForm" %>
-<%@ MasterType VirtualPath="~/Site.Master" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <style>
         .Mentes {
