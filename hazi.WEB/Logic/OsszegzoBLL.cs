@@ -83,18 +83,10 @@ namespace hazi.WEB.Logic
                     elem.JovaStatus = seged[1];
                 }
 
-                try
+                for (int i = 0; i < jogcimList.Count; i++)
                 {
-                    if (elem.JogcimNev == jogcimList[0].JogcimNev)
-                        Osszeadas(elem, jogcimList, 0);
-                    else if (elem.JogcimNev == jogcimList[1].JogcimNev)
-                        Osszeadas(elem, jogcimList, 1);
-                    else if (elem.JogcimNev == jogcimList[2].JogcimNev)
-                        Osszeadas(elem, jogcimList, 2);
-                    else if (elem.JogcimNev == jogcimList[3].JogcimNev)
-                        Osszeadas(elem, jogcimList, 3);
+                    Osszeadas(elem, jogcimList, i);
                 }
-                catch (Exception) { }
             }
 
             return jogcimList;
