@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="9b39ad45513f42cf9eccb033911ee025" Name="Diagram1">
         <EntityTypeShape EntityType="hazi2Model.Jogcim" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="hazi2Model.IdoBejelentes" Width="1.5" PointX="3.75" PointY="1.25" />
+        <EntityTypeShape EntityType="hazi2Model.IdoBejelentes" Width="1.5" PointX="3.5" PointY="1" />
         <AssociationConnector Association="hazi2Model.FK_IdoBejelentes_Jogcim" />
       </Diagram>
     </edmx:Diagrams>

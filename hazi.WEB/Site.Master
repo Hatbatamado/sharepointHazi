@@ -55,12 +55,10 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <%--<li><a runat="server" href="~/">Home</a></li>--%>
                         <li><a runat="server" href="~/Pages/About">About</a></li>
                         <li><a runat="server" href="~/Pages/Contact">Contact</a></li>
-                        <li><a runat="server" href="~/Pages/SzerepK" id="SzerepKor" visible="false">Szerepkörök</a></li>
+                        <li><a runat="server" href="~/Pages/AdminPage" id="AdminPage" visible="false">Admin oldal</a></li>
                         <li><a runat="server" href="~/Pages/OsszegzoForm" id="OsszegzoForm" visible="false">Jóváhagyások</a></li>
-                        <%--<li><a runat="server" href="~/Pages/Bejelento">Bejelentő</a></li>--%>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>

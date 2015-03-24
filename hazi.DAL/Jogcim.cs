@@ -21,6 +21,7 @@ namespace hazi.DAL
     
         public int ID { get; set; }
         public string Cim { get; set; }
+        public Nullable<bool> Inaktiv { get; set; }
     
         public virtual ICollection<IdoBejelentes> IdoBejelentes { get; set; }
     }

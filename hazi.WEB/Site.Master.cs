@@ -82,7 +82,7 @@ namespace hazi.WEB
         {
             if (RoleActions.GetRole(HttpContext.Current.User.Identity.Name) == RegisterUserAs.Admin.ToString())
             {
-                SzerepKor.Visible = true;
+                AdminPage.Visible = true;
                 OsszegzoForm.Visible = true;
             }
             else if (RoleActions.GetRole(HttpContext.Current.User.Identity.Name) == RegisterUserAs.Jovahagyok.ToString())

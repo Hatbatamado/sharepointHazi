@@ -13,13 +13,13 @@ namespace hazi.WEB {
     public partial class SiteMaster {
         
         /// <summary>
-        /// SzerepKor control.
+        /// AdminPage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor SzerepKor;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor AdminPage;
         
         /// <summary>
         /// OsszegzoForm control.

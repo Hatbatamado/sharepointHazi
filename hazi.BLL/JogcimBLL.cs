@@ -15,13 +15,14 @@ namespace hazi.BLL
             List<Jogcim> jogcimek = new List<Jogcim>();
             using(hazi2Entities db = new hazi2Entities())
             {
-                var jog = (from j in db.Jogcims
-                           orderby j.ID
-                           select j);
+                jogcimek = (from j in db.Jogcims
+                            orderby j.ID
+                            select j).ToList();
 
-                foreach (var item in jog)
+                foreach (var item in jogcimek)
                 {
-                    jogcimek.Add(item);
+                    if (item.Inaktiv == null)
+                        item.Inaktiv = false;
                 }
                 return jogcimek;
             }
@@ -244,6 +245,25 @@ namespace hazi.BLL
                     {
                         return;
                     }
+                }
+            }
+        }
+
+        public static void JogcimMentes(int? id, string nev, bool inaktiv)
+        {
+            if (id.HasValue && id > 0)
+            {
+                using(hazi2Entities db = new hazi2Entities())
+                {
+                    Jogcim jogcim = (from j in db.Jogcims
+                                     where j.ID == id
+                                     select j).Single();
+                    if (nev != string.Empty)
+                        jogcim.Cim = nev;
+
+                    jogcim.Inaktiv = inaktiv;
+
+                    db.SaveChanges();
                 }
             }
         }

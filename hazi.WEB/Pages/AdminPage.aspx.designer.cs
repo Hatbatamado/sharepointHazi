@@ -10,7 +10,16 @@
 namespace hazi.WEB.Pages {
     
     
-    public partial class SzerepK {
+    public partial class AdminPage {
+        
+        /// <summary>
+        /// HiddenField control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HiddenField;
         
         /// <summary>
         /// Felhasznalok control.
@@ -20,6 +29,24 @@ namespace hazi.WEB.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView Felhasznalok;
+        
+        /// <summary>
+        /// UpdatePanelJogcim control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelJogcim;
+        
+        /// <summary>
+        /// JogcimekGV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView JogcimekGV;
         
         /// <summary>
         /// Mentes control.
