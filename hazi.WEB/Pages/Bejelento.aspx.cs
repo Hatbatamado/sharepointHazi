@@ -275,9 +275,15 @@ namespace hazi.WEB.Pages
                 ujBejelentoUser = User.Identity.Name;
             else
                 ujBejelentoUser = "";
-            JogcimBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
+            string uzenet = JogcimBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
                             JogcimBLL.GetIDbyName(DropDownList1.SelectedValue),
                             ujBejelentoUser, User.Identity.Name, TorlesStatus.NincsTorlesiKerelem.ToString());
+            if (uzenet != string.Empty)
+            {
+                Master.Uzenet.Visible = true;
+                Master.Uzenet.Text = uzenet;
+                return;
+            }
 
             //jóváhagyásos státuszok megfelelő beállítása:
             JovahagyBLL.GetJovahagyAll();

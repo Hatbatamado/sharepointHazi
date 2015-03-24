@@ -10,11 +10,13 @@
 <body>
     <form id="form1" runat="server">
         <div id="calendar"></div>
+        <div id="dialog"></div>
     </form>
 </body>
 <script src='/Scripts/moment.min.js'></script>
 <script src='/Scripts/fullcalendar.min.js'></script>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
     $('#calendar').fullCalendar({
         events: function (start, end, timezone, callback) {
@@ -31,6 +33,14 @@
                     callback(events);
                 }
             });
+        },
+        eventClick: function (calEvent, jsEvent, view) {
+            var dUrl = "/Pages/BejelentesNaptar.aspx?id=" + calEvent.id;
+            $("#dialog").load(dUrl).dialog({
+                modal: true,
+                width: 925,
+                height: 250,
+            });
         }
     });
 
@@ -40,7 +50,8 @@
                 title: this.title,
                 start: this.start,
                 end: this.end,
-                color: this.color
+                color: this.color,
+                id: this.id
             });
         });
     }

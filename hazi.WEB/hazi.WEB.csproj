@@ -152,6 +152,7 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="Pages\AdminPage.aspx" />
+    <Content Include="Pages\BejelentesNaptar.aspx" />
     <Content Include="Pages\Bejelento.aspx" />
     <Content Include="Pages\Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -280,6 +281,13 @@
     </Compile>
     <Compile Include="Pages\AdminPage.aspx.designer.cs">
       <DependentUpon>AdminPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BejelentesNaptar.aspx.cs">
+      <DependentUpon>BejelentesNaptar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\BejelentesNaptar.aspx.designer.cs">
+      <DependentUpon>BejelentesNaptar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Bejelento.aspx.cs">
       <DependentUpon>Bejelento.aspx</DependentUpon>

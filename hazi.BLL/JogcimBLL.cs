@@ -56,7 +56,7 @@ namespace hazi.BLL
         }
 
         //db-be mentés
-        public static void IdoBejelentesMentes(int? ID, DateTime Kezdeti, DateTime Vege,
+        public static string IdoBejelentesMentes(int? ID, DateTime Kezdeti, DateTime Vege,
             int JogcimId, string UserName, string LastEditUser, string torlesStatus)
         {
             using (hazi2Entities db = new hazi2Entities())
@@ -70,6 +70,8 @@ namespace hazi.BLL
                           where b.ID == ID
                           select b).Single();
                 }
+                if (ib.Jogcim.Inaktiv == true)
+                    return "A jogcím amire elmentette a bejelentését ezelőtt megváltozott! Így a mentési joga ennél a bejelentésnél elveszett! Csak megtekintési joga van!";
 
                 ib.KezdetiDatum = Kezdeti;
                 ib.VegeDatum = Vege;
@@ -91,6 +93,7 @@ namespace hazi.BLL
 
                 db.SaveChanges();
             }
+            return string.Empty;
         }
 
         //DDL-be kiválasztott eleme ID-je
@@ -103,6 +106,60 @@ namespace hazi.BLL
                            select b).Single();
                 return jog.ID;
             }
+        }
+
+        public static List<UjBejelentes> GetIdoBejelentesById(int? id, string name, bool admin)
+        {
+            List<UjBejelentes> bejelentesek = new List<UjBejelentes>();
+
+            if (id.HasValue && id > 0)
+            {
+                using (hazi2Entities db = new hazi2Entities())
+                {
+                    if (admin == false) //nem admin
+                    {
+                        bejelentesek = (from b in db.IdoBejelentes1
+                                        where b.ID == id && b.UserName == name
+                                        select new UjBejelentes
+                                        {
+                                            ID = b.ID,
+                                            KezdetiDatum = b.KezdetiDatum,
+                                            VegeDatum = b.VegeDatum,
+                                            LastEdit = b.UtolsoModosito,
+                                            LastEditTime = b.UtolsoModositas.HasValue ?
+                                                     b.UtolsoModositas.Value : DateTime.MinValue,
+                                            JogcimNev = b.Jogcim.Cim,
+                                            Statusz = b.Statusz
+                                        }).ToList();
+
+                    }
+                    else //admin
+                    {
+                        bejelentesek = (from b in db.IdoBejelentes1
+                                        where b.ID == id
+                                        select new UjBejelentes
+                                        {
+                                            ID = b.ID,
+                                            KezdetiDatum = b.KezdetiDatum,
+                                            VegeDatum = b.VegeDatum,
+                                            LastEdit = b.UtolsoModosito,
+                                            LastEditTime = b.UtolsoModositas.HasValue ?
+                                                     b.UtolsoModositas.Value : DateTime.MinValue,
+                                            JogcimNev = b.Jogcim.Cim,
+                                            Statusz = b.Statusz
+                                        }).ToList();
+                    }
+                }
+
+                foreach (var item in bejelentesek)
+                {
+                    string[] seged = item.Statusz.Split('&');
+                    if (seged.Length > 1)
+                        item.JovaStatus = seged[1];
+                }
+            }
+
+            return bejelentesek;
         }
 
         //időbejelentések kiolvasása DB-ből
@@ -132,8 +189,7 @@ namespace hazi.BLL
                         {
                             var bej = (from b in db.IdoBejelentes1
                                        where b.ID == id &&
-                                       !b.Statusz.Contains("RegisztraltKerelem") && b.UserName == name &&
-                                       b.Jogcim.Inaktiv == false
+                                       !b.Statusz.Contains("RegisztraltKerelem") && b.UserName == name
                                        select b).Single();
                             return bej;
                         }
