@@ -92,7 +92,7 @@ namespace hazi.WEB.Pages
         //DDL feltöltése jogcímekkel
         private void DropDownListFeltoltes()
         {
-            List<Jogcim> jogcimek = JogcimBLL.GetJogcimek();
+            List<Jogcim> jogcimek = JogcimBLL.GetJogcimek(false);
             foreach (var item in jogcimek)
             {
                 DropDownList1.Items.Add(item.Cim);

@@ -10,14 +10,22 @@ namespace hazi.BLL
     public class JogcimBLL
     {
         //jogcimek kiolvasása db-ből
-        public static List<Jogcim> GetJogcimek()
+        public static List<Jogcim> GetJogcimek(bool all)
         {
             List<Jogcim> jogcimek = new List<Jogcim>();
             using(hazi2Entities db = new hazi2Entities())
             {
-                jogcimek = (from j in db.Jogcims
-                            orderby j.ID
-                            select j).ToList();
+                if (all)
+                {
+                    jogcimek = (from j in db.Jogcims
+                                select j).ToList();
+                }
+                else
+                {
+                    jogcimek = (from j in db.Jogcims
+                                where j.Inaktiv == false
+                                select j).ToList();
+                }
 
                 foreach (var item in jogcimek)
                 {
@@ -124,7 +132,8 @@ namespace hazi.BLL
                         {
                             var bej = (from b in db.IdoBejelentes1
                                        where b.ID == id &&
-                                       !b.Statusz.Contains("RegisztraltKerelem") && b.UserName == name
+                                       !b.Statusz.Contains("RegisztraltKerelem") && b.UserName == name &&
+                                       b.Jogcim.Inaktiv == false
                                        select b).Single();
                             return bej;
                         }

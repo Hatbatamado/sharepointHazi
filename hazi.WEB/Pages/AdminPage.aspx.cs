@@ -36,7 +36,7 @@ namespace hazi.WEB.Pages
             }
             else if (Request["__EVENTARGUMENT"] == "Jogcim")
             {
-                List<Jogcim> lista = JogcimBLL.GetJogcimek();
+                List<Jogcim> lista = JogcimBLL.GetJogcimek(true);
                 CheckBoxCheck(lista);
                 JogcimekGV.DataSource = lista;
                 JogcimekGV.DataBind();
