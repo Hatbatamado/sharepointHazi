@@ -18,25 +18,9 @@ namespace hazi.WEB
         private string admin = RegisterUserAs.Admin.ToString();
         private string normal = RegisterUserAs.NormalUser.ToString();
         private string jovahagy = RegisterUserAs.Jovahagyok.ToString();
-        
-        hibak hiba = hibak.nincsHiba;
-        
-        public int? Id
-        {
-            get
-            {
-                return (int?)ViewState["Id"];
-            }
-            set
-            {
-                ViewState["Id"] = value;
-            }
-        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(HiddenField.Value) != 0)
-                BejelentoForm.Visible = false;
             if (!Page.IsPostBack)
             {
                 if (User.Identity.IsAuthenticated)
@@ -56,36 +40,7 @@ namespace hazi.WEB
                     Response.Redirect("/Account/Login.aspx");
                 }
             }
-            if (Request.QueryString["ID"] != null && Request["__EVENTARGUMENT"] == null)
-            {
-                Bejelento.DropDownListFeltoltes(DropDownList1);
-                Bejelento.AlapAdatokFeltoltese(ora1, ora2, perc1, perc2);
-
-                BejelentoForm.Visible = true;
-                Tab.Visible = false;
-                TabLinkek.Visible = false;
-
-                Bejelentes.UjBejelentes = false;
-                Id = Int32.Parse(Request.QueryString["ID"]);
-                IdoBejelentes ib;
-                if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
-                    ib = JogcimBLL.GetIdoBejelentesById(Id.Value, true, string.Empty);
-                else
-                    ib = JogcimBLL.GetIdoBejelentesById(Id.Value, false, User.Identity.Name);
-                if (ib == null)
-                {
-                    Bejelento.HibaUzenetFelhasznalonak(hibak.IbNincsDBben, new Label());
-                    ElemekElrejtese();
-                }
-                else
-                    Bejelento.AdatokFeltolteseIdAlapjan(ib, datepicker, ora1, ora2, perc1, perc2, DropDownList1);
-            }
-            else if (Request["__EVENTARGUMENT"] == "Mentes")
-            {
-                //Form létrehozási részbe így nem fut le, de innét nem is hívható meg a mentés, mert validátorok így nem futnak le
-                return;
-            }
-            else if (Request["__EVENTARGUMENT"] == "FilterByJogcim")
+            if (Request["__EVENTARGUMENT"] == "FilterByJogcim")
             {
                 string text = (bejelentesekLista.HeaderRow.FindControl("jogcimFilter") as System.Web.UI.HtmlControls.HtmlInputText).Value;
                 List<UjBejelentes> lista = Bejelentes.GetIdoBejelentesByFilerJogcim(text);
@@ -309,160 +264,6 @@ namespace hazi.WEB
         }
 
         protected void Vissza_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("/Default.aspx");
-        }
-
-        private void ElemekElrejtese()
-        {
-            Label5.Visible = false;
-            datepicker.Visible = false;
-            Label1.Visible = false;
-            ora1.Visible = false;
-            Label6.Visible = false;
-            perc1.Visible = false;
-            Label2.Visible = false;
-            ora2.Visible = false;
-            Label7.Visible = false;
-            perc2.Visible = false;
-            Label3.Visible = false;
-            DropDownList1.Visible = false;
-            save.Visible = false;
-
-            cancel.Text = "Vissza";
-        }
-
-        #region validatorok
-        //dátum validátor
-        protected void CustomValidatorDatum_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            if (hiba == hibak.nincsHiba)
-            {
-                DateTime datumKezdeti = new DateTime();
-                //Kiválasztott dátum dátum-e
-                try
-                {
-                    datumKezdeti = DateTime.Parse(datepicker.Text);
-                    Bejelentes.Kezdeti = datumKezdeti;
-                    Bejelentes.Vege = datumKezdeti;
-                }
-                catch (Exception)
-                {
-                    hiba = hibak.HibasDatum;
-                    args.IsValid = false;
-                    return;
-                }
-
-                //Kiválasztott dátum régebbi-e a mai dátumnál (csak új bejelentés esetén)
-                if (Bejelentes.UjBejelentes && Bejelento.IdoVizsgalat(vizsgalat.CsakDatum, DateTime.Now) >
-                    Bejelento.IdoVizsgalat(vizsgalat.CsakDatum, datumKezdeti))
-                {
-                    hiba = hibak.KezdetiDatumRegebbiMainal;
-                    args.IsValid = false;
-                }
-            }
-        }
-
-        //folyamat kezdeti időpont validátor
-        protected void CustomValidatorIdopont1_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            if (hiba == hibak.nincsHiba)
-            {
-                string seged;
-
-                //Folyamat kezdeti óra és perc helyes-e
-                seged = Bejelento.DateTimeTosringMegfeleloModra(Bejelentes.Kezdeti);
-                seged += " " + ora1.SelectedItem.Text + ":" + perc1.SelectedItem.Text + ":00";
-                try
-                {
-                    Bejelentes.Kezdeti = DateTime.Parse(seged);
-                }
-                catch (Exception)
-                {
-                    hiba = hibak.HibasKezdetiIdo;
-                    args.IsValid = false;
-                    return;
-                }
-
-                //Folyamat kezdete régebbi-e a mostaninál (csak új bejelentés esetén)
-                if (Bejelentes.UjBejelentes && Bejelento.IdoVizsgalat(vizsgalat.MasodpercNulla, DateTime.Now) > Bejelentes.Kezdeti)
-                {
-                    hiba = hibak.HibasKezdetiErtekek;
-                    args.IsValid = false;
-                }
-            }
-        }
-
-        //folyamat vége időpont validátor
-        protected void CustomValidatorIdopont2_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            if (hiba == hibak.nincsHiba)
-            {
-                string seged;
-
-                //Folyamat vége óra és perc helyes-e
-                seged = Bejelento.DateTimeTosringMegfeleloModra(Bejelentes.Vege);
-                seged += " " + ora2.SelectedItem.Text + ":" + perc2.SelectedItem.Text + ":00";
-                try
-                {
-                    Bejelentes.Vege = DateTime.Parse(seged);
-                }
-                catch (Exception)
-                {
-                    hiba = hibak.HibasVegeIdo;
-                    args.IsValid = false;
-                    return;
-                }
-
-                //Folyamat vége régebbi-e a mostaninál (csak új bejelentés esetén)
-                if (Bejelentes.UjBejelentes && Bejelento.IdoVizsgalat(vizsgalat.MasodpercNulla, DateTime.Now) > Bejelentes.Vege)
-                {
-                    hiba = hibak.HibasVegeErtekek;
-                    args.IsValid = false;
-                }
-            }
-        }
-        #endregion
-
-        private void Mentes()
-        {
-            //ha már volt előzőleg, egy hiba azt rejtsük el
-            Master.Uzenet.Visible = false;
-            //ha már volt egy sikeres mentésünk és most újabb lesz, azt rejtsük el
-            mentesLabel.Visible = false;
-
-            if (Page.IsValid)
-            {
-                //maradék hiba ellenőrzése
-                hiba = Bejelento.Hibakereses();
-
-                //hiba esetén a felhasználó értesítése
-                if (hiba != hibak.nincsHiba)
-                    Bejelento.HibaUzenetFelhasznalonak(hiba, Master.Uzenet);
-                else
-                {
-                    //db-be mentés
-                    if (Bejelentes.Kezdeti != null && Bejelentes.Vege != null)
-                    {
-                        Bejelento.Mentes(Id, DropDownList1, Master.Uzenet, mentesLabel);
-                    }
-                    //ennek sose szabadna lefutnia
-                    else
-                        Bejelento.HibaUzenetFelhasznalonak(hibak.Ismeretlen, Master.Uzenet);
-                }
-            }
-            else
-                Bejelento.HibaUzenetFelhasznalonak(hiba, Master.Uzenet);
-        }
-
-        protected void save_Click(object sender, EventArgs e)
-        {
-            Mentes();
-            ElemekElrejtese();
-            TabLinkek.Visible = true;
-        }
-
-        protected void cancel_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Default.aspx");
         }

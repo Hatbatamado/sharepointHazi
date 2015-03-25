@@ -35,12 +35,7 @@
             });
         },
         eventClick: function (calEvent, jsEvent, view) {
-            var dUrl = "/Default.aspx?id=" + calEvent.id;
-            $("#dialog").load(dUrl).dialog({
-                modal: true,
-                width: 925,
-                height: 500,
-            });
+            showModalPopUp(calEvent.id);
         }
     });
     function processData(data, events) {
@@ -53,6 +48,24 @@
                 id: this.id
             });
         });
+    }
+
+    var popUpObj;
+    function showModalPopUp(id) {
+        popUpObj = window.open("/Pages/Bejelento.aspx?id="+id,
+        "ModalPopUp",
+        "toolbar=no," +
+        "scrollbars=no," +
+        "location=no," +
+        "statusbar=no," +
+        "menubar=no," +
+        "resizable=0," +
+        "width=925," +
+        "height=500," +
+        "left = 490," +
+        "top=300"
+        );
+        popUpObj.focus();        
     }
 </script>
 </html>
