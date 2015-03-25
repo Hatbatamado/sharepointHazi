@@ -34,7 +34,7 @@ namespace hazi.BLL
                           where b.ID == ID
                           select b).Single();
                 }
-                if (ib.Jogcim.Inaktiv == true && admin == false)
+                if (ib.Jogcim != null && ib.Jogcim.Inaktiv == true && admin == false)
                     return "A jogcím amire elmentette a bejelentését ezelőtt megváltozott!"+
                         "Így a mentési joga ennél a bejelentésnél elveszett! Csak megtekintési joga van!";
 
