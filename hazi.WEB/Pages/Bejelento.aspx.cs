@@ -121,12 +121,12 @@ namespace hazi.WEB.Pages
             datepicker.Text = DateTimeTosringMegfeleloModra(ib.KezdetiDatum);
 
             //folyamat kezdeti ideje
-            ora1.SelectedIndex = ib.KezdetiDatum.Hour;
-            perc1.SelectedIndex = ib.KezdetiDatum.Minute;
+            ora1.SelectedValue = ib.KezdetiDatum.Hour.ToString("00");
+            perc1.SelectedValue = ib.KezdetiDatum.Minute.ToString("00");
 
             //folyamat vége ideje
-            ora2.SelectedIndex = ib.VegeDatum.Hour;
-            perc2.SelectedIndex = ib.VegeDatum.Minute;
+            ora2.SelectedValue = ib.VegeDatum.Hour.ToString("00");
+            perc2.SelectedValue = ib.VegeDatum.Minute.ToString("00");
 
             //jogcim kiválasztása
             DropDownList1.SelectedValue = JogcimBLL.GetJogcimById(ib.JogcimID);
@@ -136,16 +136,16 @@ namespace hazi.WEB.Pages
         private void AlapErtekekBeallitasa()
         {
             //Folyamat kezdése: alap értéknek a mostani idő beállítása
-            ora1.SelectedIndex = DateTime.Now.Hour;
-            perc1.SelectedIndex = DateTime.Now.Minute;
+            ora1.SelectedValue = DateTime.Now.Hour.ToString("00");
+            perc1.SelectedValue = DateTime.Now.Minute.ToString("00");
 
             //Folyamat vége: alap értéknek a mostani idő +1 óra beállítása
             int segedOra = DateTime.Now.Hour;
             if ((segedOra + 1) < 24)
-                ora2.SelectedIndex = segedOra + 1;
+                ora2.SelectedValue = (segedOra + 1).ToString("00");
             else
-                ora2.SelectedIndex = segedOra - 23;
-            perc2.SelectedIndex = DateTime.Now.Minute;
+                ora2.SelectedValue = (segedOra - 23).ToString("00");
+            perc2.SelectedValue = DateTime.Now.Minute.ToString("00");
 
             //alap értéknek a mai dátum beállítása
             datepicker.Text = DateTimeTosringMegfeleloModra(DateTime.Now);
