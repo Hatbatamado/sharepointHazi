@@ -27,8 +27,7 @@ namespace hazi.WEB
                 {
 
                     Bejelentesek.Visible = true;
-                    List<UjBejelentes> lista = UjBejelentesBLL.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
-                                                    User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+                    List<UjBejelentes> lista = ListaAdat(User.Identity.Name);                  
 
                     bejelentesekLista.DataSource = lista;
                     bejelentesekLista.DataBind();
@@ -54,8 +53,7 @@ namespace hazi.WEB
                 if (text != "")
                     lista = UjBejelentesBLL.GetIdoBejelentesByFilerFelhasznalo(text);
                 else //ha még van a db-ben olyan bejelentés, aminek nincs "gazdája"
-                    lista = UjBejelentesBLL.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
-                                                    User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+                    lista = ListaAdat(User.Identity.Name);
 
                 GridFeltoles(lista, text, "usernameFilter");
             }
@@ -66,8 +64,7 @@ namespace hazi.WEB
                 if (text != "")
                     lista = UjBejelentesBLL.GetIdoBejelentesByFilerLastEdit(text);
                 else //ha még van a db-ben olyan bejelentés, aminek létrehozásakor és utána nem kapott értéket lastedit-re
-                    lista = UjBejelentesBLL.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
-                                                    User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+                    lista = ListaAdat(User.Identity.Name);
 
                 GridFeltoles(lista, text, "lasteditFilter");
             }
@@ -79,11 +76,23 @@ namespace hazi.WEB
                 if (text != "")
                     lista = UjBejelentesBLL.GetIdoBejelentesByFilerTorlesStatus(text);
                 else //ha az összes jelentést látni akarjuk
-                    lista = UjBejelentesBLL.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
-                                                    User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+                    lista = ListaAdat(User.Identity.Name);
 
                 GridFeltoles(lista, text, "DDLTorles");
             }
+        }
+
+        private List<UjBejelentes> ListaAdat(string UName)
+        {
+            List<UjBejelentes> lista = new List<UjBejelentes>();
+            if (RoleActions.IsInRole(UName, admin))
+                lista = UjBejelentesBLL.GetIdoBejelentesek(admin, UName, DateTime.MinValue, DateTime.MinValue);
+            else if (RoleActions.IsInRole(UName, normal))
+                lista = UjBejelentesBLL.GetIdoBejelentesek(normal, UName, DateTime.MinValue, DateTime.MinValue);
+            else if (RoleActions.IsInRole(UName, jovahagy))
+                lista = UjBejelentesBLL.GetIdoBejelentesek(jovahagy, UName, DateTime.MinValue, DateTime.MinValue);
+
+            return lista;
         }
 
         private void GridFeltoles(List<UjBejelentes> lista, string txt, string control)
@@ -118,7 +127,7 @@ namespace hazi.WEB
 
             //Admin nem tud egy bejelentés törlési kérelmét átállítani regisztrálta
             //így ha véletlen mégis benyomná egy admin, nem fog történni semmi
-            if (RoleActions.GetRole(User.Identity.Name) == admin)
+            if (RoleActions.IsInRole(User.Identity.Name, admin))
             {
                 string sikeresTorles = string.Empty;
 
@@ -164,12 +173,11 @@ namespace hazi.WEB
                     }
 
                 }
-                bejelentesekLista.DataSource = UjBejelentesBLL.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
-                                                    User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+                bejelentesekLista.DataSource = ListaAdat(User.Identity.Name);
                 bejelentesekLista.DataBind();
                 MegfeleloMezokMegjelenitese(sikeresTorles);
             }
-            else if (RoleActions.GetRole(User.Identity.Name) == normal || RoleActions.GetRole(User.Identity.Name) == jovahagy)
+            else if (RoleActions.IsInRole(User.Identity.Name, normal) || RoleActions.IsInRole(User.Identity.Name, jovahagy))
             {
                 //NormalUser törlésre regisztrál bejelentést
                 for (int i = 0; i < bejelentesekLista.Rows.Count; i++)
@@ -184,8 +192,7 @@ namespace hazi.WEB
                         IdoBejelentesBLL.TorlesRegisztracio(id, TorlesStatus.RegisztraltKerelem.ToString());
                     }
                 }
-                bejelentesekLista.DataSource = UjBejelentesBLL.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
-                                                    User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
+                bejelentesekLista.DataSource = ListaAdat(User.Identity.Name);
                 bejelentesekLista.DataBind();
                 MegfeleloMezokMegjelenitese(string.Empty);
             }
@@ -196,7 +203,7 @@ namespace hazi.WEB
             //ha újból futattjuk és cookie-val bent vagyunk,
             //akkor a User.IsInRole szerint nem vagyunk bent az adott szerepkörben
             //emiatt az egész alkalmazásban lecseréltem
-            if (RoleActions.GetRole(User.Identity.Name) == admin)
+            if (RoleActions.IsInRole(User.Identity.Name, admin))
             {
                 if (bejelentesekLista.Rows.Count > 0)
                 {
@@ -210,7 +217,7 @@ namespace hazi.WEB
                 else
                     BejelentesTorles.Visible = false;
             }
-            else if (RoleActions.GetRole(User.Identity.Name) == normal || RoleActions.GetRole(User.Identity.Name) == jovahagy)
+            else if (RoleActions.IsInRole(User.Identity.Name, normal) || RoleActions.IsInRole(User.Identity.Name, jovahagy))
             {
                 if (bejelentesekLista.HeaderRow != null)
                 {

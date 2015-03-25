@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using System.Globalization;
 
 namespace hazi.WEB
-{
+{ 
     public class Bejelentes
     {      
         //az oldal újratöltések / validátorok miatt példányosítással elveszne a bool értéke

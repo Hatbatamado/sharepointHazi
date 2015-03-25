@@ -80,12 +80,12 @@ namespace hazi.WEB
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (RoleActions.GetRole(HttpContext.Current.User.Identity.Name) == RegisterUserAs.Admin.ToString())
+            if (RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.Admin.ToString()))
             {
                 AdminPage.Visible = true;
                 OsszegzoForm.Visible = true;
             }
-            else if (RoleActions.GetRole(HttpContext.Current.User.Identity.Name) == RegisterUserAs.Jovahagyok.ToString())
+            else if (RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.Jovahagyok.ToString()))
                 OsszegzoForm.Visible = true;
         }
 

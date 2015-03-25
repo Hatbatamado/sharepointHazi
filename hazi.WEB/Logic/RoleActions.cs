@@ -83,7 +83,7 @@ namespace hazi.WEB.Logic
         }
 
         //szerepkör lekérdezés
-        internal static string GetRole(string userName)
+        internal static bool IsInRole(string userName, string Role)
         {
             try
             {
@@ -91,11 +91,16 @@ namespace hazi.WEB.Logic
                 var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
                 IList<string> roles = userMgr.GetRoles(userMgr.FindByName(userName).Id);
                 if (roles.Count != 0)
-                    return roles.ElementAt(0);
-                else
-                    return string.Empty;
+                {
+                    foreach (var item in roles)
+                    {
+                        if (item == Role)
+                            return true;
+                    }
+                }
             }
-            catch (NullReferenceException) { return string.Empty; }
+            catch (NullReferenceException) { return false; }
+            return false;
         }
 
 

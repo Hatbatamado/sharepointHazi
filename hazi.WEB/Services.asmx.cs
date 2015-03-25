@@ -30,8 +30,7 @@ namespace hazi.WEB
             DateTime segedEnd = DateTime.ParseExact(end, "ddd MMM dd yyyy HH:mm:ss 'GMT'K",
                 CultureInfo.InvariantCulture).AddHours(-2); //-2 óra = átalakítás után éjfél
 
-            List<UjBejelentes> bejelentesek = UjBejelentesBLL.GetIdoBejelentesek(
-                RoleActions.GetRole(User.Identity.Name), User.Identity.Name, segedStart, segedEnd);
+            List<UjBejelentes> bejelentesek = ListaAdat(User.Identity.Name, segedStart, segedEnd);
 
             IList<CalendarDTO> tasksList = TaskFeltoltes(bejelentesek);
 
@@ -39,6 +38,22 @@ namespace hazi.WEB
              new System.Web.Script.Serialization.JavaScriptSerializer();
             string sJSON = oSerializer.Serialize(tasksList);
             return sJSON;         
+        }
+
+        private List<UjBejelentes> ListaAdat(string UName, DateTime start, DateTime end)
+        {
+            string admin = RegisterUserAs.Admin.ToString();
+            string normal = RegisterUserAs.NormalUser.ToString();
+            string jovahagy = RegisterUserAs.Jovahagyok.ToString();
+            List<UjBejelentes> lista = new List<UjBejelentes>();
+            if (RoleActions.IsInRole(UName, admin))
+                lista = UjBejelentesBLL.GetIdoBejelentesek(admin, UName, start, end);
+            else if (RoleActions.IsInRole(UName, normal))
+                lista = UjBejelentesBLL.GetIdoBejelentesek(normal, UName, start, end);
+            else if (RoleActions.IsInRole(UName, jovahagy))
+                lista = UjBejelentesBLL.GetIdoBejelentesek(jovahagy, UName, start, end);
+
+            return lista;
         }
 
         public class CalendarDTO

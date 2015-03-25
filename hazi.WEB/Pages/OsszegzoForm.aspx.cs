@@ -20,8 +20,8 @@ namespace hazi.WEB.Pages
             if (!IsPostBack)
             {
                 if (User.Identity.IsAuthenticated &&
-                    (RoleActions.GetRole(User.Identity.Name) == admin ||
-                    RoleActions.GetRole(User.Identity.Name) == jova))
+                    (RoleActions.IsInRole(User.Identity.Name, admin) ||
+                    RoleActions.IsInRole(User.Identity.Name, jova)))
                 {
                     Jovahagyas.Visible = true;
                     List<UjBejelentes> lista = new List<UjBejelentes>();

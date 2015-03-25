@@ -27,10 +27,24 @@ namespace hazi.WEB.Logic
                 user.RoleList.Add(new ListItem { Value = RegisterUserAs.Admin.ToString(), Text = RegisterUserAs.Admin.ToString() });
                 user.RoleList.Add(new ListItem { Value = RegisterUserAs.NormalUser.ToString(), Text = RegisterUserAs.NormalUser.ToString() });
                 user.RoleList.Add(new ListItem { Value = RegisterUserAs.Jovahagyok.ToString(), Text = RegisterUserAs.Jovahagyok.ToString() });
-                user.Role = RoleActions.GetRole(user.Name);                
+                user.Role = UserRole(user.Name);
             }
 
             return users;
+        }
+
+        private static string UserRole(string name)
+        {
+            string admin = RegisterUserAs.Admin.ToString();
+            string normal = RegisterUserAs.NormalUser.ToString();
+            string jovahagy = RegisterUserAs.Jovahagyok.ToString();
+            if (RoleActions.IsInRole(name, admin))
+                return admin;
+            else if (RoleActions.IsInRole(name, normal))
+                return normal;
+            else if (RoleActions.IsInRole(name, jovahagy))
+                return jovahagy;
+            else return string.Empty;
         }
     }
 }

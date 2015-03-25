@@ -52,12 +52,12 @@ namespace hazi.WEB.Account
             SucLogin.Visible = true;
             helloLabel.Text = "Hello " + User.Identity.Name;
             //oldal betöltése hiánya miatt nem látszódik fent a link az oldalra
-            if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+            if (RoleActions.IsInRole(User.Identity.Name, RegisterUserAs.Admin.ToString()))
             {
                 SzerepB.Visible = true;
                 OsszegB.Visible = true;
             }
-            else if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Jovahagyok.ToString())
+            else if (RoleActions.IsInRole(User.Identity.Name, RegisterUserAs.Jovahagyok.ToString()))
                 OsszegB.Visible = true;
         }
 
@@ -66,12 +66,12 @@ namespace hazi.WEB.Account
             LoginForm.Visible = true;
             SucLogin.Visible = false;
             //oldal betöltése hiánya miatt nem látszódik fent a link az oldalra
-            if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
+            if (RoleActions.IsInRole(User.Identity.Name, RegisterUserAs.Admin.ToString()))
             {
                 SzerepB.Visible = false;
                 OsszegB.Visible = false;
             }
-            else if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Jovahagyok.ToString())
+            else if (RoleActions.IsInRole(User.Identity.Name,RegisterUserAs.Jovahagyok.ToString()))
                 OsszegB.Visible = false;
         }
 
