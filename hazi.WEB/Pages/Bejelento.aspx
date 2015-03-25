@@ -58,7 +58,7 @@
         <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
         <script>
             $(function () {
-                $("#<%=datepicker.ClientID%>").datepicker({ dateFormat: 'yy.mm.dd' }).val();
+                $("#<%=datepicker.ClientID%>").datepicker({ dateFormat: 'yy.mm.dd' });
             });
         </script>
     </asp:PlaceHolder>

@@ -208,7 +208,7 @@ namespace hazi.WEB.Pages
         //DateTime parse-hoz a dátum átalakítása
         private string DateTimeTosringMegfeleloModra(DateTime ido)
         {
-            return ido.Year + "." + ido.Month + "." + ido.Day;
+            return ido.Year + "." + ido.Month.ToString("00") + "." + ido.Day;
         }
 
         //másodpercek nullázása

@@ -102,16 +102,19 @@ namespace hazi.WEB
             bejelentesekLista.DataSource = lista;
             bejelentesekLista.DataBind();
 
-            MegfeleloMezokMegjelenitese(string.Empty);
-            if (control != "DDLTorles")
+            if (lista.Count > 0)
             {
-                (bejelentesekLista.HeaderRow.FindControl(control) as System.Web.UI.HtmlControls.HtmlInputText).Value = txt;
+                MegfeleloMezokMegjelenitese(string.Empty);
+                if (control != "DDLTorles")
+                {
+                    (bejelentesekLista.HeaderRow.FindControl(control) as System.Web.UI.HtmlControls.HtmlInputText).Value = txt;
 
-                TextBoxFocus(control);
-            }
-            else if (control == "DDLTorles")
-            {
-                (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList).SelectedValue = txt;
+                    TextBoxFocus(control);
+                }
+                else if (control == "DDLTorles")
+                {
+                    (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList).SelectedValue = txt;
+                }
             }
         }
 
