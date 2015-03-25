@@ -205,7 +205,7 @@ namespace hazi.WEB.Logic
                                 //és ezek indexét lementjük, hogy mindnak az össz idő mezőjéhez
                                 //be tudjuk írni, így nagy tábla méretnél nem kell
                                 //külön összeadni 1-1 felhasználóhoz
-                                osszeg += lista[j].Ido.Ts.Hours + lista[j].Ido.Ts.Minutes / 60;
+                                osszeg += lista[j].Ido.Ts.TotalHours;
                                 index.Add(j);
                             }
                         }
