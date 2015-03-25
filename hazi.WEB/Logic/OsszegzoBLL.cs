@@ -97,11 +97,11 @@ namespace hazi.WEB.Logic
             if (jogcimLista[index].JogcimNev == listaByName.JogcimNev)
             {
                 if (listaByName.JovaStatus == "Rogzitve")
-                    jogcimLista[index].OsszRogzitet += listaByName.Ido.Ts.Hours + listaByName.Ido.Ts.Minutes / 60;
+                    jogcimLista[index].OsszRogzitet += listaByName.Ido.Ts.TotalHours;
                 else if (listaByName.JovaStatus == "Jovahagyva")
-                    jogcimLista[index].OsszJovahagyott += listaByName.Ido.Ts.Hours + listaByName.Ido.Ts.Minutes / 60;
+                    jogcimLista[index].OsszJovahagyott += listaByName.Ido.Ts.TotalHours;
                 else if (listaByName.JovaStatus == "Elutasitva")
-                    jogcimLista[index].OsszElutasitott += listaByName.Ido.Ts.Hours + listaByName.Ido.Ts.Minutes / 60;
+                    jogcimLista[index].OsszElutasitott += listaByName.Ido.Ts.TotalHours;
             }
         }
     }
