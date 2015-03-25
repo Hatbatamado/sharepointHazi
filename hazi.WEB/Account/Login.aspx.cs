@@ -111,7 +111,7 @@ namespace hazi.WEB.Account
 
         protected void SzerepB_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Pages/SzerepK");
+            Response.Redirect("/Pages/AdminPage");
         }
 
         protected void OsszegB_Click(object sender, EventArgs e)
