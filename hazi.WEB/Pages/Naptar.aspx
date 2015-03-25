@@ -35,15 +35,14 @@
             });
         },
         eventClick: function (calEvent, jsEvent, view) {
-            var dUrl = "/Pages/BejelentesNaptar.aspx?id=" + calEvent.id;
+            var dUrl = "/Default.aspx?id=" + calEvent.id;
             $("#dialog").load(dUrl).dialog({
                 modal: true,
                 width: 925,
-                height: 250,
+                height: 500,
             });
         }
     });
-
     function processData(data, events) {
         $.each(JSON.parse(data.d), function () {
             events.push({
