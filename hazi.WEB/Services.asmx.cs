@@ -30,7 +30,7 @@ namespace hazi.WEB
             DateTime segedEnd = DateTime.ParseExact(end, "ddd MMM dd yyyy HH:mm:ss 'GMT'K",
                 CultureInfo.InvariantCulture).AddHours(-2); //-2 óra = átalakítás után éjfél
 
-            List<UjBejelentes> bejelentesek = Bejelentes.GetIdoBejelentesek(
+            List<UjBejelentes> bejelentesek = UjBejelentesBLL.GetIdoBejelentesek(
                 RoleActions.GetRole(User.Identity.Name), User.Identity.Name, segedStart, segedEnd);
 
             IList<CalendarDTO> tasksList = TaskFeltoltes(bejelentesek);

@@ -265,6 +265,7 @@
     <Compile Include="Logic\OsszegzoBLL.cs" />
     <Compile Include="Logic\RoleActions.cs" />
     <Compile Include="Logic\Statusz.cs" />
+    <Compile Include="Logic\UjBejelentesBLL.cs" />
     <Compile Include="Logic\Users.cs" />
     <Compile Include="Logic\UsersBLL.cs" />
     <Compile Include="Logic\Utility.cs" />

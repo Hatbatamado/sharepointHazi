@@ -27,7 +27,7 @@ namespace hazi.WEB
                 {
 
                     Bejelentesek.Visible = true;
-                    List<UjBejelentes> lista = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                    List<UjBejelentes> lista = UjBejelentesBLL.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
                                                     User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
 
                     bejelentesekLista.DataSource = lista;
@@ -43,7 +43,7 @@ namespace hazi.WEB
             if (Request["__EVENTARGUMENT"] == "FilterByJogcim")
             {
                 string text = (bejelentesekLista.HeaderRow.FindControl("jogcimFilter") as System.Web.UI.HtmlControls.HtmlInputText).Value;
-                List<UjBejelentes> lista = Bejelentes.GetIdoBejelentesByFilerJogcim(text);
+                List<UjBejelentes> lista = UjBejelentesBLL.GetIdoBejelentesByFilerJogcim(text);
 
                 GridFeltoles(lista, text, "jogcimFilter");
             }
@@ -52,9 +52,9 @@ namespace hazi.WEB
                 string text = (bejelentesekLista.HeaderRow.FindControl("usernameFilter") as System.Web.UI.HtmlControls.HtmlInputText).Value;
                 List<UjBejelentes> lista;
                 if (text != "")
-                    lista = Bejelentes.GetIdoBejelentesByFilerFelhasznalo(text);
+                    lista = UjBejelentesBLL.GetIdoBejelentesByFilerFelhasznalo(text);
                 else //ha még van a db-ben olyan bejelentés, aminek nincs "gazdája"
-                    lista = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                    lista = UjBejelentesBLL.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
                                                     User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
 
                 GridFeltoles(lista, text, "usernameFilter");
@@ -64,9 +64,9 @@ namespace hazi.WEB
                 string text = (bejelentesekLista.HeaderRow.FindControl("lasteditFilter") as System.Web.UI.HtmlControls.HtmlInputText).Value;
                 List<UjBejelentes> lista;
                 if (text != "")
-                    lista = Bejelentes.GetIdoBejelentesByFilerLastEdit(text);
+                    lista = UjBejelentesBLL.GetIdoBejelentesByFilerLastEdit(text);
                 else //ha még van a db-ben olyan bejelentés, aminek létrehozásakor és utána nem kapott értéket lastedit-re
-                    lista = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                    lista = UjBejelentesBLL.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
                                                     User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
 
                 GridFeltoles(lista, text, "lasteditFilter");
@@ -77,9 +77,9 @@ namespace hazi.WEB
 
                 List<UjBejelentes> lista;
                 if (text != "")
-                    lista = Bejelentes.GetIdoBejelentesByFilerTorlesStatus(text);
+                    lista = UjBejelentesBLL.GetIdoBejelentesByFilerTorlesStatus(text);
                 else //ha az összes jelentést látni akarjuk
-                    lista = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                    lista = UjBejelentesBLL.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
                                                     User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
 
                 GridFeltoles(lista, text, "DDLTorles");
@@ -164,7 +164,7 @@ namespace hazi.WEB
                     }
 
                 }
-                bejelentesekLista.DataSource = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                bejelentesekLista.DataSource = UjBejelentesBLL.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
                                                     User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
                 bejelentesekLista.DataBind();
                 MegfeleloMezokMegjelenitese(sikeresTorles);
@@ -181,10 +181,10 @@ namespace hazi.WEB
 
                         int id = Convert.ToInt32(rowValues["ID"]);
 
-                        JogcimBLL.TorlesRegisztracio(id, TorlesStatus.RegisztraltKerelem.ToString());
+                        IdoBejelentesBLL.TorlesRegisztracio(id, TorlesStatus.RegisztraltKerelem.ToString());
                     }
                 }
-                bejelentesekLista.DataSource = Bejelentes.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
+                bejelentesekLista.DataSource = UjBejelentesBLL.GetIdoBejelentesek(RoleActions.GetRole(User.Identity.Name),
                                                     User.Identity.Name, DateTime.MinValue, DateTime.MinValue);
                 bejelentesekLista.DataBind();
                 MegfeleloMezokMegjelenitese(string.Empty);
