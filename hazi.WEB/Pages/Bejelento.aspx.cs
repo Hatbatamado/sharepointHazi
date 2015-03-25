@@ -65,9 +65,9 @@ namespace hazi.WEB.Pages
                         Id = Int32.Parse(Request.QueryString["ID"]);
                         IdoBejelentes ib;
                         if (RoleActions.GetRole(User.Identity.Name) == RegisterUserAs.Admin.ToString())
-                            ib = JogcimBLL.GetIdoBejelentesById(Id.Value, true, string.Empty);
+                            ib = IdoBejelentesBLL.GetIdoBejelentesById(Id.Value, true, string.Empty);
                         else
-                            ib = JogcimBLL.GetIdoBejelentesById(Id.Value, false, User.Identity.Name);
+                            ib = IdoBejelentesBLL.GetIdoBejelentesById(Id.Value, false, User.Identity.Name);
                         if (ib == null)
                             HibaUzenetFelhasznalonak(hibak.IbNincsDBben);
                         else
@@ -274,9 +274,14 @@ namespace hazi.WEB.Pages
                 ujBejelentoUser = User.Identity.Name;
             else
                 ujBejelentoUser = "";
-            string uzenet = JogcimBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
-                            JogcimBLL.GetIDbyName(DropDownList1.SelectedValue),
-                            ujBejelentoUser, User.Identity.Name, TorlesStatus.NincsTorlesiKerelem.ToString());
+            string uzenet = string.Empty;
+            if (RoleActions.GetRole(User.Identity.Name) != RegisterUserAs.Admin.ToString())
+                uzenet = IdoBejelentesBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
+                             DropDownList1.SelectedValue, ujBejelentoUser, User.Identity.Name, TorlesStatus.NincsTorlesiKerelem.ToString(), false);
+            else
+                uzenet = IdoBejelentesBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
+                             DropDownList1.SelectedValue, ujBejelentoUser, User.Identity.Name, TorlesStatus.NincsTorlesiKerelem.ToString(), true);
+
             if (uzenet != string.Empty)
             {
                 Master.Uzenet.Visible = true;

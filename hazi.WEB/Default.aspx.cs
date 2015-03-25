@@ -132,7 +132,7 @@ namespace hazi.WEB
                         rowValues = Utility.GetValues(bejelentesekLista.Rows[i]);
 
                         int id = Convert.ToInt32(rowValues["ID"]);
-                        sikeresTorles = JogcimBLL.IdoBejelentesTorles(id,
+                        sikeresTorles = IdoBejelentesBLL.IdoBejelentesTorles(id,
                                                     TorlesStatus.RegisztraltKerelem.ToString());
                         if (sikeresTorles != string.Empty) break;
                     }
@@ -146,7 +146,7 @@ namespace hazi.WEB
 
                         int id = Convert.ToInt32(rowValues["ID"]);
 
-                        sikeresTorles = JogcimBLL.IdoBejelentesTorles(id);
+                        sikeresTorles = IdoBejelentesBLL.IdoBejelentesTorles(id);
                         if (sikeresTorles != string.Empty) break;
                     }
                     else if ((bejelentesekLista.Rows[i].FindControl("StatusDDL") as DropDownList).
@@ -158,7 +158,7 @@ namespace hazi.WEB
 
                         int id = Convert.ToInt32(rowValues["ID"]);
 
-                        sikeresTorles = JogcimBLL.TorlesElutasitva(id, TorlesStatus.RegisztraltKerelem.ToString(),
+                        sikeresTorles = IdoBejelentesBLL.TorlesElutasitva(id, TorlesStatus.RegisztraltKerelem.ToString(),
                                                     TorlesStatus.NincsTorlesiKerelem.ToString());
                         if (sikeresTorles != string.Empty) break;
                     }

@@ -257,7 +257,7 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="Bejelentes.cs" />
+    <Compile Include="Logic\Bejelentes.cs" />
     <Compile Include="Logic\DateYearMonth.cs" />
     <Compile Include="Logic\Error404.cs" />
     <Compile Include="Logic\Enumok.cs" />
