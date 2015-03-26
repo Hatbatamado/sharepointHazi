@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="hazi.WEB._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="hazi.WEB._Default" EnableEventValidation="false" %>
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -23,12 +23,23 @@
                 <hgroup>
                     <h2>Bejelentések</h2>
                 </hgroup>
+                <div runat="server" id="SzuroDiv" visible="false">
+                    <asp:UpdatePanel runat="server" ID="SzuresPanel" UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <asp:Label ID="Szuro" runat="server" Text="Szűrés:"></asp:Label><br />
+                            <asp:DropDownList ID="DDLSzures" runat="server"></asp:DropDownList>
+                            <asp:TextBox ID="FilterBox" runat="server" onkeyup="TextChanged();"></asp:TextBox>
+                            <br />
+                            <br />
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
                 <asp:UpdatePanel runat="server" ID="MainUpdatePanel" UpdateMode="Conditional">
                     <ContentTemplate>
                         <asp:PlaceHolder runat="server" ID="Bejelentesek" Visible="false">
                             <asp:GridView ID="bejelentesekLista" runat="server" AutoGenerateColumns="False"
                                 GridLines="Vertical" CellPadding="4" ItemType="hazi.DAL.UjBejelentes"
-                                HeaderStyle-BackColor="DarkBlue" HeaderStyle-ForeColor="White" CssClass="table table-bordered">
+                                HeaderStyle-BackColor="DarkBlue" HeaderStyle-ForeColor="White" CssClass="table table-bordered" OnDataBound="bejelentesekLista_DataBound">
                                 <EmptyDataTemplate>
                                     Nem található (a szűrő által megadott) bejelentés a db-ben
                                     <br />
@@ -43,50 +54,18 @@
                                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                                     <asp:BoundField DataField="kezdetidatum" HeaderText="Kezdeti dátum" />
                                     <asp:BoundField DataField="VegeDatum" HeaderText="Végdátum" />
-                                    <asp:TemplateField>
-                                        <HeaderTemplate>
-                                            <asp:Label ID="jogcimLabel" runat="server" Text="Jogcím"></asp:Label>
-                                            <br />
-                                            <input id="jogcimFilter" type="text" runat="server" onkeyup="FilterByJogcim();" style="width: 100px; color:black;" />
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="jogcim" runat="server" Text='<%# Eval("JogcimNev")%>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <HeaderTemplate>
-                                            <asp:Label ID="felhasznaloLabel" runat="server" Text="Felhasználó"></asp:Label>
-                                            <br />
-                                           <input id="usernameFilter" type="text" runat="server" onkeyup="FilterByFelhasznalo();" style="width: 100px; color:black;" />
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="username" runat="server" Text='<%# Eval("UserName")%>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <HeaderTemplate>
-                                            <asp:Label ID="lasteditLabel" runat="server" Text="Utolsó módosító"></asp:Label>
-                                            <br />
-                                            <input id="lasteditFilter" type="text" runat="server" onkeyup="FilterByLastedit();" style="width: 100px; color:black;" />
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lastedit" runat="server" Text='<%# Eval("LastEdit")%>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="JogcimNev" HeaderText="Jogcím" />
+                                    <asp:BoundField DataField="UserName" HeaderText="Felhasználó" />
+                                    <asp:BoundField DataField="LastEdit" HeaderText="Utolsó módosító" />
                                     <asp:BoundField DataField="LastEditTime" HeaderText="Utoljára módosítva" />
                                     <asp:BoundField DataField="JovaStatus" HeaderText="Státusz" />
-                                    <asp:TemplateField>
-                                        <HeaderTemplate>
-                                            <asp:Label ID="TorlesLabel" runat="server" Text="Törlés"></asp:Label>
-                                            <br />
-                                            <asp:DropDownList ID="DDLTorles" runat="server" ForeColor="Black" onchange="FilterByTorlesStatus();" Width="100px"></asp:DropDownList>
-                                        </HeaderTemplate>
+                                    <asp:TemplateField HeaderText="Törlés">
                                         <ItemTemplate>
                                             <asp:CheckBox ID="Remove" runat="server" Visible="false"></asp:CheckBox>
                                             <asp:DropDownList runat="server" ID="StatusDDL"
                                                 SelectedValue='<%# Eval("TorlesStatus") %>'
                                                 DataSource='<%# Eval("TorlesStatuszList") %>'
-                                                DataTextField="Text" DataValueField="Value" Visible="false" Width="100px">
+                                                DataTextField="Text" DataValueField="Value" Visible="false">
                                             </asp:DropDownList>
                                         </ItemTemplate>
                                     </asp:TemplateField>
@@ -114,17 +93,8 @@
                 }
             });
         });
-        function FilterByJogcim() {
-            __doPostBack('<%= MainUpdatePanel.ClientID %>', 'FilterByJogcim');
-        }
-        function FilterByFelhasznalo() {
-            __doPostBack('<%= MainUpdatePanel.ClientID %>', 'FilterByFelhasznalo');
-        }
-        function FilterByLastedit() {
-            __doPostBack('<%= MainUpdatePanel.ClientID %>', 'FilterByLastedit');
-        }
-        function FilterByTorlesStatus() {
-            __doPostBack('<%= MainUpdatePanel.ClientID %>', 'FilterByTorlesStatus');
+        function TextChanged() {
+            __doPostBack('<%= MainUpdatePanel.ClientID %>', 'FilterTextChanged');
         }
     </script>
 </asp:Content>

@@ -58,7 +58,7 @@ namespace hazi.WEB.Pages
                     BejelentoForm.Visible = true;
                     DropDownListFeltoltes();
                     AlapAdatokFeltoltese();
-
+                    
                     if (Request.QueryString["ID"] != null)
                     {
                         Bejelentes.UjBejelentes = false;
@@ -230,8 +230,14 @@ namespace hazi.WEB.Pages
         #region save / cancel klikk
         protected void cancel_Click(object sender, EventArgs e)
         {
-            //Home-ra navigálás
-            Response.Redirect("/Default.aspx");
+            if (Request.QueryString["status"] == "popup")
+            {
+                Response.Write("<script>window.close();</" + "script>");
+                Response.End();
+            }
+            else
+                //Home-ra navigálás
+                Response.Redirect("/Default.aspx");
         }
 
         protected void save_Click(object sender, EventArgs e)

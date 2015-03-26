@@ -52,7 +52,7 @@
 
     var popUpObj;
     function showModalPopUp(id) {
-        popUpObj = window.open("/Pages/Bejelento.aspx?id="+id,
+        popUpObj = window.open("/Pages/Bejelento.aspx?id="+id+"&status=popup",
         "ModalPopUp",
         "toolbar=no," +
         "scrollbars=no," +

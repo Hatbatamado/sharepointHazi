@@ -13,6 +13,51 @@ namespace hazi.WEB {
     public partial class _Default {
         
         /// <summary>
+        /// SzuroDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SzuroDiv;
+        
+        /// <summary>
+        /// SzuresPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel SzuresPanel;
+        
+        /// <summary>
+        /// Szuro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Szuro;
+        
+        /// <summary>
+        /// DDLSzures control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLSzures;
+        
+        /// <summary>
+        /// FilterBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox FilterBox;
+        
+        /// <summary>
         /// MainUpdatePanel control.
         /// </summary>
         /// <remarks>

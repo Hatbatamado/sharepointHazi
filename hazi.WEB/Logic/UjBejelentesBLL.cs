@@ -308,17 +308,7 @@ namespace hazi.WEB.Logic
             foreach (UjBejelentes item in bejelentesek)
             {
                 //DDL lista elemek
-                item.TorlesStatuszList = new List<ListItem>();
-                item.TorlesStatuszList.Add(
-                    new ListItem { Value = TorlesStatus.NincsTorlesiKerelem.ToString(), Text = "Nincs törlési kérelem" });
-                item.TorlesStatuszList.Add(
-                        new ListItem { Value = TorlesStatus.ElfogadottKerelem.ToString(), Text = "Elfogadott kérelem" });
-                item.TorlesStatuszList.Add(
-                        new ListItem { Value = TorlesStatus.RegisztraltKerelem.ToString(), Text = "Regisztrált kérelem" });
-                item.TorlesStatuszList.Add(
-                        new ListItem { Value = TorlesStatus.Torles.ToString(), Text = "Törlés" });
-                item.TorlesStatuszList.Add(
-                        new ListItem { Value = TorlesStatus.Elutasitott.ToString(), Text = "Elutasított" });
+                item.TorlesStatuszList = ListItems();                
 
                 //db-ben statusz nélküli elemek kapnak nincs törlési kérelem státuszt
                 if (item.TorlesStatus == null)
@@ -327,6 +317,18 @@ namespace hazi.WEB.Logic
                 string[] seged = item.TorlesStatus.Split('&');
                 item.TorlesStatus = seged[0];
             }
+        }
+
+        public static List<ListItem> ListItems()
+        {
+            List<ListItem> items = new List<ListItem>();
+            items.Add(new ListItem { Value = TorlesStatus.NincsTorlesiKerelem.ToString(), Text = "Nincs törlési kérelem" });
+            items.Add(new ListItem { Value = TorlesStatus.RegisztraltKerelem.ToString(), Text = "Regisztrált kérelem" });
+            items.Add(new ListItem { Value = TorlesStatus.ElfogadottKerelem.ToString(), Text = "Elfogadott kérelem" });
+            items.Add(new ListItem { Value = TorlesStatus.Elutasitott.ToString(), Text = "Elutasított" });
+            items.Add(new ListItem { Value = TorlesStatus.Torles.ToString(), Text = "Törlés" });
+
+            return items;
         }
     }
 }
