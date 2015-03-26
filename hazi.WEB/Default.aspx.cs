@@ -67,15 +67,15 @@ namespace hazi.WEB
                         lista = ListaAdat(User.Identity.Name);
                     GridFeltoles(lista);
                 }
-                else if (DDLSzures.SelectedValue == "Törlés státuszra")
+                else if (DDLSzures.SelectedValue == "Státuszra")
                 {
                     if (FilterBox.Text != "")
                     {
                         //ékezet eltávolítása, mivel db-ben is úgy van
                         string seged = FilterBox.Text;
-                        byte[] temp;
-                        temp = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(seged);
-                        seged = System.Text.Encoding.UTF8.GetString(temp);
+                        //byte[] temp;
+                        //temp = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(seged);
+                        //seged = System.Text.Encoding.UTF8.GetString(temp);
                         lista = UjBejelentesBLL.GetIdoBejelentesByFilerTorlesStatus(seged);
                     }                        
                     else
@@ -138,7 +138,7 @@ namespace hazi.WEB
 
                         int id = Convert.ToInt32(rowValues["ID"]);
                         sikeresTorles = IdoBejelentesBLL.IdoBejelentesTorles(id,
-                                                    TorlesStatus.RegisztraltKerelem.ToString());
+                                                    TorlesStatus.BejelentettKerelem.ToString());
                         if (sikeresTorles != string.Empty) break;
                     }
                     else if ((bejelentesekLista.Rows[i].FindControl("StatusDDL") as DropDownList).
@@ -163,8 +163,8 @@ namespace hazi.WEB
 
                         int id = Convert.ToInt32(rowValues["ID"]);
 
-                        sikeresTorles = IdoBejelentesBLL.TorlesElutasitva(id, TorlesStatus.RegisztraltKerelem.ToString(),
-                                                    TorlesStatus.NincsTorlesiKerelem.ToString());
+                        sikeresTorles = IdoBejelentesBLL.TorlesElutasitva(id, TorlesStatus.BejelentettKerelem.ToString(),
+                                                    TorlesStatus.Inaktiv.ToString());
                         if (sikeresTorles != string.Empty) break;
                     }
 
@@ -185,7 +185,7 @@ namespace hazi.WEB
 
                         int id = Convert.ToInt32(rowValues["ID"]);
 
-                        IdoBejelentesBLL.TorlesRegisztracio(id, TorlesStatus.RegisztraltKerelem.ToString());
+                        IdoBejelentesBLL.TorlesRegisztracio(id, TorlesStatus.BejelentettKerelem.ToString());
                     }
                 }
                 bejelentesekLista.DataSource = ListaAdat(User.Identity.Name);
@@ -243,8 +243,8 @@ namespace hazi.WEB
             {
                 DropDownList ddlTorles = (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList);
                 ddlTorles.Items.Add(new ListItem());
-                ddlTorles.Items.Add(new ListItem() { Text = "Nincs törlési kérelem", Value = TorlesStatus.NincsTorlesiKerelem.ToString() });
-                ddlTorles.Items.Add(new ListItem() { Text = "Regisztrált kérelem", Value = TorlesStatus.RegisztraltKerelem.ToString() });
+                ddlTorles.Items.Add(new ListItem() { Text = "Inaktív", Value = TorlesStatus.Inaktiv.ToString() });
+                ddlTorles.Items.Add(new ListItem() { Text = "BejelentettKérelem", Value = TorlesStatus.BejelentettKerelem.ToString() });
             }
 
             if (uzenet != string.Empty)

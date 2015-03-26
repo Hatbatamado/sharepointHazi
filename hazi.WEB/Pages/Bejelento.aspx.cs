@@ -283,10 +283,10 @@ namespace hazi.WEB.Pages
             string uzenet = string.Empty;
             if (!RoleActions.IsInRole(User.Identity.Name, RegisterUserAs.Admin.ToString()))
                 uzenet = IdoBejelentesBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
-                             DropDownList1.SelectedValue, ujBejelentoUser, User.Identity.Name, TorlesStatus.NincsTorlesiKerelem.ToString(), false);
+                             DropDownList1.SelectedValue, ujBejelentoUser, User.Identity.Name, TorlesStatus.Inaktiv.ToString(), false);
             else
                 uzenet = IdoBejelentesBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
-                             DropDownList1.SelectedValue, ujBejelentoUser, User.Identity.Name, TorlesStatus.NincsTorlesiKerelem.ToString(), true);
+                             DropDownList1.SelectedValue, ujBejelentoUser, User.Identity.Name, TorlesStatus.Inaktiv.ToString(), true);
 
             if (uzenet != string.Empty)
             {

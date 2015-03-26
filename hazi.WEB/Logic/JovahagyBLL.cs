@@ -17,7 +17,7 @@ namespace hazi.WEB.Logic
             {
 
                 lista = (from b in db.IdoBejelentes1
-                         where !b.Statusz.Contains("RegisztraltKerelem")
+                         where !b.Statusz.Contains("RogzitettKerelem")
                          select new UjBejelentes
                          {
                              ID = b.ID,
@@ -86,12 +86,12 @@ namespace hazi.WEB.Logic
             if (item.Statusz != null)
                 seged = item.Statusz.Split('&');
             else
-                seged = new string[] { TorlesStatus.NincsTorlesiKerelem.ToString() };
+                seged = new string[] { TorlesStatus.Inaktiv.ToString() };
 
             //ha még nincs 2 fajta státusza
             if (seged.Length == 1)
             {
-                if (seged[0] == TorlesStatus.NincsTorlesiKerelem.ToString())
+                if (seged[0] == TorlesStatus.Inaktiv.ToString())
                 {
                     if (item.JogcimNev == "Rendes szabadság")
                     {
@@ -145,7 +145,7 @@ namespace hazi.WEB.Logic
             }
             else //ha van 2 fajta státusz
             {
-                if (seged[0] == TorlesStatus.NincsTorlesiKerelem.ToString())
+                if (seged[0] == TorlesStatus.Inaktiv.ToString())
                 {
                     item.JovaStatus = seged[1];
                 }

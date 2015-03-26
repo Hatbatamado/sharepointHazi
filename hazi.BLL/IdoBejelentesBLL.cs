@@ -52,7 +52,7 @@ namespace hazi.BLL
                     db.IdoBejelentes1.Add(ib);
 
                 if (torlesStatus == string.Empty)
-                    ib.Statusz = "NincsTorlesiKerelem";
+                    ib.Statusz = "Inaktiv";
                 else
                     ib.Statusz = torlesStatus;
 
@@ -94,7 +94,7 @@ namespace hazi.BLL
                         {
                             var bej = (from b in db.IdoBejelentes1
                                        where b.ID == id &&
-                                       !b.Statusz.Contains("RegisztraltKerelem") && b.UserName == name
+                                       !b.Statusz.Contains("RogzitettKerelem") && b.UserName == name
                                        select b).Single();
                             return bej;
                         }

@@ -7,8 +7,8 @@ namespace hazi.WEB.Logic
 {
     public enum TorlesStatus
     {
-        NincsTorlesiKerelem,
-        RegisztraltKerelem,
+        Inaktiv,
+        BejelentettKerelem,
         ElfogadottKerelem,
         Torles,
         Elutasitott

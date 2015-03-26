@@ -39,7 +39,8 @@
                         <asp:PlaceHolder runat="server" ID="Bejelentesek" Visible="false">
                             <asp:GridView ID="bejelentesekLista" runat="server" AutoGenerateColumns="False"
                                 GridLines="Vertical" CellPadding="4" ItemType="hazi.DAL.UjBejelentes"
-                                HeaderStyle-BackColor="DarkBlue" HeaderStyle-ForeColor="White" CssClass="table table-bordered" OnDataBound="bejelentesekLista_DataBound">
+                                HeaderStyle-BackColor="DarkBlue" HeaderStyle-ForeColor="White" CssClass="table table-bordered"
+                                OnDataBound="bejelentesekLista_DataBound">
                                 <EmptyDataTemplate>
                                     Nem található (a szűrő által megadott) bejelentés a db-ben
                                     <br />
@@ -59,13 +60,13 @@
                                     <asp:BoundField DataField="LastEdit" HeaderText="Utolsó módosító" />
                                     <asp:BoundField DataField="LastEditTime" HeaderText="Utoljára módosítva" />
                                     <asp:BoundField DataField="JovaStatus" HeaderText="Státusz" />
-                                    <asp:TemplateField HeaderText="Törlés">
+                                    <asp:TemplateField HeaderText="Törlés státusz">
                                         <ItemTemplate>
                                             <asp:CheckBox ID="Remove" runat="server" Visible="false"></asp:CheckBox>
                                             <asp:DropDownList runat="server" ID="StatusDDL"
                                                 SelectedValue='<%# Eval("TorlesStatus") %>'
                                                 DataSource='<%# Eval("TorlesStatuszList") %>'
-                                                DataTextField="Text" DataValueField="Value" Visible="false">
+                                                DataTextField="Text" DataValueField="Value" Visible="false" Width="150px">
                                             </asp:DropDownList>
                                         </ItemTemplate>
                                     </asp:TemplateField>

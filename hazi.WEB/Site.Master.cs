@@ -61,20 +61,26 @@ namespace hazi.WEB
 
         protected void master_Page_PreLoad(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                // Set Anti-XSRF token
-                ViewState[AntiXsrfTokenKey] = Page.ViewStateUserKey;
-                ViewState[AntiXsrfUserNameKey] = Context.User.Identity.Name ?? String.Empty;
-            }
-            else
-            {
-                // Validate the Anti-XSRF token
-                if ((string)ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue
-                    || (string)ViewState[AntiXsrfUserNameKey] != (Context.User.Identity.Name ?? String.Empty))
+                if (!IsPostBack)
                 {
-                    //throw new InvalidOperationException("Validation of Anti-XSRF token failed.");
+                    // Set Anti-XSRF token
+                    ViewState[AntiXsrfTokenKey] = Page.ViewStateUserKey;
+                    ViewState[AntiXsrfUserNameKey] = Context.User.Identity.Name ?? String.Empty;
                 }
+                else
+                {
+                    // Validate the Anti-XSRF token
+                    if ((string)ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue
+                        || (string)ViewState[AntiXsrfUserNameKey] != (Context.User.Identity.Name ?? String.Empty))
+                    {
+                        //throw new InvalidOperationException("Validation of Anti-XSRF token failed.");
+                    }
+                }
+            } catch(Exception)
+            {
+                Response.Redirect("/Account/Login");
             }
         }
 
