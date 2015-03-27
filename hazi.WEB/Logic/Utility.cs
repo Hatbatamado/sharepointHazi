@@ -9,6 +9,11 @@ namespace hazi.WEB.Logic
 {
     public class Utility
     {
+        /// <summary>
+        /// GridView sor értékék kiolvasásához
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public static IOrderedDictionary GetValues(GridViewRow row)
         {
             IOrderedDictionary values = new OrderedDictionary();

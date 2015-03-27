@@ -176,11 +176,11 @@ namespace hazi.WEB.Logic
         }
 
         /// <summary>
-        /// LISTÁS nézet szűrővel törlés státuszra, csak adminnak
+        /// LISTÁS nézet szűrővel státuszra, csak adminnak
         /// </summary>
         /// <param name="torles"></param>
         /// <returns></returns>
-        public static List<UjBejelentes> GetIdoBejelentesByFilerTorlesStatus(string torles)
+        public static List<UjBejelentes> GetIdoBejelentesByFilerStatus(string torles)
         {
             using (hazi2Entities db = new hazi2Entities())
             {
@@ -293,6 +293,10 @@ namespace hazi.WEB.Logic
             }
         }
 
+        /// <summary>
+        /// Törlési státuszok beállítása listitem listában
+        /// </summary>
+        /// <returns></returns>
         public static List<ListItem> ListItems()
         {
             List<ListItem> items = new List<ListItem>();

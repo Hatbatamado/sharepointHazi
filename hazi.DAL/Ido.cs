@@ -14,6 +14,11 @@ namespace hazi.DAL
             get { return ts; }
         }
 
+        /// <summary>
+        /// 2 datetime értékből kiszámítja a kettő között eltelt órát és percet
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
         public Ido(DateTime start, DateTime end)
         {
             ts = new TimeSpan(end.Hour - start.Hour, end.Minute - start.Minute, 0);

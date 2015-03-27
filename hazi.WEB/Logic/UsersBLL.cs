@@ -9,6 +9,10 @@ namespace hazi.WEB.Logic
 {
     public class UsersBLL
     {
+        /// <summary>
+        /// Felhasználók kiolvasása beépített db-ből
+        /// </summary>
+        /// <returns></returns>
         public static List<Users> UserList()
         {
             List<Users> users = new List<Users>();
@@ -33,6 +37,11 @@ namespace hazi.WEB.Logic
             return users;
         }
 
+        /// <summary>
+        /// Felhasználói szerepkörök beállítása
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private static string UserRole(string name)
         {
             string admin = RegisterUserAs.Admin.ToString();

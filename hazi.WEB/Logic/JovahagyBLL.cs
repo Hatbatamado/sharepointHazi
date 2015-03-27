@@ -275,6 +275,11 @@ namespace hazi.WEB.Logic
             }
         }
 
+        /// <summary>
+        /// Bejelentési kezdeti dátum hetének kiszámítása, +- 52/53 hét évszámtól függően
+        /// </summary>
+        /// <param name="lista"></param>
+        /// <returns></returns>
         private static List<UjBejelentes> HanyadikHet(List<UjBejelentes> lista)
         {
             foreach (UjBejelentes item in lista)
@@ -311,8 +316,11 @@ namespace hazi.WEB.Logic
             return lista;
         }
 
-        //hányadik hét
-        //http://stackoverflow.com/questions/11154673/get-the-correct-week-number-of-a-given-date
+        /// <summary>
+        /// hányadik hét kiszámítása: http://stackoverflow.com/questions/11154673/get-the-correct-week-number-of-a-given-date
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public static int GetIso8601WeekOfYear(DateTime time)
         {
             DateTime timeSeged = time;
@@ -322,8 +330,7 @@ namespace hazi.WEB.Logic
                 time = time.AddDays(3);
                 if (time.Year != timeSeged.Year)
                 {
-                    timeSeged.AddDays(-4);
-                    time = timeSeged;
+                    time = new DateTime(timeSeged.Year, timeSeged.Month, timeSeged.Day - 4);
                 }
             }
 
@@ -331,6 +338,11 @@ namespace hazi.WEB.Logic
             return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         }
 
+        /// <summary>
+        /// DB-be új jóváhagyási státusz mentése
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="statusz"></param>
         public static void JovahagyasMentes(int? id, string statusz)
         {
             if (id.HasValue && id > 0)

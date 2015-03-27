@@ -17,6 +17,13 @@ namespace hazi.WEB.Logic
 
     public class RoleActions
     {
+        /// <summary>
+        /// Felhasználó létrehozása a megadott paraméterek szerint
+        /// </summary>
+        /// <param name="uName"></param>
+        /// <param name="uPass"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
         internal string createUserAs(string uName, string uPass, RegisterUserAs role)
         {
             // Access the application context and create result variables.
@@ -61,7 +68,11 @@ namespace hazi.WEB.Logic
             return "";
         }
 
-        //Adott user, adott szerepkörhöz való rendelése
+        /// <summary>
+        /// Adott user, adott szerepkörhöz való rendelése
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="role"></param>
         internal static void AddToRole(string name, RegisterUserAs role)
         {
             IdentityResult IdRoleResult;
@@ -82,7 +93,12 @@ namespace hazi.WEB.Logic
             IdUserResult = userMgr.AddToRole(user.Id, role.ToString());
         }
 
-        //szerepkör lekérdezés
+        /// <summary>
+        /// Az adott user megtalálható-e az adott szerepkörben
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="Role"></param>
+        /// <returns></returns>
         internal static bool IsInRole(string userName, string Role)
         {
             try
@@ -103,7 +119,13 @@ namespace hazi.WEB.Logic
             return false;
         }
 
-
+        /// <summary>
+        /// Adott user szerepkörének megváltoztatása
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="oldRole"></param>
+        /// <param name="newRole"></param>
+        /// <returns></returns>
         internal static string ChangeRole(string name, string oldRole, string newRole)
         {
             IdentityResult IdUserResult;

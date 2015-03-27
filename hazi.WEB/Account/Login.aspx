@@ -69,7 +69,7 @@
                 <br />
                 <br />
             </asp:PlaceHolder>
-            <asp:Button ID="SzerepB" runat="server" Text="Szerepkörök" OnClick="SzerepB_Click" Visible="false" />
+            <asp:Button ID="SzerepB" runat="server" Text="Admin oldal" OnClick="SzerepB_Click" Visible="false" />
             <br />
             <br />
             <asp:Button ID="OsszegB" runat="server" Text="Jóváhagyások" OnClick="OsszegB_Click" Visible="false" />

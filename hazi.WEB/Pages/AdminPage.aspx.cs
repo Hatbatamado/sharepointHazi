@@ -37,7 +37,13 @@ namespace hazi.WEB.Pages
             else if (Request["__EVENTARGUMENT"] == "Jogcim")
             {
                 List<Jogcim> lista = JogcimBLL.GetJogcimek(true);
-                CheckBoxCheck(lista);
+                if (lista.Count > 0)
+                {
+                    CheckBoxCheck(lista);
+                    Mentes.Visible = true;
+                }
+                else
+                    Mentes.Visible = false;
                 JogcimekGV.DataSource = lista;
                 JogcimekGV.DataBind();
             }

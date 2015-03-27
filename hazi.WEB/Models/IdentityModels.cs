@@ -69,7 +69,7 @@ namespace hazi.WEB
             }
             else
             {
-                response.Redirect("~/");
+                response.Redirect("/");
             }
         }
     }

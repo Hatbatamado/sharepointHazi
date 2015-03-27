@@ -25,13 +25,8 @@ namespace hazi.WEB
             {
                 if (User.Identity.IsAuthenticated)
                 {
-
                     Bejelentesek.Visible = true;
-                    List<UjBejelentes> lista = ListaAdat(User.Identity.Name);                  
-
-                    bejelentesekLista.DataSource = lista;
-                    bejelentesekLista.DataBind();
-                    MegfeleloMezokMegjelenitese(string.Empty);
+                    Frissites();
                 }
                 else
                 {
@@ -76,13 +71,29 @@ namespace hazi.WEB
                         byte[] temp;
                         temp = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(seged);
                         seged = System.Text.Encoding.UTF8.GetString(temp);
-                        lista = UjBejelentesBLL.GetIdoBejelentesByFilerTorlesStatus(seged);
+                        lista = UjBejelentesBLL.GetIdoBejelentesByFilerStatus(seged);
                     }                        
                     else
                         lista = ListaAdat(User.Identity.Name);
                     GridFeltoles(lista);
                 }
-            }          
+            }
+            else if (Request["__EVENTARGUMENT"] == "TabFrissites")
+            {
+                Frissites();
+            }
+        }
+
+        /// <summary>
+        /// GV feltöltése / újratöltése tab váltásnál
+        /// </summary>
+        private void Frissites()
+        {
+            List<UjBejelentes> lista = ListaAdat(User.Identity.Name);
+
+            bejelentesekLista.DataSource = lista;
+            bejelentesekLista.DataBind();
+            MegfeleloMezokMegjelenitese(string.Empty);
         }
 
         private List<UjBejelentes> ListaAdat(string UName)

@@ -14,15 +14,6 @@ namespace hazi.WEB.Pages
         {
             if (!IsPostBack)
             {
-                //List<DateYearMonth> lista = OsszegzoBLL.GetAllOsszegzes();
-                //DatumValaszto.Items.Add(new ListItem()); //üres item, hogy kötelező legyen választani
-
-                //foreach (DateYearMonth item in lista)
-                //{
-                //    DatumValaszto.Items.Add(
-                //        new ListItem() { Value = item.ToString(), Text = item.ToString() });
-                //}
-
                 if (User.Identity.IsAuthenticated)
                 {
                     Uzenet.Text = "Az Ön " + DateTime.Now.Month + ". havi bejelentéseink összegzése:";

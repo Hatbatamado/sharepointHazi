@@ -41,6 +41,9 @@
                             <asp:GridView ID="JogcimekGV" runat="server" AutoGenerateColumns="False" GridLines="Vertical"
                                 CellPadding="4" ItemType="hazi.DAL.Jogcim" HeaderStyle-BackColor="DarkBlue"
                                 HeaderStyle-ForeColor="White" CssClass="table table-bordered">
+                                <EmptyDataTemplate>
+                                    Nem található jogcím a db-ben!
+                                </EmptyDataTemplate>
                                 <Columns>
                                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                                     <asp:BoundField DataField="Cim" HeaderText="Jogcím" />

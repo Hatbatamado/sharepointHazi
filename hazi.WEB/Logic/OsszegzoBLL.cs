@@ -8,43 +8,12 @@ namespace hazi.WEB.Logic
 {
     public class OsszegzoBLL
     {
-        public static List<DateYearMonth> GetAllOsszegzes()
-        {
-            List<UjBejelentes> lista;
-            using(hazi2Entities db = new hazi2Entities())
-            {
-                lista = (from b in db.IdoBejelentes1
-                             select new UjBejelentes
-                             {
-                                 KezdetiDatum = b.KezdetiDatum
-                             }).ToList();
-            }
-
-            List<DateYearMonth> dym = new List<DateYearMonth>();
-            if (lista.Count > 0)
-            {    
-                dym.Add(new DateYearMonth(lista[0].KezdetiDatum.Year, lista[0].KezdetiDatum.Month));
-
-                DateYearMonth dymElem;
-                foreach (UjBejelentes item in lista)
-                {
-                    dymElem = new DateYearMonth(item.KezdetiDatum.Year, item.KezdetiDatum.Month);
-                    int j = 0;
-                    while (j < dym.Count)
-                    {
-                        if (dym[j].Year == dymElem.Year && dym[j].Month == dymElem.Month)
-                            break;
-                        j++;
-                    }
-
-                    if (j == dym.Count)
-                        dym.Add(dymElem);
-                }
-            }
-
-            return dym;
-        }
-
+        /// <summary>
+        /// Az adott hónapú bejelentések lekérdezése és időtartamok összegzése jogcím és jóváhagyási státusz alapján
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public static List<UjBejelentes> GetOsszegzes(string name, DateTime time)
         {
             List<UjBejelentes> jogcimList;
@@ -92,6 +61,12 @@ namespace hazi.WEB.Logic
             return jogcimList;
         }
 
+        /// <summary>
+        /// adott jogcím jóváhagyási státusz szerinti összegzése
+        /// </summary>
+        /// <param name="listaByName"></param>
+        /// <param name="jogcimLista"></param>
+        /// <param name="index"></param>
         private static void Osszeadas(UjBejelentes listaByName, List<UjBejelentes> jogcimLista, int index)
         {
             if (jogcimLista[index].JogcimNev == listaByName.JogcimNev)

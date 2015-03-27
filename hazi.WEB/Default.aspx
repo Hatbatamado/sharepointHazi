@@ -92,6 +92,12 @@
                         ui.panel.html(
                           "Nem sikerült betölteni a tartalmat");
                     });
+                },
+                activate: function (event, ui) {
+                    var index = ui.newTab.index();
+                    if (index == 0) {
+                        __doPostBack('<%= MainUpdatePanel.ClientID %>', 'TabFrissites');
+                    }
                 }
             });
         });
