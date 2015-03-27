@@ -10,6 +10,11 @@ namespace hazi.WEB.Logic
 {
     public class JovahagyBLL
     {
+        /// <summary>
+        /// Minden bejelentés megjelenítése, amit nem kértek törlésre
+        /// </summary>
+        /// <param name="statusz"></param>
+        /// <returns></returns>
         public static List<UjBejelentes> GetJovahagyAll(string statusz)
         {
             if (statusz == "Mind")
@@ -59,6 +64,12 @@ namespace hazi.WEB.Logic
             return lista;
         }
 
+        /// <summary>
+        /// statusz mező értékének 2 részre osztása
+        /// </summary>
+        /// <param name="statusz"></param>
+        /// <param name="melyik"></param>
+        /// <returns></returns>
         private static string StatuszDarabolas(string statusz, int melyik)
         {
             string[] seged;
@@ -73,6 +84,11 @@ namespace hazi.WEB.Logic
             return string.Empty;
         }
 
+        /// <summary>
+        /// státuszok beállítása
+        /// </summary>
+        /// <param name="lista"></param>
+        /// <param name="AdminListasNezet"></param>
         public static void StatuszBeallitasok(List<UjBejelentes> lista, bool AdminListasNezet)
         {
             int i = 0;
@@ -83,6 +99,13 @@ namespace hazi.WEB.Logic
             }
         }
 
+        /// <summary>
+        /// Megfelelő jóváhagyási és törlési státuszok beállítása
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="lista"></param>
+        /// <param name="i"></param>
+        /// <param name="AdminListasNezet"></param>
         private static void StatuszVizsgalat(UjBejelentes item, List<UjBejelentes> lista, ref int i, bool AdminListasNezet)
         {
             string[] seged;
@@ -156,6 +179,12 @@ namespace hazi.WEB.Logic
             }
         }
 
+        /// <summary>
+        /// DB-be az új státusz elmentése a paraméterekkel átadott értékek szerint
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="torlesStatusz"></param>
+        /// <param name="jovaStatusz"></param>
         private static void JovahagyStatuszBeallit(UjBejelentes item, string torlesStatusz, string jovaStatusz)
         {
             item.Statusz = torlesStatusz + "&" + jovaStatusz;
@@ -164,6 +193,11 @@ namespace hazi.WEB.Logic
             item.JovaStatus = jovaStatusz;
         }
 
+        /// <summary>
+        /// DB-be az új státusz elmentése
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ujStatusz"></param>
         private static void UjStatusz(int? id, string ujStatusz)
         {
             if (id.HasValue && id > 0)
@@ -182,7 +216,11 @@ namespace hazi.WEB.Logic
             }
         }
 
-        //jelenléthez heti összidő kiszámításása
+        /// <summary>
+        /// Jelenlét jogcímhez a heti idő kiszámítása
+        /// </summary>
+        /// <param name="lista"></param>
+        /// <param name="username"></param>
         private static void OsszIdo(List<UjBejelentes> lista, string username)
         {
             List<int> index;
@@ -224,6 +262,10 @@ namespace hazi.WEB.Logic
             }
         }
 
+        /// <summary>
+        /// Minden felhasználóra meghívjuk a jelenlét heti értékének beállító fv-t
+        /// </summary>
+        /// <param name="lista"></param>
         public static void UsersOsszIdohoz(List<UjBejelentes> lista)
         {
             List<Users> users = UsersBLL.UserList();
@@ -237,8 +279,32 @@ namespace hazi.WEB.Logic
         {
             foreach (UjBejelentes item in lista)
             {
+                int id = item.ID;
                 if (item.HanyadikHet == 0)
+                {
                     item.HanyadikHet = GetIso8601WeekOfYear(item.KezdetiDatum);
+                    if (item.KezdetiDatum.Year != DateTime.Now.Year)
+                    {
+                        int kulonbseg = item.KezdetiDatum.Year - DateTime.Now.Year;
+                        int pluszhet = 0;
+                        if (kulonbseg >= 1)
+                        {
+                            for (int i = 0; i < kulonbseg; i++)
+                            {
+                                pluszhet += GetIso8601WeekOfYear(new DateTime(DateTime.Now.Year + i, 12, 31));
+                            }
+                            item.HanyadikHet += pluszhet;
+                        }
+                        else if (kulonbseg <= -1)
+                        {
+                            for (int i = kulonbseg; i < 0; i++)
+                            {
+                                pluszhet += GetIso8601WeekOfYear(new DateTime(DateTime.Now.Year + i, 12, 31));
+                            }
+                            item.HanyadikHet -= pluszhet;
+                        }
+                    }
+                }
             }
             lista.Sort((x, y) => x.HanyadikHet.CompareTo(y.HanyadikHet));
 
@@ -249,10 +315,16 @@ namespace hazi.WEB.Logic
         //http://stackoverflow.com/questions/11154673/get-the-correct-week-number-of-a-given-date
         public static int GetIso8601WeekOfYear(DateTime time)
         {
+            DateTime timeSeged = time;
             DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(time);
             if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
             {
                 time = time.AddDays(3);
+                if (time.Year != timeSeged.Year)
+                {
+                    timeSeged.AddDays(-4);
+                    time = timeSeged;
+                }
             }
 
             // Return the week of our adjusted day
