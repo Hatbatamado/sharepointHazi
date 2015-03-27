@@ -27,9 +27,10 @@
                     <asp:UpdatePanel runat="server" ID="SzuresPanel" UpdateMode="Conditional">
                         <ContentTemplate>
                             <asp:Label ID="Szuro" runat="server" Text="Szűrés:"></asp:Label><br />
-                            <asp:DropDownList ID="DDLSzures" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="DDLSzures" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DDLSzures_SelectedIndexChanged"></asp:DropDownList>
                             <asp:TextBox ID="FilterBox" runat="server" onkeyup="TextChanged();"></asp:TextBox>
                             <br />
+                            <asp:Label ID="Warning" runat="server" Text="" Visible="false"></asp:Label>
                             <br />
                         </ContentTemplate>
                     </asp:UpdatePanel>

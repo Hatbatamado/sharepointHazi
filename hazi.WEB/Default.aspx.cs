@@ -73,9 +73,9 @@ namespace hazi.WEB
                     {
                         //ékezet eltávolítása, mivel db-ben is úgy van
                         string seged = FilterBox.Text;
-                        //byte[] temp;
-                        //temp = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(seged);
-                        //seged = System.Text.Encoding.UTF8.GetString(temp);
+                        byte[] temp;
+                        temp = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(seged);
+                        seged = System.Text.Encoding.UTF8.GetString(temp);
                         lista = UjBejelentesBLL.GetIdoBejelentesByFilerTorlesStatus(seged);
                     }                        
                     else
@@ -269,10 +269,23 @@ namespace hazi.WEB
                 DDLSzures.Items.Add("Jogcímre");
                 DDLSzures.Items.Add("Felhasználóra");
                 DDLSzures.Items.Add("Utolsó módosítóra");
-                DDLSzures.Items.Add("Törlés státuszra");
+                DDLSzures.Items.Add("Státuszra");
             }
             else
                 SzuroDiv.Visible = false;
+        }
+
+        protected void DDLSzures_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((sender as DropDownList).SelectedValue != "")
+            {
+                Warning.Visible = true;
+                Warning.Text = "A magyar dupla karaktereket ki kell írni a megfelelő működéshez!." +
+                    "(pl. \"sz\" esetén csak \"s\"-re nem adja ki a találatokat)";
+                Warning.ForeColor = System.Drawing.Color.DarkBlue;
+            }
+            else
+                Warning.Visible = false;
         }
     }
 }

@@ -112,7 +112,8 @@ namespace hazi.WEB.Logic
                                     JogcimID = b.JogcimID,
                                     UserName = b.UserName,
                                     LastEdit = b.UtolsoModosito,
-                                    JogcimNev = b.Jogcim.Cim
+                                    JogcimNev = b.Jogcim.Cim,
+                                    Statusz = b.Statusz
                                 }).ToList();
                     }
                 }
@@ -123,22 +124,20 @@ namespace hazi.WEB.Logic
                     using (hazi2Entities db = new hazi2Entities())
                     {
                         string segedStatus = TorlesStatus.Inaktiv.ToString();
-                        var bejelentesek = (from b in db.IdoBejelentes1
-                                            where (b.UserName == name && b.KezdetiDatum >= start
-                                            && b.VegeDatum <= end) && (b.Statusz.Contains(segedStatus) || b.Statusz == null)
-                                            select new UjBejelentes
-                                            {
-                                                ID = b.ID,
-                                                KezdetiDatum = b.KezdetiDatum,
-                                                VegeDatum = b.VegeDatum,
-                                                JogcimID = b.JogcimID,
-                                                UserName = b.UserName,
-                                                LastEdit = b.UtolsoModosito,
-                                                JogcimNev = b.Jogcim.Cim,
-                                                Statusz = b.Statusz,
-                                            }).ToList();
-
-                        return bejelentesek;
+                        return (from b in db.IdoBejelentes1
+                                where (b.UserName == name && b.KezdetiDatum >= start
+                                && b.VegeDatum <= end) && (b.Statusz.Contains(segedStatus) || b.Statusz == null)
+                                select new UjBejelentes
+                                {
+                                    ID = b.ID,
+                                    KezdetiDatum = b.KezdetiDatum,
+                                    VegeDatum = b.VegeDatum,
+                                    JogcimID = b.JogcimID,
+                                    UserName = b.UserName,
+                                    LastEdit = b.UtolsoModosito,
+                                    JogcimNev = b.Jogcim.Cim,
+                                    Statusz = b.Statusz,
+                                }).ToList();
                     }
                 }
             }

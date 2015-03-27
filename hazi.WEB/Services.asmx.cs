@@ -47,11 +47,20 @@ namespace hazi.WEB
             string jovahagy = RegisterUserAs.Jovahagyok.ToString();
             List<UjBejelentes> lista = new List<UjBejelentes>();
             if (RoleActions.IsInRole(UName, admin))
+            {
                 lista = UjBejelentesBLL.GetIdoBejelentesek(admin, UName, start, end);
+                JovahagyBLL.StatuszBeallitasok(lista, true);
+            }
             else if (RoleActions.IsInRole(UName, normal))
+            {
                 lista = UjBejelentesBLL.GetIdoBejelentesek(normal, UName, start, end);
+                JovahagyBLL.StatuszBeallitasok(lista, false);
+            }
             else if (RoleActions.IsInRole(UName, jovahagy))
+            {
                 lista = UjBejelentesBLL.GetIdoBejelentesek(jovahagy, UName, start, end);
+                JovahagyBLL.StatuszBeallitasok(lista, false);
+            }           
 
             return lista;
         }
@@ -72,13 +81,26 @@ namespace hazi.WEB
             IList<CalendarDTO> naptarList = new List<CalendarDTO>();
             foreach (UjBejelentes item in bejelentList)
             {
+                string jovahagyva = "#01DF3A";
+                string rogzitve = "#ee9629";
+                string elutasitva = "#ee2121";
+                string kivalasztott = "";
+                if (item.JovaStatus == "Rogzitve")
+                    kivalasztott = rogzitve;
+                else if (item.JovaStatus == "Jovahagyva")
+                    kivalasztott = jovahagyva;
+                else if (item.JovaStatus == "Elutasitva")
+                    kivalasztott = elutasitva;
+                else
+                    kivalasztott = "#989090";
+
                 naptarList.Add(new CalendarDTO
                     {
                         id = item.ID,
                         title = item.JogcimNev,
                         start = item.KezdetiDatum.ToString("s"),
                         end = item.VegeDatum.ToString("s"),
-                        color = "#01DF3A",
+                        color = kivalasztott,
                         allDay = false,
                         className = string.Empty
                     });
