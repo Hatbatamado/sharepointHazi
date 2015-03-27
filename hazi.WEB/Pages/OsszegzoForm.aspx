@@ -6,6 +6,10 @@
             float: right;
         }
     </style>
+    <asp:Label ID="Filter" runat="server" Text="Szűrés:"></asp:Label>
+    <asp:DropDownList ID="JovahagySzures" runat="server" AutoPostBack="true" OnSelectedIndexChanged="JovahagySzures_SelectedIndexChanged"></asp:DropDownList>
+    <br />
+    <br />
     <asp:GridView ID="Jovahagyas" runat="server" AutoGenerateColumns="False" GridLines="Vertical"
         CellPadding="4" ItemType="hazi.DAL.UjBejelentes" HeaderStyle-BackColor="DarkBlue"
         HeaderStyle-ForeColor="White" CssClass="table table-bordered" Visible="false">
@@ -19,7 +23,7 @@
             <asp:BoundField DataField="JovaStatus" HeaderText="Státusz" />
             <asp:TemplateField>
                 <HeaderTemplate>
-                    <asp:Label ID="StatuszLabel" runat="server" Text="Státusz"></asp:Label>
+                    <asp:Label ID="StatuszLabel" runat="server" Text="Új státusz"></asp:Label>
                 </HeaderTemplate>
                 <ItemTemplate>
                     <asp:DropDownList runat="server" ID="StatuszDDL"

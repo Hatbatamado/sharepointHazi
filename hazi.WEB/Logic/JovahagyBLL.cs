@@ -10,14 +10,17 @@ namespace hazi.WEB.Logic
 {
     public class JovahagyBLL
     {
-        public static List<UjBejelentes> GetJovahagyAll()
+        public static List<UjBejelentes> GetJovahagyAll(string statusz)
         {
+            if (statusz == "Mind")
+                statusz = string.Empty;
+
             List<UjBejelentes> lista;
             using (hazi2Entities db = new hazi2Entities())
             {
 
                 lista = (from b in db.IdoBejelentes1
-                         where !b.Statusz.Contains("RogzitettKerelem")
+                         where !b.Statusz.Contains("RogzitettKerelem") && b.Statusz.Contains(statusz)
                          select new UjBejelentes
                          {
                              ID = b.ID,
@@ -273,5 +276,6 @@ namespace hazi.WEB.Logic
                 }
             }
         }
+
     }
 }

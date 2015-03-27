@@ -296,7 +296,7 @@ namespace hazi.WEB.Pages
             }
 
             //jóváhagyásos státuszok megfelelő beállítása:
-            JovahagyBLL.GetJovahagyAll();
+            JovahagyBLL.GetJovahagyAll(string.Empty);
 
             mentesLabel.Visible = true;
             mentesLabel.Text = "A mentés sikeres!";

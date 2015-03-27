@@ -13,6 +13,24 @@ namespace hazi.WEB.Pages {
     public partial class OsszegzoForm {
         
         /// <summary>
+        /// Filter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Filter;
+        
+        /// <summary>
+        /// JovahagySzures control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList JovahagySzures;
+        
+        /// <summary>
         /// Jovahagyas control.
         /// </summary>
         /// <remarks>
