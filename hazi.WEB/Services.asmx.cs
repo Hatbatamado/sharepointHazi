@@ -84,12 +84,16 @@ namespace hazi.WEB
                 string jovahagyva = "#01DF3A";
                 string rogzitve = "#ee9629";
                 string elutasitva = "#ee2121";
+                string torles = "#813a4c";
                 string kivalasztott = "";
-                if (item.JovaStatus == "Rogzitve")
+
+                if (item.TorlesStatus == TorlesStatus.BejelentettKerelem.ToString())
+                    kivalasztott = torles;
+                else if (item.JovaStatus == JovaHagyasStatus.Rogzitve.ToString())
                     kivalasztott = rogzitve;
-                else if (item.JovaStatus == "Jovahagyva")
+                else if (item.JovaStatus == JovaHagyasStatus.Jovahagyva.ToString())
                     kivalasztott = jovahagyva;
-                else if (item.JovaStatus == "Elutasitva")
+                else if (item.JovaStatus == JovaHagyasStatus.Elutasitva.ToString())
                     kivalasztott = elutasitva;
                 else
                     kivalasztott = "#989090";

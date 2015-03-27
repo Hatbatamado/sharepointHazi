@@ -44,6 +44,8 @@ namespace hazi.WEB.Pages
 
             if (lista.Count == 0)
                 Mentes.Visible = false;
+            else
+                Mentes.Visible = true;
         }
 
         private void DDLFeltoltes()
