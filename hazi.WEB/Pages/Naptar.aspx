@@ -6,9 +6,25 @@
 <head runat="server">
     <title></title>
     <link rel='stylesheet' href='/Scripts/fullcalendar.min.css' />
+    <link rel='stylesheet' href='/Styles/NaptarStyle.css' />
 </head>
 <body>
     <form id="form1" runat="server">
+        <div id="jova">
+            Jóváhagyva
+        </div>
+        <div id="rogzitve">
+            Rögzítve
+        </div>
+        <div id="elutasitva">
+            Elutasítva
+        </div>
+        <div id="torles">
+            Törlés
+        </div>
+        <div id="egyeb">
+            Egyéb
+        </div>
         <div id="calendar"></div>
         <div id="dialog"></div>
     </form>
@@ -52,7 +68,7 @@
 
     var popUpObj;
     function showModalPopUp(id) {
-        popUpObj = window.open("/Pages/Bejelento.aspx?id="+id+"&status=popup",
+        popUpObj = window.open("/Pages/Bejelento.aspx?id=" + id + "&status=popup",
         "ModalPopUp",
         "toolbar=no," +
         "scrollbars=no," +
@@ -65,7 +81,7 @@
         "left = 490," +
         "top=300"
         );
-        popUpObj.focus();        
+        popUpObj.focus();
     }
 </script>
 </html>

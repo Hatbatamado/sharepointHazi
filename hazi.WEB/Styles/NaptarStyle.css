@@ -1,0 +1,44 @@
+﻿body .fc {
+    padding-top: 10px;
+}
+
+#jova {
+    background-color: #01DF3A;
+    display: inline-block;
+    width: 110px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#rogzitve {
+    background-color: #ee9629;
+    display: inline-block;
+    width: 110px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#elutasitva {
+    background-color: #ee2121;
+    display: inline-block;
+    width: 110px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#torles {
+    background-color: #813a4c;
+    display: inline-block;
+    width: 110px;
+    text-align: center;
+    position: relative;
+    font-weight: bold;
+}
+
+#egyeb {
+    background-color: #989090;
+    display: inline-block;
+    width: 110px;
+    text-align: center;
+    font-weight: bold;
+}
