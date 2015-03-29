@@ -263,6 +263,7 @@
     <Compile Include="Logic\DateYearMonth.cs" />
     <Compile Include="Logic\Error404.cs" />
     <Compile Include="Logic\Enumok.cs" />
+    <Compile Include="Logic\HeaderMenu.cs" />
     <Compile Include="Logic\JovahagyBLL.cs" />
     <Compile Include="Logic\OsszegzoBLL.cs" />
     <Compile Include="Logic\RoleActions.cs" />

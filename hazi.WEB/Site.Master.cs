@@ -1,5 +1,4 @@
 ﻿using hazi.WEB.Logic;
-using hazi.WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -16,6 +15,8 @@ namespace hazi.WEB
         private const string AntiXsrfTokenKey = "__AntiXsrfToken";
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
+
+        #region Tulajdonságok
         public Label Uzenet
         {
             get
@@ -39,6 +40,55 @@ namespace hazi.WEB
                 Header = value;
             }
         }
+
+        public Repeater BalMRep
+        {
+            get
+            {
+                return BalMenuRepeater;
+            }
+            set
+            {
+                BalMenuRepeater = value;
+            }
+        }
+
+        public Repeater JobbMRep
+        {
+            get
+            {
+                return JobbMenuRepeater;
+            }
+            set
+            {
+                JobbMenuRepeater = value;
+            }
+        }
+
+        public System.Web.UI.HtmlControls.HtmlGenericControl LogOffGombDiv
+        {
+            get
+            {
+                return logOffButton;
+            }
+            set
+            {
+                logOffButton = value;
+            }
+        }
+
+        public UpdatePanel SiteMasterUpdatePanel
+        {
+            get
+            {
+                return MasterMainUpdatePanel;
+            }
+            set
+            {
+                MasterMainUpdatePanel = value;
+            }
+        }
+        #endregion
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -99,42 +149,10 @@ namespace hazi.WEB
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            /*if (RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.Admin.ToString()))
+            if (!IsPostBack)
             {
-                AdminPage.Visible = true;
-                OsszegzoForm.Visible = true;
+                HeaderMenu.HeaderMenuBeallitas(logOffButton, BalMenuRepeater, JobbMenuRepeater);
             }
-            else if (RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.Jovahagyok.ToString()))
-                OsszegzoForm.Visible = true;*/
-            List<MyMenuItem> balmenuitems = new List<MyMenuItem>();
-            List<MyMenuItem> jobbmenuitems = new List<MyMenuItem>();
-            //Bal Menü
-            if (HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                balmenuitems.Add(new MyMenuItem() { Text = "Bejelentések", Link = "/" });
-
-                if (!RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.NormalUser.ToString()))
-                    balmenuitems.Add(new MyMenuItem() { Text = "Jóváhagyások", Link = "/Pages/OsszegzoForm" });
-
-                if (RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.Admin.ToString()))
-                    jobbmenuitems.Add(new MyMenuItem() { Text = "Admin oldal", Link = "/Pages/AdminPage" });
-
-                jobbmenuitems.Add(new MyMenuItem() { Text = "Hello, " + HttpContext.Current.User.Identity.Name +
-                    " !", Link = "/Account/Manage" });
-                logOffButton.Visible = true;
-            }
-            else
-            {
-                jobbmenuitems.Add(new MyMenuItem() { Text = "Login", Link = "/Account/Login" });
-                jobbmenuitems.Add(new MyMenuItem() { Text = "Register", Link = "/Account/Register" });
-                logOffButton.Visible = false;
-            }
-
-            BalMenuRepeater.DataSource = balmenuitems;
-            BalMenuRepeater.DataBind();
-
-            JobbMenuRepeater.DataSource = jobbmenuitems;
-            JobbMenuRepeater.DataBind();            
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)

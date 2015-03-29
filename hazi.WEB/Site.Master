@@ -47,37 +47,41 @@
 
         <div class="Header" runat="server" id="Header">
             <div class="Menu">
-                <asp:Repeater runat="server" ID="BalMenuRepeater">
-                    <HeaderTemplate>
-                        <ul class="BalMenu">
-                    </HeaderTemplate>
-                    <ItemTemplate>
-                        <li class="BalMenuItem">
-                            <asp:HyperLink runat="server" ID="BalMenuItemHL" CssClass="BalMenuLink"
-                                Text='<%# Eval("Text") %>' NavigateUrl='<%# Eval("Link") %>'></asp:HyperLink>
-                        </li>
-                    </ItemTemplate>
-                    <FooterTemplate>
-                        </ul>
-                    </FooterTemplate>
-                </asp:Repeater>
-                <asp:Repeater runat="server" ID="JobbMenuRepeater">
-                    <HeaderTemplate>
-                        <ul class="JobbMenu">
-                    </HeaderTemplate>
-                    <ItemTemplate>
-                        <li class="JobbMenuItem">
-                            <asp:HyperLink runat="server" ID="JobbMenuItemHL" CssClass="JobbMenuLink"
-                                Text='<%# Eval("Text") %>' NavigateUrl='<%# Eval("Link") %>'></asp:HyperLink>
-                        </li>
-                    </ItemTemplate>
-                    <FooterTemplate>
-                        </ul>
-                    </FooterTemplate>
-                </asp:Repeater>
-                <div class="logOffButton" id="logOffButton" runat="server" visible="false">
-                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="/" OnLoggingOut="Unnamed_LoggingOut" />
-                </div>
+                <asp:UpdatePanel runat="server" ID="MasterMainUpdatePanel" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <asp:Repeater runat="server" ID="BalMenuRepeater">
+                            <HeaderTemplate>
+                                <ul class="BalMenu">
+                            </HeaderTemplate>
+                            <ItemTemplate>
+                                <li class="BalMenuItem">
+                                    <asp:HyperLink runat="server" ID="BalMenuItemHL" CssClass="BalMenuLink"
+                                        Text='<%# Eval("Text") %>' NavigateUrl='<%# Eval("Link") %>'></asp:HyperLink>
+                                </li>
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                </ul>
+                            </FooterTemplate>
+                        </asp:Repeater>
+                        <asp:Repeater runat="server" ID="JobbMenuRepeater">
+                            <HeaderTemplate>
+                                <ul class="JobbMenu">
+                            </HeaderTemplate>
+                            <ItemTemplate>
+                                <li class="JobbMenuItem">
+                                    <asp:HyperLink runat="server" ID="JobbMenuItemHL" CssClass="JobbMenuLink"
+                                        Text='<%# Eval("Text") %>' NavigateUrl='<%# Eval("Link") %>'></asp:HyperLink>
+                                </li>
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                </ul>
+                            </FooterTemplate>
+                        </asp:Repeater>
+                        <div class="logOffButton" id="logOffButton" runat="server" visible="false">
+                            <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="/" OnLoggingOut="Unnamed_LoggingOut" />
+                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
         </div>
         <div class="container body-content">

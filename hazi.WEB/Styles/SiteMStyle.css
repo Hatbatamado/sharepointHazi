@@ -49,12 +49,13 @@
 
     .JobbMenuItem > a {
         color: gray;
-        text-decoration: none;
+        text-decoration: none !important;
         font-size: 14pt;
     }
 
         .JobbMenuItem > a:hover {
             color: white;
+            text-decoration: none !important;
         }
 ul {
   margin-bottom: 0px;

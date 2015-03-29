@@ -30,19 +30,31 @@ namespace hazi.WEB.Account
                 if (User.Identity.IsAuthenticated)
                 {
                     SikerBelep();
+                    HeaderMenu.HeaderMenuBeallitas(Master.LogOffGombDiv, Master.BalMRep, Master.JobbMRep);
                 }
                 else
                 {
                     SikerKilep();
+                    HeaderMenu.HeaderMenuBeallitas(Master.LogOffGombDiv, Master.BalMRep, Master.JobbMRep);
                 }
             }
             if (Request["__EVENTARGUMENT"] == "SikeresKilepes")
             {
                 SikerKilep();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "asd", "KilepesHeader();", true);
             }
             else if (Request["__EVENTARGUMENT"] == "SikeresBelepes")
             {
                 SikerBelep();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "asd", "BelepesHeader();", true);
+            }
+            else if (Request["__EVENTARGUMENT"] == "SikeresKilepesHeader")
+            {
+                HeaderMenu.HeaderMenuBeallitas(Master.LogOffGombDiv, Master.BalMRep, Master.JobbMRep);
+            }
+            else if (Request["__EVENTARGUMENT"] == "SikeresBelepesHeader")
+            {
+                HeaderMenu.HeaderMenuBeallitas(Master.LogOffGombDiv, Master.BalMRep, Master.JobbMRep);
             }
         }
 
@@ -51,28 +63,12 @@ namespace hazi.WEB.Account
             LoginForm.Visible = false;
             SucLogin.Visible = true;
             helloLabel.Text = "Hello " + User.Identity.Name;
-            //oldal betöltése hiánya miatt nem látszódik fent a link az oldalra
-            if (RoleActions.IsInRole(User.Identity.Name, RegisterUserAs.Admin.ToString()))
-            {
-                SzerepB.Visible = true;
-                OsszegB.Visible = true;
-            }
-            else if (RoleActions.IsInRole(User.Identity.Name, RegisterUserAs.Jovahagyok.ToString()))
-                OsszegB.Visible = true;
         }
 
         private void SikerKilep()
         {
             LoginForm.Visible = true;
             SucLogin.Visible = false;
-            //oldal betöltése hiánya miatt nem látszódik fent a link az oldalra
-            if (RoleActions.IsInRole(User.Identity.Name, RegisterUserAs.Admin.ToString()))
-            {
-                SzerepB.Visible = false;
-                OsszegB.Visible = false;
-            }
-            else if (RoleActions.IsInRole(User.Identity.Name,RegisterUserAs.Jovahagyok.ToString()))
-                OsszegB.Visible = false;
         }
 
         protected void LogIn(object sender, EventArgs e)

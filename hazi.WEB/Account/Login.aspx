@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="Log in" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="hazi.WEB.Account.Login" Async="true" %>
+<%@ MasterType VirtualPath="~/Site.Master" %>
 
 <%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
@@ -53,12 +54,6 @@
                             </p>
                         </section>
                     </div>
-
-                    <%--<div class="col-md-4">
-                <section id="socialLoginForm">
-                    <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
-                </section>
-            </div>--%>
                 </div>
             </asp:PlaceHolder>
             <asp:PlaceHolder runat="server" ID="SucLogin" Visible="false">
@@ -66,13 +61,7 @@
                 <br />
                 <br />
                 <asp:Button ID="buttonLogoff" runat="server" Text="Log off" OnClick="buttonLogoff_Click" />
-                <br />
-                <br />
             </asp:PlaceHolder>
-            <asp:Button ID="SzerepB" runat="server" Text="Admin oldal" OnClick="SzerepB_Click" Visible="false" />
-            <br />
-            <br />
-            <asp:Button ID="OsszegB" runat="server" Text="Jóváhagyások" OnClick="OsszegB_Click" Visible="false" />
         </ContentTemplate>
     </asp:UpdatePanel>
 
@@ -82,6 +71,12 @@
         }
         function Kilepes() {
             __doPostBack('<%= MainUpdatePanel.ClientID %>', 'SikeresKilepes');
+        }
+        function KilepesHeader() {
+            __doPostBack('<%= Master.SiteMasterUpdatePanel.ClientID %>', 'SikeresKilepesHeader');
+        }
+        function BelepesHeader() {
+            __doPostBack('<%= Master.SiteMasterUpdatePanel.ClientID %>', 'SikeresBelepesHeader');
         }
     </script>
 </asp:Content>

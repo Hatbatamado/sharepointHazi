@@ -112,21 +112,15 @@ namespace hazi.WEB.Account {
         protected global::System.Web.UI.WebControls.Button buttonLogoff;
         
         /// <summary>
-        /// SzerepB control.
+        /// Master property.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Auto-generated property.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SzerepB;
-        
-        /// <summary>
-        /// OsszegB control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button OsszegB;
+        public new hazi.WEB.SiteMaster Master {
+            get {
+                return ((hazi.WEB.SiteMaster)(base.Master));
+            }
+        }
     }
 }
