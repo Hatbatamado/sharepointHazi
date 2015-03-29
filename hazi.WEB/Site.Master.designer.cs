@@ -13,22 +13,40 @@ namespace hazi.WEB {
     public partial class SiteMaster {
         
         /// <summary>
-        /// OsszegzoForm control.
+        /// Header control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor OsszegzoForm;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Header;
         
         /// <summary>
-        /// AdminPage control.
+        /// BalMenuRepeater control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor AdminPage;
+        protected global::System.Web.UI.WebControls.Repeater BalMenuRepeater;
+        
+        /// <summary>
+        /// JobbMenuRepeater control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater JobbMenuRepeater;
+        
+        /// <summary>
+        /// logOffButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl logOffButton;
         
         /// <summary>
         /// UzenetFelhasznalonak control.

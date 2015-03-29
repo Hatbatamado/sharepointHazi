@@ -78,6 +78,10 @@ namespace hazi.WEB.Pages
                         Bejelentes.UjBejelentes = true;
                         AlapErtekekBeallitasa();
                     }
+                    if (Request.QueryString["status"] == "popup")
+                    {
+                        Master.HeaderDiv.Visible = false;
+                    }
                 }
                 else
                 {

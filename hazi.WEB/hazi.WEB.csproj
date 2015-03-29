@@ -208,6 +208,7 @@
     <Content Include="Services.asmx" />
     <Content Include="Site.Master" />
     <Content Include="Styles\NaptarStyle.css" />
+    <Content Include="Styles\SiteMStyle.css" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -270,6 +271,7 @@
     <Compile Include="Logic\Users.cs" />
     <Compile Include="Logic\UsersBLL.cs" />
     <Compile Include="Logic\Utility.cs" />
+    <Compile Include="Models\MyMenuItem.cs" />
     <Compile Include="Pages\About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -369,6 +371,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\hazi.BLL\hazi.BLL.csproj">

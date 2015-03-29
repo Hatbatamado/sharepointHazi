@@ -1,0 +1,79 @@
+﻿body {
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+.Header {
+    width: 100%;
+    height: 40px;
+    background-color: #3a3a3a;
+    padding-top: 5px;
+}
+
+/*Bal Menü*/
+.BalMenu {
+    margin-left: 175px;
+    float:left;
+}
+
+.BalMenuItem {
+    list-style: none !important;
+    display: inline-block;
+    padding-right: 30px;
+}
+
+    .BalMenuItem > a {
+        color: gray;
+        text-decoration: none !important;
+        font-size: 14pt;
+    }
+
+        .BalMenuItem > a:hover {
+            color: white;
+        }
+/************************************/
+
+/*Jobb Menü*/
+
+.JobbMenu {
+    float: right;
+    margin-right: 375px;
+    display: inline-block;
+}
+
+.JobbMenuItem {
+    list-style: none !important;
+    display: inline-block;
+    padding-left: 30px;
+}
+
+    .JobbMenuItem > a {
+        color: gray;
+        text-decoration: none;
+        font-size: 14pt;
+    }
+
+        .JobbMenuItem > a:hover {
+            color: white;
+        }
+ul {
+  margin-bottom: 0px;
+}
+
+/*log off gomb jobb oldalt*/
+.logOffButton {
+    float:right;
+    position:absolute;
+    left:85%;
+}
+
+.logOffButton > a {
+        color: gray;
+        text-decoration: none !important;
+        font-size: 14pt;
+    }
+
+        .logOffButton > a:hover {
+            color: white;
+        }
+/************************************/
