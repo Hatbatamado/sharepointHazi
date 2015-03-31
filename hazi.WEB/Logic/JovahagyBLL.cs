@@ -361,5 +361,42 @@ namespace hazi.WEB.Logic
             }
         }
 
+
+        internal static AttekintoElem GetJovahagyByEvByUser(DateTime date, string user)
+        {
+            AttekintoElem elem;
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                elem = (from b in db.IdoBejelentes1
+                        where b.KezdetiDatum.Year == date.Year &&
+                        b.KezdetiDatum.Month == date.Month &&
+                        b.KezdetiDatum.Day == date.Day && b.UserName == user
+                        select new AttekintoElem
+                        {
+                            Datum = b.KezdetiDatum,
+                            Statusz = b.Statusz,
+                            Jogcim = b.Jogcim
+                        }).SingleOrDefault();
+
+                if (elem != null)
+                {
+                    elem.JogcimNev = elem.Jogcim.Cim.ToUpper()[0];
+
+                    string[] seged = elem.Statusz.Split('&');
+                    if (seged.Length < 2)
+                        return null;
+                    else
+                        elem.Statusz = seged[1];
+
+                    elem.Statusz = "kockak " + elem.Statusz;
+                }
+                else
+                {
+                    elem = new AttekintoElem() { Statusz = "kockak", JogcimNev = '.' };
+                }
+            }
+
+            return elem;
+        }
     }
 }

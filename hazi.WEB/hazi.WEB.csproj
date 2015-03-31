@@ -152,6 +152,7 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="Pages\AdminPage.aspx" />
+    <Content Include="Pages\Attekinto.aspx" />
     <Content Include="Pages\Bejelento.aspx" />
     <Content Include="Pages\Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -209,6 +210,7 @@
     <Content Include="Site.Master" />
     <Content Include="Styles\NaptarStyle.css" />
     <Content Include="Styles\SiteMStyle.css" />
+    <Content Include="Styles\AttekintoStyle.css" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -259,12 +261,15 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Logic\AttekintoElem.cs" />
+    <Compile Include="Logic\AttekintoViewModel.cs" />
     <Compile Include="Logic\Bejelentes.cs" />
     <Compile Include="Logic\DateYearMonth.cs" />
     <Compile Include="Logic\Error404.cs" />
     <Compile Include="Logic\Enumok.cs" />
     <Compile Include="Logic\HeaderMenu.cs" />
     <Compile Include="Logic\JovahagyBLL.cs" />
+    <Compile Include="Logic\Napokszama.cs" />
     <Compile Include="Logic\OsszegzoBLL.cs" />
     <Compile Include="Logic\RoleActions.cs" />
     <Compile Include="Logic\Statusz.cs" />
@@ -288,6 +293,13 @@
     </Compile>
     <Compile Include="Pages\AdminPage.aspx.designer.cs">
       <DependentUpon>AdminPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Attekinto.aspx.cs">
+      <DependentUpon>Attekinto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Attekinto.aspx.designer.cs">
+      <DependentUpon>Attekinto.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Bejelento.aspx.cs">
       <DependentUpon>Bejelento.aspx</DependentUpon>

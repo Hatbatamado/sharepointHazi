@@ -1,0 +1,31 @@
+﻿body {
+}
+
+.napokSzama{
+    display: inline-block;
+}
+
+.AttekintoTablazat{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.kockak {
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    padding-right: 3px;
+    background-color:lightgreen;
+    border: 1px solid gray;
+    text-align:center;
+    color: lightgreen;
+}
+
+.HonapNeve {
+    display: inline-block;
+    width: 100px;
+}
