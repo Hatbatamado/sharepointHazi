@@ -7,10 +7,15 @@ namespace hazi.WEB.Logic
 {
     public enum TorlesStatus
     {
+        [EnumDisplayStringAttribute("Inaktív")]
         Inaktiv,
+        [EnumDisplayStringAttribute("BejelentettKérelem")]
         BejelentettKerelem,
+        [EnumDisplayStringAttribute("ElfogadottKérelem")]
         ElfogadottKerelem,
+        [EnumDisplayStringAttribute("Törlés")]
         Torles,
+        [EnumDisplayStringAttribute("Elutasított")]
         Elutasitott
     };
 

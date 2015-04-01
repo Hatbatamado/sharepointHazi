@@ -20,7 +20,7 @@
             <asp:BoundField DataField="JogcimNev" HeaderText="Jogcím" />
             <asp:BoundField DataField="Ido" HeaderText="Idő" />
             <asp:BoundField DataField="OsszIdo" HeaderText="Jelenlét idő / hét" />
-            <asp:BoundField DataField="JovaStatus" HeaderText="Státusz" />
+            <asp:BoundField DataField="JovaStatusMegjelenes" HeaderText="Státusz" />
             <asp:TemplateField>
                 <HeaderTemplate>
                     <asp:Label ID="StatuszLabel" runat="server" Text="Új státusz"></asp:Label>

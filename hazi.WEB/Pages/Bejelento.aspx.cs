@@ -237,7 +237,7 @@ namespace hazi.WEB.Pages
             if (Request.QueryString["status"] == "popup")
             {
                 Response.Write("<script>window.close();</" + "script>");
-                Response.End();
+                Response.End();                
             }
             else
                 //Home-ra navigálás

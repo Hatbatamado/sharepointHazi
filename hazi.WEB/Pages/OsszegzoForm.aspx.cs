@@ -50,9 +50,9 @@ namespace hazi.WEB.Pages
 
         private void DDLFeltoltes()
         {
-            JovahagySzures.Items.Add(new ListItem() { Value = JovaHagyasStatus.Rogzitve.ToString(), Text = "Rögzítve" });
-            JovahagySzures.Items.Add(new ListItem() { Value = JovaHagyasStatus.Jovahagyva.ToString(), Text = "Jóváhagyva" });
-            JovahagySzures.Items.Add(new ListItem() { Value = JovaHagyasStatus.Elutasitva.ToString(), Text = "Elutasítva" });
+            JovahagySzures.Items.Add(new ListItem() { Value = JovaHagyasStatus.Rogzitve.ToString(), Text = JovaHagyasStatus.Rogzitve.ToDisplayString() });
+            JovahagySzures.Items.Add(new ListItem() { Value = JovaHagyasStatus.Jovahagyva.ToString(), Text = JovaHagyasStatus.Jovahagyva.ToDisplayString() });
+            JovahagySzures.Items.Add(new ListItem() { Value = JovaHagyasStatus.Elutasitva.ToString(), Text = JovaHagyasStatus.Elutasitva.ToDisplayString() });
             JovahagySzures.Items.Add(new ListItem() { Value = "Mind", Text = "Mind" });
         }
 

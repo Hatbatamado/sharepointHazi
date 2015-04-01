@@ -45,11 +45,11 @@ namespace hazi.WEB.Logic
             {
                 item.JovaStatuszList = new List<ListItem>();
                 item.JovaStatuszList.Add(
-                    new ListItem { Value = JovaHagyasStatus.Rogzitve.ToString(), Text = "Rögzítve" });
+                    new ListItem { Value = JovaHagyasStatus.Rogzitve.ToString(), Text = JovaHagyasStatus.Rogzitve.ToDisplayString() });
                 item.JovaStatuszList.Add(
-                    new ListItem { Value = JovaHagyasStatus.Jovahagyva.ToString(), Text = "Jóváhagyva" });
+                    new ListItem { Value = JovaHagyasStatus.Jovahagyva.ToString(), Text = JovaHagyasStatus.Jovahagyva.ToDisplayString() });
                 item.JovaStatuszList.Add(
-                    new ListItem { Value = JovaHagyasStatus.Elutasitva.ToString(), Text = "Elutasítva" });
+                    new ListItem { Value = JovaHagyasStatus.Elutasitva.ToString(), Text = JovaHagyasStatus.Elutasitva.ToDisplayString() });
 
                 item.JovaStatus = StatuszDarabolas(item.Statusz, 1);
                 item.TorlesStatus = StatuszDarabolas(item.Statusz, 0);
@@ -121,7 +121,7 @@ namespace hazi.WEB.Logic
                 {
                     if (item.JogcimNev == "Rendes szabadság")
                     {
-                        JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Rogzitve.ToString());                      
+                        JovahagyStatuszBeallit(item, (TorlesStatus)Enum.Parse(typeof(TorlesStatus), seged[0]), JovaHagyasStatus.Rogzitve);                      
                     }
                     else if (item.JogcimNev == "Jelenlét")
                     {
@@ -129,7 +129,7 @@ namespace hazi.WEB.Logic
                         {
                             if (item.OsszIdo != 0)
                             {
-                                JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Jovahagyva.ToString());
+                                JovahagyStatuszBeallit(item, (TorlesStatus)Enum.Parse(typeof(TorlesStatus), seged[0]), JovaHagyasStatus.Jovahagyva);
                             }
                             else
                             {
@@ -140,19 +140,19 @@ namespace hazi.WEB.Logic
                                 }
                                 OsszIdo(lista, item.UserName);
                                 if (item.OsszIdo < 40)
-                                    JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Jovahagyva.ToString());
+                                JovahagyStatuszBeallit(item, (TorlesStatus)Enum.Parse(typeof(TorlesStatus), seged[0]), JovaHagyasStatus.Jovahagyva);
                                 else
-                                    JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Rogzitve.ToString());
+                                JovahagyStatuszBeallit(item, (TorlesStatus)Enum.Parse(typeof(TorlesStatus), seged[0]), JovaHagyasStatus.Rogzitve);
                             }
                         }
                         else
                         {
-                            JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Rogzitve.ToString());
+                            JovahagyStatuszBeallit(item, (TorlesStatus)Enum.Parse(typeof(TorlesStatus), seged[0]), JovaHagyasStatus.Rogzitve);
                         }
                     }
                     else
                     {
-                        JovahagyStatuszBeallit(item, seged[0], JovaHagyasStatus.Jovahagyva.ToString());
+                        JovahagyStatuszBeallit(item, (TorlesStatus)Enum.Parse(typeof(TorlesStatus), seged[0]), JovaHagyasStatus.Jovahagyva);
                     }
                 }
                 else
@@ -165,7 +165,7 @@ namespace hazi.WEB.Logic
                     }
                     else
                     {
-                        item.TorlesStatus = seged[0];
+                        item.TorlesStatus = ((TorlesStatus)Enum.Parse(typeof(TorlesStatus), seged[0])).ToString();
                     }
                 }
             }
@@ -173,9 +173,12 @@ namespace hazi.WEB.Logic
             {
                 if (seged[0] == TorlesStatus.Inaktiv.ToString())
                 {
-                    item.JovaStatus = seged[1];
+                    JovaHagyasStatus jova = (JovaHagyasStatus)Enum.Parse(typeof(JovaHagyasStatus), seged[1]);
+                    item.JovaStatus = jova.ToString();
+                    item.JovaStatusMegjelenes = jova.ToDisplayString();
                 }
-                item.TorlesStatus = seged[0];
+                TorlesStatus torles = (TorlesStatus)Enum.Parse(typeof(TorlesStatus), seged[0]);
+                item.TorlesStatus = torles.ToString();
             }
         }
 
@@ -185,12 +188,13 @@ namespace hazi.WEB.Logic
         /// <param name="item"></param>
         /// <param name="torlesStatusz"></param>
         /// <param name="jovaStatusz"></param>
-        private static void JovahagyStatuszBeallit(UjBejelentes item, string torlesStatusz, string jovaStatusz)
+        private static void JovahagyStatuszBeallit(UjBejelentes item, TorlesStatus torlesStatusz, JovaHagyasStatus jovaStatusz)
         {
-            item.Statusz = torlesStatusz + "&" + jovaStatusz;
+            item.Statusz = torlesStatusz.ToString() + "&" + jovaStatusz.ToString();
             UjStatusz(item.ID, item.Statusz);
-            item.TorlesStatus = torlesStatusz;
-            item.JovaStatus = jovaStatusz;
+            item.TorlesStatus = torlesStatusz.ToString();
+            item.JovaStatus = jovaStatusz.ToString();
+            item.JovaStatusMegjelenes = jovaStatusz.ToDisplayString();
         }
 
         /// <summary>

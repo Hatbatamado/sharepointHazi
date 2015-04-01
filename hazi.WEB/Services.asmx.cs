@@ -89,11 +89,11 @@ namespace hazi.WEB
 
                 if (item.TorlesStatus == TorlesStatus.BejelentettKerelem.ToString())
                     kivalasztott = torles;
-                else if (item.JovaStatus == JovaHagyasStatus.Rogzitve.ToString())
+                else if (item.JovaStatus == JovaHagyasStatus.Rogzitve.ToDisplayString())
                     kivalasztott = rogzitve;
-                else if (item.JovaStatus == JovaHagyasStatus.Jovahagyva.ToString())
+                else if (item.JovaStatus == JovaHagyasStatus.Jovahagyva.ToDisplayString())
                     kivalasztott = jovahagyva;
-                else if (item.JovaStatus == JovaHagyasStatus.Elutasitva.ToString())
+                else if (item.JovaStatus == JovaHagyasStatus.Elutasitva.ToDisplayString())
                     kivalasztott = elutasitva;
                 else
                     kivalasztott = "#989090";

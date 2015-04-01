@@ -60,7 +60,7 @@
                                     <asp:BoundField DataField="UserName" HeaderText="Felhasználó" />
                                     <asp:BoundField DataField="LastEdit" HeaderText="Utolsó módosító" />
                                     <asp:BoundField DataField="LastEditTime" HeaderText="Utoljára módosítva" />
-                                    <asp:BoundField DataField="JovaStatus" HeaderText="Státusz" />
+                                    <asp:BoundField DataField="JovaStatusMegjelenes" HeaderText="Státusz" />
                                     <asp:TemplateField HeaderText="Törlés státusz">
                                         <ItemTemplate>
                                             <asp:CheckBox ID="Remove" runat="server" Visible="false"></asp:CheckBox>
@@ -103,6 +103,10 @@
         });
         function TextChanged() {
             __doPostBack('<%= MainUpdatePanel.ClientID %>', 'FilterTextChanged');
+        }
+        function NaptarRefresh()
+        {
+            alert('default');
         }
     </script>
 </asp:Content>

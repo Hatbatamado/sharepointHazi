@@ -21,6 +21,7 @@ namespace hazi.DAL
         public string JogcimNev { get; set; }
         public string TorlesStatus { get; set; }
         public string JovaStatus { get; set; }
+        public string JovaStatusMegjelenes { get; set; }
         public string Statusz { get; set; }
         public Ido Ido { get; set; }
         public double OsszIdo { get; set; }

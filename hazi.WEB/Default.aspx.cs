@@ -254,8 +254,10 @@ namespace hazi.WEB
             {
                 DropDownList ddlTorles = (bejelentesekLista.HeaderRow.FindControl("DDLTorles") as DropDownList);
                 ddlTorles.Items.Add(new ListItem());
-                ddlTorles.Items.Add(new ListItem() { Text = "Inaktív", Value = TorlesStatus.Inaktiv.ToString() });
-                ddlTorles.Items.Add(new ListItem() { Text = "BejelentettKérelem", Value = TorlesStatus.BejelentettKerelem.ToString() });
+                ddlTorles.Items.Add(new ListItem() {
+                    Text = TorlesStatus.Inaktiv.ToDisplayString(), Value = TorlesStatus.Inaktiv.ToString() });
+                ddlTorles.Items.Add(new ListItem() {
+                    Text = TorlesStatus.BejelentettKerelem.ToDisplayString(), Value = TorlesStatus.BejelentettKerelem.ToString() });
             }
 
             if (uzenet != string.Empty)

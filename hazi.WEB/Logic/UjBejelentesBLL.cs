@@ -79,7 +79,7 @@ namespace hazi.WEB.Logic
                         {
                             item.TorlesStatuszList = new List<ListItem>();
                             item.TorlesStatuszList.Add(
-                                new ListItem { Value = TorlesStatus.Inaktiv.ToString(), Text = "Inaktív" });
+                                new ListItem { Value = TorlesStatus.Inaktiv.ToString(), Text = TorlesStatus.Inaktiv.ToDisplayString() });
 
                             //db-ben statusz nélküli elemek kapnak inaktív státuszt
                             if (item.TorlesStatus == null)
@@ -288,8 +288,8 @@ namespace hazi.WEB.Logic
                 if (item.TorlesStatus == null)
                     item.TorlesStatus = TorlesStatus.Inaktiv.ToString();
 
-                string[] seged = item.TorlesStatus.Split('&');
-                item.TorlesStatus = seged[0];
+                /*string[] seged = item.TorlesStatus.Split('&');
+                item.TorlesStatus = ((TorlesStatus)Enum.Parse(typeof(TorlesStatus), seged[0])).ToDisplayString();*/
             }
         }
 
@@ -300,11 +300,11 @@ namespace hazi.WEB.Logic
         public static List<ListItem> ListItems()
         {
             List<ListItem> items = new List<ListItem>();
-            items.Add(new ListItem { Value = TorlesStatus.Inaktiv.ToString(), Text = "Inaktív" });
-            items.Add(new ListItem { Value = TorlesStatus.BejelentettKerelem.ToString(), Text = "BejelentettKérelem" });
-            items.Add(new ListItem { Value = TorlesStatus.ElfogadottKerelem.ToString(), Text = "ElfogadottKérelem" });
-            items.Add(new ListItem { Value = TorlesStatus.Elutasitott.ToString(), Text = "Elutasított" });
-            items.Add(new ListItem { Value = TorlesStatus.Torles.ToString(), Text = "Törlés" });
+            items.Add(new ListItem { Value = TorlesStatus.Inaktiv.ToString(), Text = TorlesStatus.Inaktiv.ToDisplayString() });
+            items.Add(new ListItem { Value = TorlesStatus.BejelentettKerelem.ToString(), Text = TorlesStatus.BejelentettKerelem.ToDisplayString() });
+            items.Add(new ListItem { Value = TorlesStatus.ElfogadottKerelem.ToString(), Text = TorlesStatus.ElfogadottKerelem.ToDisplayString() });
+            items.Add(new ListItem { Value = TorlesStatus.Elutasitott.ToString(), Text = TorlesStatus.Elutasitott.ToDisplayString() });
+            items.Add(new ListItem { Value = TorlesStatus.Torles.ToString(), Text = TorlesStatus.Torles.ToDisplayString() });
 
             return items;
         }
