@@ -72,6 +72,10 @@ namespace hazi.WEB.Pages
                             HibaUzenetFelhasznalonak(hibak.IbNincsDBben);
                         else
                             AdatokFeltolteseIdAlapjan(ib);
+                        if (ib.Jogcim.Inaktiv == true)
+                        {
+                            InaktivJogim();
+                        }
                     }
                     else
                     {
@@ -89,6 +93,21 @@ namespace hazi.WEB.Pages
                     Response.Redirect("/Account/Login.aspx");
                 }
             }
+        }
+
+        private void InaktivJogim()
+        {
+            save.Visible = false;
+            cancel.Visible = false;
+            datepicker.Enabled = false;
+            ora1.Enabled = false;
+            ora2.Enabled = false;
+            perc1.Enabled = false;
+            perc2.Enabled = false;
+            DropDownList1.Enabled = false;
+            Master.Uzenet.Visible = true;
+            Master.Uzenet.Text = "A jogcím amire elmentette a bejelentését ezelőtt megváltozott!" +
+        "Így a mentési joga ennél a bejelentésnél elveszett! Csak megtekintési joga van!";
         }
 
         #region DDL-ek feltoltese + alaperteke
@@ -284,20 +303,13 @@ namespace hazi.WEB.Pages
                 ujBejelentoUser = User.Identity.Name;
             else
                 ujBejelentoUser = "";
-            string uzenet = string.Empty;
+
             if (!RoleActions.IsInRole(User.Identity.Name, RegisterUserAs.Admin.ToString()))
-                uzenet = IdoBejelentesBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
+                IdoBejelentesBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
                              DropDownList1.SelectedValue, ujBejelentoUser, User.Identity.Name, TorlesStatus.Inaktiv.ToString(), false);
             else
-                uzenet = IdoBejelentesBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
+                IdoBejelentesBLL.IdoBejelentesMentes(Id, Bejelentes.Kezdeti, Bejelentes.Vege,
                              DropDownList1.SelectedValue, ujBejelentoUser, User.Identity.Name, TorlesStatus.Inaktiv.ToString(), true);
-
-            if (uzenet != string.Empty)
-            {
-                Master.Uzenet.Visible = true;
-                Master.Uzenet.Text = uzenet;
-                return;
-            }
 
             //jóváhagyásos státuszok megfelelő beállítása:
             JovahagyBLL.GetJovahagyAll(string.Empty);

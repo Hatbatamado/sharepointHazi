@@ -20,7 +20,7 @@ namespace hazi.BLL
         /// <param name="LastEditUser"></param>
         /// <param name="torlesStatus"></param>
         /// <returns></returns>
-        public static string IdoBejelentesMentes(int? ID, DateTime Kezdeti, DateTime Vege,
+        public static void IdoBejelentesMentes(int? ID, DateTime Kezdeti, DateTime Vege,
             string JogcimNev, string UserName, string LastEditUser, string torlesStatus, bool admin)
         {
             using (hazi2Entities db = new hazi2Entities())
@@ -34,9 +34,6 @@ namespace hazi.BLL
                           where b.ID == ID
                           select b).Single();
                 }
-                if (ib.Jogcim != null && ib.Jogcim.Inaktiv == true && admin == false)
-                    return "A jogcím amire elmentette a bejelentését ezelőtt megváltozott!"+
-                        "Így a mentési joga ennél a bejelentésnél elveszett! Csak megtekintési joga van!";
 
                 ib.KezdetiDatum = Kezdeti;
                 ib.VegeDatum = Vege;
@@ -58,7 +55,6 @@ namespace hazi.BLL
 
                 db.SaveChanges();
             }
-            return string.Empty;
         }
 
         /// <summary>
@@ -81,6 +77,7 @@ namespace hazi.BLL
                             var bej = (from b in db.IdoBejelentes1
                                        where b.ID == id
                                        select b).Single();
+                            bej.JogcimStatusz = (bool)bej.Jogcim.Inaktiv;
                             return bej;
                         }
                         catch (Exception)
@@ -96,6 +93,7 @@ namespace hazi.BLL
                                        where b.ID == id &&
                                        !b.Statusz.Contains("RogzitettKerelem") && b.UserName == name
                                        select b).Single();
+                            bej.JogcimStatusz = (bool)bej.Jogcim.Inaktiv;
                             return bej;
                         }
                         catch (Exception)

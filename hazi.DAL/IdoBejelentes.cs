@@ -22,6 +22,7 @@ namespace hazi.DAL
         public string UtolsoModosito { get; set; }
         public Nullable<System.DateTime> UtolsoModositas { get; set; }
         public string Statusz { get; set; }
+        public bool JogcimStatusz { get; set; }
     
         public virtual Jogcim Jogcim { get; set; }
     }
