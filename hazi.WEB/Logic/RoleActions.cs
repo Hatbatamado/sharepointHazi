@@ -10,8 +10,11 @@ namespace hazi.WEB.Logic
 {
     public enum RegisterUserAs
     {
+        [EnumDisplayStringAttribute("Admin")]
         Admin,
+        [EnumDisplayStringAttribute("Normál felhasználó")]
         NormalUser,
+        [EnumDisplayStringAttribute("Jóváhagyók")]
         Jovahagyok
     }
 

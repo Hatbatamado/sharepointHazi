@@ -11,6 +11,7 @@ namespace hazi.WEB.Logic
     {
         public string Name { get; set; }
         public string Role { get; set; }
+        public string RoleMegjelenes { get; set; }
 
         [NotMapped]
         public List<ListItem> RoleList { get; set; }
