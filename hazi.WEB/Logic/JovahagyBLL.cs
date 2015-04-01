@@ -364,35 +364,64 @@ namespace hazi.WEB.Logic
 
         internal static AttekintoElem GetJovahagyByEvByUser(DateTime date, string user)
         {
-            AttekintoElem elem;
+            AttekintoElem elem = null;
             using (hazi2Entities db = new hazi2Entities())
             {
-                elem = (from b in db.IdoBejelentes1
-                        where b.KezdetiDatum.Year == date.Year &&
-                        b.KezdetiDatum.Month == date.Month &&
-                        b.KezdetiDatum.Day == date.Day && b.UserName == user
-                        select new AttekintoElem
-                        {
-                            Datum = b.KezdetiDatum,
-                            Statusz = b.Statusz,
-                            Jogcim = b.Jogcim
-                        }).SingleOrDefault();
+                try
+                {
+                    elem = (from b in db.IdoBejelentes1
+                            where b.KezdetiDatum.Year == date.Year &&
+                            b.KezdetiDatum.Month == date.Month &&
+                            b.KezdetiDatum.Day == date.Day && b.UserName == user
+                            select new AttekintoElem
+                            {
+                                Datum = b.KezdetiDatum,
+                                JovaStatusz = b.Statusz,
+                                Jogcim = b.Jogcim
+                            }).SingleOrDefault();
+                }
+                catch (InvalidOperationException)
+                {
+                    //több elem 1 nap
+                    elem = new AttekintoElem {
+                        Datum = date,
+                        JogcimNev = 'T',
+                        Szin = "#c9c9ee" };
 
+                    return elem;
+                }
                 if (elem != null)
                 {
                     elem.JogcimNev = elem.Jogcim.Cim.ToUpper()[0];
 
-                    string[] seged = elem.Statusz.Split('&');
+                    string[] seged = elem.JovaStatusz.Split('&');
                     if (seged.Length < 2)
                         return null;
                     else
-                        elem.Statusz = seged[1];
+                        elem.JovaStatusz = seged[1];
 
-                    elem.Statusz = "kockak " + elem.Statusz;
+                    string[] segedszin = elem.Jogcim.Szin.Split('#');
+                    string rogszin = "";
+                    string jovaszin = "";
+                    string elutszin = "";
+                    if (segedszin.Length >= 1)
+                        rogszin = '#' + segedszin[1];
+                    if (segedszin.Length >= 2)
+                        jovaszin = '#' + segedszin[2];
+                    if (segedszin.Length >= 3)
+                        elutszin = '#' + segedszin[3];
+
+                    if (elem.JovaStatusz == JovaHagyasStatus.Rogzitve.ToString())
+                        elem.Szin = rogszin;
+                    else if (elem.JovaStatusz == JovaHagyasStatus.Jovahagyva.ToString())
+                        elem.Szin = jovaszin;
+                    else if (elem.JovaStatusz == JovaHagyasStatus.Elutasitva.ToString())
+                        elem.Szin = elutszin;
                 }
                 else
                 {
-                    elem = new AttekintoElem() { Statusz = "kockak", JogcimNev = '.' };
+                    //Szöveges tartalom kell a divekbe, mert különben elcsúszik a többi div ahol van
+                    elem = new AttekintoElem() { JogcimNev = '.' };
                 }
             }
 

@@ -14,7 +14,28 @@ namespace hazi.WEB.Pages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            int year = DateTime.Now.Year;
+            if (!IsPostBack)
+            {
+                AdatokFeltoltese(DateTime.Now.Year);
+            }
+            if (Request["__EVENTARGUMENT"] == "TextChangedJobbra")
+            {
+                int ev = Convert.ToInt32(evLabel.Text) + 1;
+                AdatokFeltoltese(ev);
+                evLabel.Text = ev.ToString();
+            }
+            else  if (Request["__EVENTARGUMENT"] == "TextChangedBalra")
+            {
+                int ev = Convert.ToInt32(evLabel.Text) - 1;
+                AdatokFeltoltese(ev);
+                evLabel.Text = ev.ToString();
+            }
+        }
+
+        private void AdatokFeltoltese(int year)
+        {
+            Jelmagyarazat();
+
             string user = User.Identity.Name;
 
             List<AttekintoViewModel> kulsoLista = new List<AttekintoViewModel>();
@@ -33,24 +54,42 @@ namespace hazi.WEB.Pages
             for (int i = 1; i <= 31; i++)
             {
                 napok.Add(new Napokszama() { napokSzama = i });
-            }            
+            }
             napokSzama.DataSource = napok;
             napokSzama.DataBind();
+
+        }
+
+        private void Jelmagyarazat()
+        {
+            List<JelMagy> jelmagy = UjJogcimBLL.GetJelMagy();
+            JelmagyarazatRepeater.DataSource = jelmagy;
+            JelmagyarazatRepeater.DataBind();
         }
 
         protected void BelsoRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            string RogzitveColor = "yellow";
-            string JovahagyvaColor = "darkgreen";
-            string ElutasitvaColor = "red";
+            string szin = (e.Item.DataItem as AttekintoElem).Szin;
+            string fontcolor = "";
+            if (szin == "" || szin == null)
+            {
+                szin = "lightgreen";
+                fontcolor = "lightgreen";
+            }
+            else
+                fontcolor = "black";
             HtmlGenericControl divRog = (HtmlGenericControl)(e.Item.FindControl("bejelentesKocka"));
 
-            if (divRog != null && divRog.Attributes["class"].Contains(JovaHagyasStatus.Rogzitve.ToString()))
-                divRog.Attributes["style"] += ("background:" + RogzitveColor + "; color: black;)");
-            else if (divRog != null && divRog.Attributes["class"].Contains(JovaHagyasStatus.Jovahagyva.ToString()))
-                divRog.Attributes["style"] += ("background:" + JovahagyvaColor + "; color: black;)");
-            else if (divRog != null && divRog.Attributes["class"].Contains(JovaHagyasStatus.Elutasitva.ToString()))
-                divRog.Attributes["style"] += ("background:" + ElutasitvaColor + "; color: black;)");
+            if (divRog != null)
+                divRog.Attributes["style"] += ("background:" + szin + "; color: " + fontcolor + ";)"); 
+        }
+
+        protected void JelmagyarazatRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            HtmlGenericControl div = (HtmlGenericControl)(e.Item.FindControl("jelSzin"));
+            string szin = (e.Item.DataItem as JelMagy).Szin;
+            if (div != null)
+                div.Attributes["style"] += ("background:" + szin + "; color: black;)");   
         }
     }
 }

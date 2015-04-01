@@ -13,7 +13,7 @@ namespace hazi.WEB.Logic
         public AttekintoViewModel(int year, int month, string user)
         {
             BelsoLista = new List<AttekintoElem>();
-            for (int i = 1; i < DateTime.DaysInMonth(year, month); i++ )
+            for (int i = 1; i <= DateTime.DaysInMonth(year, month); i++ )
             {
                 DateTime temp = new DateTime(year, month, i);
                 AttekintoElem elem = JovahagyBLL.GetJovahagyByEvByUser(temp, user);

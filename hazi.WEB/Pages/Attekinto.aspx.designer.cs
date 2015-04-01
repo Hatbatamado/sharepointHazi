@@ -13,6 +13,24 @@ namespace hazi.WEB.Pages {
     public partial class Attekinto {
         
         /// <summary>
+        /// AttekintoUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel AttekintoUpdatePanel;
+        
+        /// <summary>
+        /// evLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label evLabel;
+        
+        /// <summary>
         /// napokSzama control.
         /// </summary>
         /// <remarks>
@@ -29,5 +47,14 @@ namespace hazi.WEB.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater KulsoRepeater;
+        
+        /// <summary>
+        /// JelmagyarazatRepeater control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater JelmagyarazatRepeater;
     }
 }

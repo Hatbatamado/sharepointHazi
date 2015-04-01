@@ -36,7 +36,7 @@ namespace hazi.WEB.Pages
             }
             else if (Request["__EVENTARGUMENT"] == "Jogcim")
             {
-                List<Jogcim> lista = JogcimBLL.GetJogcimek(true);
+                List<UjJogcim> lista = UjJogcimBLL.GetAllJogcim();
                 if (lista.Count > 0)
                 {
                     CheckBoxCheck(lista);
@@ -100,14 +100,25 @@ namespace hazi.WEB.Pages
                     int id = Convert.ToInt32(rowValues["ID"]);
                     string nev = (JogcimekGV.Rows[i].FindControl("ujJogcimNev") as TextBox).Text;
                     bool inaktiv = (JogcimekGV.Rows[i].FindControl("JogcimAktiv") as CheckBox).Checked;
+                    string rogszin = (JogcimekGV.Rows[i].FindControl("rogszin") as TextBox).Text;
+                    string jovszin = (JogcimekGV.Rows[i].FindControl("jovszin") as TextBox).Text;
+                    string elutszin = (JogcimekGV.Rows[i].FindControl("elutszin") as TextBox).Text;
+                    
+                    string szin = "";
 
-                    JogcimBLL.JogcimMentes(id, nev, inaktiv);
+                    if (rogszin.Contains('#')) szin += rogszin;
+                    else szin += '#' + rogszin;
+                    if (jovszin.Contains('#')) szin += jovszin;
+                    else szin += '#' + jovszin;
+                    if (elutszin.Contains('#')) szin += elutszin;
+                    else szin += '#' + elutszin;
+                    JogcimBLL.JogcimMentes(id, nev, inaktiv, szin);
                 }
                 LoadJogcimekGV();
             }
         }
 
-        private void CheckBoxCheck(List<Jogcim> lista)
+        private void CheckBoxCheck(List<UjJogcim> lista)
         {
             for (int i = 0; i < JogcimekGV.Rows.Count; i++)
             {

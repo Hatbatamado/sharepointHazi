@@ -16,8 +16,11 @@ namespace hazi.WEB.Logic
 
     public enum JovaHagyasStatus
     {
+        [EnumDisplayStringAttribute("Rögzítve")]
         Rogzitve,
+        [EnumDisplayStringAttribute("Elutasítva")]
         Elutasitva,
+        [EnumDisplayStringAttribute("Jóváhagyva")]
         Jovahagyva
     };
 }

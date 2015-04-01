@@ -25,6 +25,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Cim" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Inaktiv" Type="bit" />
+          <Property Name="Szin" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_IdoBejelentes_Jogcim">
           <End Role="Jogcim" Type="Self.Jogcim" Multiplicity="1" />
@@ -58,6 +59,7 @@
           <Property Name="Cim" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Inaktiv" Type="Boolean" />
           <NavigationProperty Name="IdoBejelentes" Relationship="hazi2Model.FK_IdoBejelentes_Jogcim" FromRole="Jogcim" ToRole="IdoBejelente" />
+          <Property Name="Szin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="hazi2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Jogcims" EntityType="Self.Jogcim" />
@@ -102,6 +104,7 @@
           <EntitySetMapping Name="Jogcims">
             <EntityTypeMapping TypeName="hazi2Model.Jogcim">
               <MappingFragment StoreEntitySet="Jogcim">
+                <ScalarProperty Name="Szin" ColumnName="Szin" />
                 <ScalarProperty Name="Inaktiv" ColumnName="Inaktiv" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Cim" ColumnName="Cim" />

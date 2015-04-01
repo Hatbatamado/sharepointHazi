@@ -69,7 +69,7 @@ namespace hazi.BLL
         /// <param name="id"></param>
         /// <param name="nev"></param>
         /// <param name="inaktiv"></param>
-        public static void JogcimMentes(int? id, string nev, bool inaktiv)
+        public static void JogcimMentes(int? id, string nev, bool inaktiv, string szin)
         {
             if (id.HasValue && id > 0)
             {
@@ -82,6 +82,8 @@ namespace hazi.BLL
                         jogcim.Cim = nev;
 
                     jogcim.Inaktiv = inaktiv;
+
+                    jogcim.Szin = szin;
 
                     db.SaveChanges();
                 }

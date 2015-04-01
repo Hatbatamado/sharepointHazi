@@ -2,6 +2,7 @@
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="/Styles/colorpicker.css" />
     <style>
         .Mentes {
             float: right;
@@ -39,7 +40,7 @@
                     <asp:UpdatePanel runat="server" ID="UpdatePanelJogcim" UpdateMode="Conditional">
                         <ContentTemplate>
                             <asp:GridView ID="JogcimekGV" runat="server" AutoGenerateColumns="False" GridLines="Vertical"
-                                CellPadding="4" ItemType="hazi.DAL.Jogcim" HeaderStyle-BackColor="DarkBlue"
+                                CellPadding="4" ItemType="hazi.WEB.Logic.UjJogcim" HeaderStyle-BackColor="DarkBlue"
                                 HeaderStyle-ForeColor="White" CssClass="table table-bordered">
                                 <EmptyDataTemplate>
                                     Nem található jogcím a db-ben!
@@ -54,7 +55,22 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Inaktív">
                                         <ItemTemplate>
-                                            <asp:CheckBox ID="JogcimAktiv" runat="server" Checked='<%#((bool)Eval("Inaktiv")) %>' />
+                                           <asp:CheckBox ID="JogcimAktiv" runat="server" Checked='<%#((bool)Eval("Inaktiv")) %>' />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Rögzítve szín">
+                                        <ItemTemplate>
+                                            <asp:TextBox ID="rogszin" runat="server" Text='<%# Eval("RogzitveSzin") %>' Width="100px"></asp:TextBox>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Jóváhagyva szín">
+                                        <ItemTemplate>
+                                            <asp:TextBox ID="jovszin" runat="server" Text='<%# Eval("JovahagySzin") %>' Width="100px"></asp:TextBox>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Elutasítva szín">
+                                        <ItemTemplate>
+                                            <asp:TextBox ID="elutszin" runat="server" Text='<%# Eval("ElutasitvaSzin") %>' Width="100px"></asp:TextBox>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
@@ -67,6 +83,7 @@
 
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="/Scripts/colorpicker.js"></script>
     <script>
         $(function () {
             $("#tabs").tabs({

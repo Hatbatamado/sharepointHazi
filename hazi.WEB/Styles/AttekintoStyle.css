@@ -1,28 +1,81 @@
 ﻿body {
 }
 
-.napokSzama{
+/*Tablazat fejlec*/
+.EvValaszto {
+    text-align: center;
+    font-weight: bold;
+    font-size: 14pt;
+}
+
+.ev {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.iconNyil {
+    cursor: pointer;
+}
+
+.napokSzama {
+    display: inline-block;
+    width: 20px;
+    padding-right: 3px;
+    text-align: center;
+}
+
+.Fejlec {
+    margin-left: 104px;
+}
+
+/******************/
+
+/*Jel magyarázat*/
+.Jelmagyarazat {
+    float: right;
+    position: relative;
+    bottom: 272px;
+}
+
+.jelSzin {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.jelNev {
     display: inline-block;
 }
 
-.AttekintoTablazat{
+.JelmagyarazatCim {
+    font-weight: bold;
+}
+/*****************/
+
+/*Tablazat elemei nem kijelolhetoek*/
+.AttekintoTablazat {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    width: 1200px;
 }
-
+/*****************/
 .kockak {
     height: 20px;
     width: 20px;
     display: inline-block;
     padding-right: 3px;
-    background-color:lightgreen;
     border: 1px solid gray;
-    text-align:center;
-    color: lightgreen;
+    text-align: center;
+    font-weight: bold;
+}
+
+.kockak:hover{
+    border:1px solid black;
 }
 
 .HonapNeve {
