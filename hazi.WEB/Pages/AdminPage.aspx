@@ -68,11 +68,6 @@
                                             <asp:TextBox ID="jovszin" runat="server" Text='<%# Eval("JovahagySzin") %>' Width="100px"></asp:TextBox>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Elutasítva szín">
-                                        <ItemTemplate>
-                                            <asp:TextBox ID="elutszin" runat="server" Text='<%# Eval("ElutasitvaSzin") %>' Width="100px"></asp:TextBox>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>
                         </ContentTemplate>

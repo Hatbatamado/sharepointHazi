@@ -32,8 +32,6 @@ namespace hazi.WEB.Logic
                             item.RogzitveSzin = "#" + seged[1];
                             if (seged.Length > 2)
                                 item.JovahagySzin = "#" + seged[2];
-                            if (seged.Length > 3)
-                                item.ElutasitvaSzin = "#" + seged[3];
                         }
                     }
                 }
@@ -57,24 +55,19 @@ namespace hazi.WEB.Logic
                     string[] seged = item.Szin.Split('#');
                     string rogszin = "";
                     string jovaszin = "";
-                    string elutszin = "";
                     if (seged.Length > 1)
                         rogszin = '#' + seged[1];
                     if (seged.Length > 2)
                         jovaszin = '#' + seged[2];
-                    if (seged.Length > 3)
-                        elutszin = '#' + seged[3];
 
-                    if (rogszin.Length <= 1 || jovaszin.Length <= 1 || elutszin.Length <= 1)
+                    if (rogszin.Length <= 1 || jovaszin.Length <= 1)
                     {
                         if (rogszin.Length <= 1)
                             rogszin = "#FFFF00";
                         if (jovaszin.Length <= 1)
                             jovaszin = "#006400";
-                        if (elutszin.Length <= 1)
-                            elutszin = "#FF0000";
 
-                        item.Szin = rogszin + jovaszin + elutszin;
+                        item.Szin = rogszin + jovaszin;
 
                         using (hazi2Entities db = new hazi2Entities())
                         {
@@ -92,9 +85,6 @@ namespace hazi.WEB.Logic
                     lista.Add(new JelMagy() {
                         BetuJel = item.Cim[0], JelNev = item.Cim + " " +
                             JovaHagyasStatus.Jovahagyva.ToDisplayString().ToLower(), Szin = jovaszin });
-                    lista.Add(new JelMagy() {
-                        BetuJel = item.Cim[0], JelNev = item.Cim + " " +
-                            JovaHagyasStatus.Elutasitva.ToDisplayString().ToLower(), Szin = elutszin });
                 }
             }
             lista.Add(new JelMagy() {

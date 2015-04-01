@@ -102,7 +102,6 @@ namespace hazi.WEB.Pages
                     bool inaktiv = (JogcimekGV.Rows[i].FindControl("JogcimAktiv") as CheckBox).Checked;
                     string rogszin = (JogcimekGV.Rows[i].FindControl("rogszin") as TextBox).Text;
                     string jovszin = (JogcimekGV.Rows[i].FindControl("jovszin") as TextBox).Text;
-                    string elutszin = (JogcimekGV.Rows[i].FindControl("elutszin") as TextBox).Text;
                     
                     string szin = "";
 
@@ -110,8 +109,6 @@ namespace hazi.WEB.Pages
                     else szin += '#' + rogszin;
                     if (jovszin.Contains('#')) szin += jovszin;
                     else szin += '#' + jovszin;
-                    if (elutszin.Contains('#')) szin += elutszin;
-                    else szin += '#' + elutszin;
                     JogcimBLL.JogcimMentes(id, nev, inaktiv, szin);
                 }
                 LoadJogcimekGV();

@@ -15,11 +15,6 @@
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel='stylesheet' href='/Styles/SiteMStyle.css' />
-    <style>
-        #Uzenet {
-            padding-top: 20px;
-        }
-    </style>
 
 </head>
 <body>

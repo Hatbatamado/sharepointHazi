@@ -12,6 +12,5 @@ namespace hazi.WEB.Logic
         public Nullable<bool> Inaktiv { get; set; }
         public string RogzitveSzin { get; set; }
         public string JovahagySzin { get; set; }
-        public string ElutasitvaSzin { get; set; }
     }
 }

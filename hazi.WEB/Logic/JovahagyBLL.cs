@@ -372,7 +372,8 @@ namespace hazi.WEB.Logic
                     elem = (from b in db.IdoBejelentes1
                             where b.KezdetiDatum.Year == date.Year &&
                             b.KezdetiDatum.Month == date.Month &&
-                            b.KezdetiDatum.Day == date.Day && b.UserName == user
+                            b.KezdetiDatum.Day == date.Day && b.UserName == user &&
+                            !b.Statusz.Contains("Elutasitva")
                             select new AttekintoElem
                             {
                                 Datum = b.KezdetiDatum,
@@ -403,20 +404,15 @@ namespace hazi.WEB.Logic
                     string[] segedszin = elem.Jogcim.Szin.Split('#');
                     string rogszin = "";
                     string jovaszin = "";
-                    string elutszin = "";
                     if (segedszin.Length >= 1)
                         rogszin = '#' + segedszin[1];
                     if (segedszin.Length >= 2)
                         jovaszin = '#' + segedszin[2];
-                    if (segedszin.Length >= 3)
-                        elutszin = '#' + segedszin[3];
 
                     if (elem.JovaStatusz == JovaHagyasStatus.Rogzitve.ToString())
                         elem.Szin = rogszin;
                     else if (elem.JovaStatusz == JovaHagyasStatus.Jovahagyva.ToString())
                         elem.Szin = jovaszin;
-                    else if (elem.JovaStatusz == JovaHagyasStatus.Elutasitva.ToString())
-                        elem.Szin = elutszin;
                 }
                 else
                 {
