@@ -49,6 +49,17 @@ namespace hazi.WEB.Pages
             }
         }
 
+        private string RoleNevKereses(string SzepNev)
+        {
+            if (SzepNev == RegisterUserAs.Admin.ToDisplayString())
+                return RegisterUserAs.Admin.ToString();
+            else if (SzepNev == RegisterUserAs.Jovahagyok.ToDisplayString())
+                return RegisterUserAs.Jovahagyok.ToString();
+            else if (SzepNev == RegisterUserAs.NormalUser.ToDisplayString())
+                return RegisterUserAs.NormalUser.ToString();
+            else return null;
+        }
+
         protected void Mentes_Click(object sender, EventArgs e)
         {
             if (Convert.ToInt32(HiddenField.Value) == 0)
@@ -65,15 +76,15 @@ namespace hazi.WEB.Pages
                     string ddlValue = (Felhasznalok.Rows[i].FindControl("SzerepkorDDL") as DropDownList).SelectedValue;
 
                     //magunkat nem tudjuk megváltoztatni
+                    string role = RoleNevKereses(rowValues["RoleMegjelenes"].ToString());
                     if (rowValues["Name"].ToString() != User.Identity.Name)
                     {
-                        string role = rowValues["Role"].ToString();
-                        if (rowValues["Role"].ToString() != ddlValue)
-                            uzenet = RoleActions.ChangeRole(rowValues["Name"].ToString(), rowValues["Role"].ToString(), ddlValue);
+                        if (role != ddlValue)
+                            uzenet = RoleActions.ChangeRole(rowValues["Name"].ToString(), role, ddlValue);
                     }
                     else
                     {
-                        if (rowValues["Role"].ToString() != ddlValue)
+                        if (role != ddlValue)
                         {
                             uzenet = "Saját szerepkört nem lehet változtatni!";
                             break;

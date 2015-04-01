@@ -66,7 +66,11 @@ namespace hazi.WEB.Pages
                 string ddlSelected = (Jovahagyas.Rows[i].FindControl("StatuszDDL") as DropDownList).SelectedValue;
                 int id = Convert.ToInt32(rowValues["ID"]);
 
-                if (rowValues["JovaStatus"].ToString() != ddlSelected)
+                string ekezetesstatus = rowValues["JovaStatusMegjelenes"].ToString();
+                string jovastatus = ((JovaHagyasStatus)Enum.Parse(
+                    typeof(JovaHagyasStatus), Utility.EkezetEltavolitas(ekezetesstatus))).ToString();
+
+                if (jovastatus != ddlSelected)
                     JovahagyBLL.JovahagyasMentes(id, ddlSelected);                
             }
 

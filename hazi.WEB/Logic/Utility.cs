@@ -27,5 +27,16 @@ namespace hazi.WEB.Logic
             }
             return values;
         }
+
+        public static string EkezetEltavolitas(string szoveg)
+        {
+            //ékezet eltávolítása, mivel db-ben is úgy van
+            string seged = szoveg;
+            byte[] temp;
+            temp = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(seged);
+            seged = System.Text.Encoding.UTF8.GetString(temp);
+
+            return seged;
+        }
     }
 }

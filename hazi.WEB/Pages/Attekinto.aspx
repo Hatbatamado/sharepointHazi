@@ -67,6 +67,6 @@
                 __doPostBack('<%= AttekintoUpdatePanel.ClientID %>', 'TextChangedBalra');
             }
             <%--$('#<%= evLabel.ClientID %>').text(ev);--%>
-        }
+        }        
     </script>
 </asp:Content>

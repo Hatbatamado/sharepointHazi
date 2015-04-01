@@ -66,12 +66,7 @@ namespace hazi.WEB
                 {
                     if (FilterBox.Text != "")
                     {
-                        //ékezet eltávolítása, mivel db-ben is úgy van
-                        string seged = FilterBox.Text;
-                        byte[] temp;
-                        temp = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(seged);
-                        seged = System.Text.Encoding.UTF8.GetString(temp);
-                        lista = UjBejelentesBLL.GetIdoBejelentesByFilerStatus(seged);
+                        lista = UjBejelentesBLL.GetIdoBejelentesByFilerStatus(Utility.EkezetEltavolitas(FilterBox.Text));
                     }                        
                     else
                         lista = ListaAdat(User.Identity.Name);

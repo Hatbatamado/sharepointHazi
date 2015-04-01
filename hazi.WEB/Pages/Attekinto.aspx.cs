@@ -81,12 +81,13 @@ namespace hazi.WEB.Pages
 
         protected void BelsoRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
+            string alapszin = "lightgreen";
             string szin = (e.Item.DataItem as AttekintoElem).Szin;
             string fontcolor = "";
             if (szin == "" || szin == null)
             {
-                szin = "lightgreen";
-                fontcolor = "lightgreen";
+                szin = alapszin;
+                fontcolor = alapszin;
             }
             else
                 fontcolor = "black";
