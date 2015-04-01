@@ -13,6 +13,51 @@ namespace hazi.WEB.Pages {
     public partial class Attekinto {
         
         /// <summary>
+        /// AttekintoUserKereso control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AttekintoUserKereso;
+        
+        /// <summary>
+        /// AttekintoUserKeresoLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label AttekintoUserKeresoLabel;
+        
+        /// <summary>
+        /// AttekintoUserKeresoTB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox AttekintoUserKeresoTB;
+        
+        /// <summary>
+        /// kereses control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button kereses;
+        
+        /// <summary>
+        /// uzenet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label uzenet;
+        
+        /// <summary>
         /// AttekintoUpdatePanel control.
         /// </summary>
         /// <remarks>
@@ -56,5 +101,17 @@ namespace hazi.WEB.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater JelmagyarazatRepeater;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new hazi.WEB.SiteMaster Master {
+            get {
+                return ((hazi.WEB.SiteMaster)(base.Master));
+            }
+        }
     }
 }

@@ -1,4 +1,18 @@
-﻿body {
+﻿/*Kereso rész*/
+.UserLabel {
+    display: inline-block;
+}
+
+.UserTB {
+    display: inline-block;
+}
+/***************/
+
+.keresoUzenet {
+    font-weight: bold;
+    font-size: 9pt;
+    padding-top: 5px;
+    color: #52339f;
 }
 
 /*Tablazat fejlec*/
@@ -64,6 +78,8 @@
     width: 1200px;
 }
 /*****************/
+
+/*Tablazat "kocka" elem*/
 .kockak {
     height: 20px;
     width: 20px;
@@ -74,11 +90,15 @@
     font-weight: bold;
 }
 
-.kockak:hover{
-    border:1px solid black;
-}
+    .kockak:hover {
+        border: 1px solid black;
+    }
 
+/*****************/
+
+/*Honap neve*/
 .HonapNeve {
     display: inline-block;
     width: 100px;
 }
+/*****************/

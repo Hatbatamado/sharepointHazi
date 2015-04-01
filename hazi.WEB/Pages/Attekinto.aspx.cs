@@ -14,29 +14,39 @@ namespace hazi.WEB.Pages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!IsPostBack && User.Identity.IsAuthenticated)
             {
-                AdatokFeltoltese(DateTime.Now.Year);
+                AdatokFeltoltese(DateTime.Now.Year, User.Identity.Name);
             }
+            else if (!IsPostBack && !User.Identity.IsAuthenticated)
+                Error404.HibaDobas(Response);
             if (Request["__EVENTARGUMENT"] == "TextChangedJobbra")
             {
                 int ev = Convert.ToInt32(evLabel.Text) + 1;
-                AdatokFeltoltese(ev);
+                AdatokFeltoltese(ev, AttekintoUserKeresoTB.Text);
                 evLabel.Text = ev.ToString();
             }
-            else  if (Request["__EVENTARGUMENT"] == "TextChangedBalra")
+            else if (Request["__EVENTARGUMENT"] == "TextChangedBalra")
             {
                 int ev = Convert.ToInt32(evLabel.Text) - 1;
-                AdatokFeltoltese(ev);
+                AdatokFeltoltese(ev, AttekintoUserKeresoTB.Text);
                 evLabel.Text = ev.ToString();
             }
         }
 
-        private void AdatokFeltoltese(int year)
+        private string AdatokFeltoltese(int year, string user)
         {
-            Jelmagyarazat();
+            if (user == "" || user == null)
+                user = User.Identity.Name;
+            else if (!UsersBLL.FelhasznaloIsInDB(user))
+                return "nincs";
 
-            string user = User.Identity.Name;
+            if (!RoleActions.IsInRole(User.Identity.Name, RegisterUserAs.NormalUser.ToString()))
+                AttekintoUserKereso.Visible = true;
+            else
+                AttekintoUserKereso.Visible = false;
+
+            Jelmagyarazat();
 
             List<AttekintoViewModel> kulsoLista = new List<AttekintoViewModel>();
             for (int i = 1; i <= 12; i++)
@@ -47,6 +57,7 @@ namespace hazi.WEB.Pages
                       ToString("MMMM", CultureInfo.CreateSpecificCulture("hu-HU"))
                 });
             }
+
             KulsoRepeater.DataSource = kulsoLista;
             KulsoRepeater.DataBind();
 
@@ -57,7 +68,8 @@ namespace hazi.WEB.Pages
             }
             napokSzama.DataSource = napok;
             napokSzama.DataBind();
-
+            
+            return string.Empty;
         }
 
         private void Jelmagyarazat()
@@ -90,6 +102,21 @@ namespace hazi.WEB.Pages
             string szin = (e.Item.DataItem as JelMagy).Szin;
             if (div != null)
                 div.Attributes["style"] += ("background:" + szin + "; color: black;)");   
+        }
+
+        protected void kereses_Click(object sender, EventArgs e)
+        {
+            //ha már volt sikeretelen keresés
+            Master.Uzenet.Visible = false;
+
+            int ev = Convert.ToInt32(evLabel.Text);
+            string nincs = AdatokFeltoltese(ev, AttekintoUserKeresoTB.Text);
+            if (nincs == "nincs")
+            {
+                Master.Uzenet.Visible = true;
+                Master.Uzenet.Text = "A keresett felhasználó nem található!";
+            }
+
         }
     }
 }

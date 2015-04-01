@@ -22,6 +22,8 @@ namespace hazi.WEB.Logic
                 if (!RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.NormalUser.ToString()))
                     balmenuitems.Add(new MyMenuItem() { Text = "Jóváhagyások", Link = "/Pages/OsszegzoForm" });
 
+                balmenuitems.Add(new MyMenuItem() { Text = "Éves áttekintő", Link = "/Pages/Attekinto" });
+
                 if (RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.Admin.ToString()))
                     jobbmenuitems.Add(new MyMenuItem() { Text = "Admin oldal", Link = "/Pages/AdminPage" });
 

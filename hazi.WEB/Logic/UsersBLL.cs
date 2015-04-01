@@ -55,5 +55,24 @@ namespace hazi.WEB.Logic
                 return jovahagy;
             else return string.Empty;
         }
+
+        public static bool FelhasznaloIsInDB(string username)
+        {
+            List<Users> users = new List<Users>();
+            using (var db = new ApplicationDbContext())
+            {
+                users = (from b in db.Users
+                         select new Users
+                         {
+                             Name = b.UserName,
+                         }).ToList();
+            }
+            foreach (var item in users)
+            {
+                if (item.Name == username)
+                    return true;
+            }
+            return false;
+        }
     }
 }

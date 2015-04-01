@@ -1,7 +1,20 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Attekinto.aspx.cs" Inherits="hazi.WEB.Pages.Attekinto" %>
 
+<%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link rel='stylesheet' href='/Styles/AttekintoStyle.css' />
+    <div runat="server" id="AttekintoUserKereso" class="AttekintoUserKereso" visible="false">
+        <div class="UserLabel">
+            <asp:Label runat="server" ID="AttekintoUserKeresoLabel" Text="Felhasználó:"></asp:Label>
+        </div>
+        <div class="UserTB">
+            <asp:TextBox runat="server" ID="AttekintoUserKeresoTB"></asp:TextBox>
+            <asp:Button ID="kereses" runat="server" Text="Keresés" OnClick="kereses_Click" />
+        </div>
+        <div class="keresoUzenet">
+            <asp:Label ID="uzenet" runat="server" Text="Kis és nagy betűk számítanak a keresésnél!"></asp:Label>
+        </div>
+    </div>
     <div class="AttekintoTablazat">
         <asp:UpdatePanel runat="server" ID="AttekintoUpdatePanel" UpdateMode="Conditional">
             <ContentTemplate>
@@ -30,15 +43,15 @@
                         <br />
                     </ItemTemplate>
                 </asp:Repeater>
-            <div class="Jelmagyarazat">
-                <div class="JelmagyarazatCim">Jelmagyarázat:</div>
-                <asp:Repeater runat="server" ID="JelmagyarazatRepeater" OnItemDataBound="JelmagyarazatRepeater_ItemDataBound">
-                    <ItemTemplate>
-                        <div runat="server" id="jelSzin" class="jelSzin"><%# Eval("BetuJel") %></div>
-                        <div class="jelNev"><%# Eval("JelNev") %></div>
-                        <br />
-                    </ItemTemplate>
-                </asp:Repeater>
+                <div class="Jelmagyarazat">
+                    <div class="JelmagyarazatCim">Jelmagyarázat:</div>
+                    <asp:Repeater runat="server" ID="JelmagyarazatRepeater" OnItemDataBound="JelmagyarazatRepeater_ItemDataBound">
+                        <ItemTemplate>
+                            <div runat="server" id="jelSzin" class="jelSzin"><%# Eval("BetuJel") %></div>
+                            <div class="jelNev"><%# Eval("JelNev") %></div>
+                            <br />
+                        </ItemTemplate>
+                    </asp:Repeater>
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>
