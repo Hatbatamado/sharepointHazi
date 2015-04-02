@@ -5,7 +5,9 @@
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <link rel='stylesheet' href='/Styles/ManageStyle.css' />
     <h2><%: Title %>.</h2>
-
+    <p class="text-danger">
+        <asp:Literal runat="server" ID="ErrorMessage" />
+    </p>
     <div>
         <asp:PlaceHolder runat="server" ID="successMessage" Visible="false" ViewStateMode="Disabled">
             <p class="text-success"><%: SuccessMessage %></p>
@@ -123,9 +125,16 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <asp:Label runat="server" ID="Label1" CssClass="col-md-2 control-label ujLabel KepLabel">Aktuális kép (280x150)</asp:Label>
+                    <div class="UjControlPos col-md-10 KepControl">
+                        <div runat="server" id="profilKepDiv" class="profilKep"></div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="ujAdatokPos col-md-offset-2 col-md-10">
                         <asp:Button runat="server" OnClick="Unnamed_Click" Text="Adatok mentése" CssClass="btn btn-default ujAdatok" />
                     </div>
+                    
                 </div>
             </section>
         </div>

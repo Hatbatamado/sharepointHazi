@@ -20,3 +20,16 @@
     padding-left:5px;
     padding-top:10px;
 }
+
+.profilKep{
+    width:280px;
+    height:150px;
+}
+
+.KepLabel{
+    padding-top:50px;
+}
+
+.KepControl{
+    padding-top:5px;
+}

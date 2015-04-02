@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using hazi.WEB.Models;
 using hazi.WEB.Logic;
+using hazi.DAL;
 
 namespace hazi.WEB.Account
 {
@@ -34,6 +35,17 @@ namespace hazi.WEB.Account
             {
                 VezetoDDL.DataSource = UsersBLL.GetUserNames();
                 VezetoDDL.DataBind();
+
+                FelhasznaloiProfilok fp = UsersBLL.GetUserProfilData(User.Identity.Name);
+                if (fp != null)
+                {
+                    SzuletesiTB.Text = fp.SzuletesiDatum.ToString("yyyy-MM-dd");
+                    VezetoDDL.SelectedValue = fp.Vezeto;
+                    if (fp.ProfilKepUrl != "")
+                        profilKepDiv.Attributes["style"] += ("background: url(" + fp.ProfilKepUrl + ") no-repeat;)"); 
+                    else
+                        profilKepDiv.Attributes["style"] += ("background: url(\"/Images/logo.jpg\") no-repeat;"); 
+                }
 
                 // Determine the sections to render
                 UserManager manager = new UserManager();
@@ -128,7 +140,8 @@ namespace hazi.WEB.Account
 
         protected void Unnamed_Click(object sender, EventArgs e)
         {
-
+            UsersBLL.ProfilMentes(Server, PictureFileUpload, ErrorMessage, User.Identity.Name,
+                SzuletesiTB.Text, VezetoDDL.SelectedValue, Response, "/Account/Manage");
         }
     }
 }

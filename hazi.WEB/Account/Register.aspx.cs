@@ -32,44 +32,8 @@ namespace hazi.WEB.Account
             if (error != "")
                 ErrorMessage.Text = error;
 
-            Boolean fileOK = false;
-            String path = Server.MapPath("~/Images/");
-            if (PictureFileUpload.HasFile)
-            {
-                String fileExtension = System.IO.Path.GetExtension(PictureFileUpload.FileName).ToLower();
-                String[] allowedExtensions = { ".gif", ".png", ".jpeg", ".jpg" };
-                for (int i = 0; i < allowedExtensions.Length; i++)
-                {
-                    if (fileExtension == allowedExtensions[i])
-                    {
-                        fileOK = true;
-                    }
-                }
-            }
-
-            if (fileOK)
-            {
-                try
-                {
-                    // Save to Images folder.
-                    PictureFileUpload.PostedFile.SaveAs(path + PictureFileUpload.FileName);
-                }
-                catch (Exception ex)
-                {
-                    ErrorMessage.Text = ex.Message;
-                }
-            }
-            else
-            {
-                ErrorMessage.Text = "Unable to accept file type.";
-            }
-
-            if (fileOK)
-                UsersBLL.FelhasznaloiAdatokMentese(UserName.Text, SzuletesiTB.Text, VezetoDDL.SelectedValue, "/Images/" + PictureFileUpload.FileName);
-            else
-                UsersBLL.FelhasznaloiAdatokMentese(UserName.Text, SzuletesiTB.Text, VezetoDDL.SelectedValue, "");
-
-            Response.Redirect("/");
+            UsersBLL.ProfilMentes(Server, PictureFileUpload, ErrorMessage, UserName.Text,
+                SzuletesiTB.Text, VezetoDDL.SelectedValue, Response, "/");
         }
     }
 }

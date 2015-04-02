@@ -104,6 +104,7 @@ namespace hazi.WEB.Logic
             using (hazi2Entities db = new hazi2Entities())
             {
                 FelhasznaloiProfilok fp = null;
+                bool uj = false;
                 try
                 {
                     fp = (from u in db.FelhasznaloiProfiloks
@@ -115,15 +116,76 @@ namespace hazi.WEB.Logic
                 {
                     fp = new FelhasznaloiProfilok();
                     fp.UserName = username;
+                    uj = true;
                 }
                 fp.SzuletesiDatum = DateTime.Parse(szuletesiDatum);
                 fp.Vezeto = vezeto;
                 fp.ProfilKepUrl = kepUrl;
 
-                db.FelhasznaloiProfiloks.Add(fp);
+                if (uj)
+                    db.FelhasznaloiProfiloks.Add(fp);
 
                 db.SaveChanges();
             }
+        }
+
+        public static FelhasznaloiProfilok GetUserProfilData(string user)
+        {
+            FelhasznaloiProfilok fp;
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                fp = (from f in db.FelhasznaloiProfiloks
+                      where f.UserName == user
+                      select f).Single();
+            }
+            return fp;
+        }
+
+        public static void ProfilMentes(HttpServerUtility Server,
+            System.Web.UI.WebControls.FileUpload PictureFileUpload, System.Web.UI.WebControls.Literal ErrorMessage,
+            string username, string szuldatum, string vezeto, HttpResponse Response, string redirect)
+        {
+            Boolean fileOK = false;
+            String path = Server.MapPath("~/Images/");
+            String fileExtension = "";
+            if (PictureFileUpload.HasFile)
+            {
+                fileExtension = System.IO.Path.GetExtension(PictureFileUpload.FileName).ToLower();
+                String[] allowedExtensions = { ".gif", ".png", ".jpeg", ".jpg" };
+                for (int i = 0; i < allowedExtensions.Length; i++)
+                {
+                    if (fileExtension == allowedExtensions[i])
+                    {
+                        fileOK = true;
+                    }
+                }
+            }
+            string FileNev = "";
+            if (fileOK)
+            {
+                try
+                {
+                    // Save to Images folder.
+                    FileNev = username + "_" + DateTime.Now.Year + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Hour
+                        + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + fileExtension;
+                    PictureFileUpload.PostedFile.SaveAs(path + FileNev);
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage.Text = ex.Message;
+                }
+            }
+            else
+            {
+                ErrorMessage.Text = "Unable to accept file type.";
+            }
+
+            if (fileOK)
+                FelhasznaloiAdatokMentese(username, szuldatum, vezeto, "/Images/" + FileNev);
+            else
+                FelhasznaloiAdatokMentese(username, szuldatum, vezeto, FileNev);
+
+            Response.Redirect(redirect);
         }
     }
 }
