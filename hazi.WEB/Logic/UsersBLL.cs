@@ -131,14 +131,17 @@ namespace hazi.WEB.Logic
 
         public static FelhasznaloiProfilok GetUserProfilData(string user)
         {
-            FelhasznaloiProfilok fp;
+            
             using (hazi2Entities db = new hazi2Entities())
             {
-                fp = (from f in db.FelhasznaloiProfiloks
-                      where f.UserName == user
-                      select f).Single();
+                try
+                {
+                    return (from f in db.FelhasznaloiProfiloks
+                            where f.UserName == user
+                            select f).Single();
+                }
+                catch (Exception) { return null; }
             }
-            return fp;
         }
 
         public static void ProfilMentes(HttpServerUtility Server,

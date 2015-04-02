@@ -57,8 +57,16 @@
                                     <asp:BoundField DataField="kezdetidatum" HeaderText="Kezdeti dátum" />
                                     <asp:BoundField DataField="VegeDatum" HeaderText="Végdátum" />
                                     <asp:BoundField DataField="JogcimNev" HeaderText="Jogcím" />
-                                    <asp:BoundField DataField="UserName" HeaderText="Felhasználó" />
-                                    <asp:BoundField DataField="LastEdit" HeaderText="Utolsó módosító" />
+                                    <asp:TemplateField HeaderText="Felhasználó">
+                                        <ItemTemplate>
+                                            <a class="linkek" href="/Pages/Profile.aspx?UserName=<%#: Item.UserName %>"><%#: Item.UserName %></a>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Utolsó módosító">
+                                        <ItemTemplate>
+                                            <a class="linkek" href="/Pages/Profile.aspx?UserName=<%#: Item.LastEdit %>"><%#: Item.LastEdit %></a>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:BoundField DataField="LastEditTime" HeaderText="Utoljára módosítva" />
                                     <asp:BoundField DataField="JovaStatusMegjelenes" HeaderText="Státusz" />
                                     <asp:TemplateField HeaderText="Törlés státusz">

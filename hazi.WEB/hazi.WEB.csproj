@@ -169,6 +169,7 @@
     <Content Include="Pages\Naptar.aspx" />
     <Content Include="Pages\Osszegzes.aspx" />
     <Content Include="Pages\OsszegzoForm.aspx" />
+    <Content Include="Pages\Profile.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\fullcalendar.css" />
@@ -210,6 +211,7 @@
     <Content Include="Site.Master" />
     <Content Include="Styles\ManageStyle.css" />
     <Content Include="Styles\NaptarStyle.css" />
+    <Content Include="Styles\ProfileStyle.css" />
     <Content Include="Styles\RegisterStyle.css" />
     <Content Include="Styles\SiteMStyle.css" />
     <Content Include="Styles\AttekintoStyle.css" />
@@ -359,6 +361,13 @@
     </Compile>
     <Compile Include="Pages\OsszegzoForm.aspx.designer.cs">
       <DependentUpon>OsszegzoForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Profile.aspx.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Profile.aspx.designer.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services.asmx.cs">
