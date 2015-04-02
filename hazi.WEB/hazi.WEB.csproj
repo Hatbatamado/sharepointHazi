@@ -208,7 +208,9 @@
     <Content Include="Global.asax" />
     <Content Include="Services.asmx" />
     <Content Include="Site.Master" />
+    <Content Include="Styles\ManageStyle.css" />
     <Content Include="Styles\NaptarStyle.css" />
+    <Content Include="Styles\RegisterStyle.css" />
     <Content Include="Styles\SiteMStyle.css" />
     <Content Include="Styles\AttekintoStyle.css" />
     <Content Include="ViewSwitcher.ascx" />
@@ -388,6 +390,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\hazi.BLL\hazi.BLL.csproj">

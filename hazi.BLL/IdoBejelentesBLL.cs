@@ -77,7 +77,6 @@ namespace hazi.BLL
                             var bej = (from b in db.IdoBejelentes1
                                        where b.ID == id
                                        select b).Single();
-                            bej.JogcimStatusz = (bool)bej.Jogcim.Inaktiv;
                             return bej;
                         }
                         catch (Exception)
@@ -93,7 +92,6 @@ namespace hazi.BLL
                                        where b.ID == id &&
                                        !b.Statusz.Contains("RogzitettKerelem") && b.UserName == name
                                        select b).Single();
-                            bej.JogcimStatusz = (bool)bej.Jogcim.Inaktiv;
                             return bej;
                         }
                         catch (Exception)

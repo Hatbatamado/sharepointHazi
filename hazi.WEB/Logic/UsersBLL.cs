@@ -1,4 +1,5 @@
-﻿using hazi.WEB.Models;
+﻿using hazi.DAL;
+using hazi.WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,6 +75,55 @@ namespace hazi.WEB.Logic
                     return true;
             }
             return false;
+        }
+
+        public static List<string> GetUserNames()
+        {
+            List<Users> users = new List<Users>();
+            using (var db = new ApplicationDbContext())
+            {
+                users = (from b in db.Users
+                        select new Users
+                        {
+                            Name = b.UserName,
+                        }).ToList();
+            }
+
+            List<string> usernames = new List<string>();
+            usernames.Add(string.Empty); //kötelező választás, null alapértelmezett selected érték
+            foreach (var item in users)
+            {
+                usernames.Add(item.Name);
+            }
+
+            return usernames;
+        }
+
+        internal static void FelhasznaloiAdatokMentese(string username, string szuletesiDatum, string vezeto, string kepUrl)
+        {
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                FelhasznaloiProfilok fp = null;
+                try
+                {
+                    fp = (from u in db.FelhasznaloiProfiloks
+                          where u.UserName == username
+                          select u).Single();
+                }
+                catch (Exception) { }
+                if (fp == null)
+                {
+                    fp = new FelhasznaloiProfilok();
+                    fp.UserName = username;
+                }
+                fp.SzuletesiDatum = DateTime.Parse(szuletesiDatum);
+                fp.Vezeto = vezeto;
+                fp.ProfilKepUrl = kepUrl;
+
+                db.FelhasznaloiProfiloks.Add(fp);
+
+                db.SaveChanges();
+            }
         }
     }
 }

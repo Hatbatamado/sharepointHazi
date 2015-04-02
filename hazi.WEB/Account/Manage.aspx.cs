@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using hazi.WEB.Models;
+using hazi.WEB.Logic;
 
 namespace hazi.WEB.Account
 {
@@ -31,6 +32,9 @@ namespace hazi.WEB.Account
         {
             if (!IsPostBack)
             {
+                VezetoDDL.DataSource = UsersBLL.GetUserNames();
+                VezetoDDL.DataBind();
+
                 // Determine the sections to render
                 UserManager manager = new UserManager();
                 if (HasPassword(manager))
@@ -120,6 +124,11 @@ namespace hazi.WEB.Account
             {
                 ModelState.AddModelError("", error);
             }
+        }
+
+        protected void Unnamed_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

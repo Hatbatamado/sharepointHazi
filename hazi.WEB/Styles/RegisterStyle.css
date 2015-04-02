@@ -1,0 +1,10 @@
+﻿body {
+}
+
+.ujLabel{
+    font-weight:bold;
+}
+
+.ujControl{
+    max-width:280px;
+}

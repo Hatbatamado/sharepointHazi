@@ -1,0 +1,22 @@
+﻿body {
+}
+
+.ujLabel{
+    font-weight:bold;
+    text-align:right;
+    padding-right:25px;
+    padding-top:5px;
+}
+
+.ujControl{
+    max-width:280px;
+}
+
+.UjControlPos{
+    padding-left:5px;
+}
+
+.ujAdatokPos{
+    padding-left:5px;
+    padding-top:10px;
+}

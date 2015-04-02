@@ -12,17 +12,11 @@ namespace hazi.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class IdoBejelentes
+    public partial class FelhasznaloiProfilok
     {
-        public int ID { get; set; }
-        public System.DateTime KezdetiDatum { get; set; }
-        public System.DateTime VegeDatum { get; set; }
-        public int JogcimID { get; set; }
         public string UserName { get; set; }
-        public string UtolsoModosito { get; set; }
-        public Nullable<System.DateTime> UtolsoModositas { get; set; }
-        public string Statusz { get; set; }
-    
-        public virtual Jogcim Jogcim { get; set; }
+        public System.DateTime SzuletesiDatum { get; set; }
+        public string Vezeto { get; set; }
+        public string ProfilKepUrl { get; set; }
     }
 }

@@ -65,6 +65,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="FelhasznaloiProfilok.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Ido.cs" />
     <Compile Include="IdoBejelentes.cs">
       <DependentUpon>DBModel.tt</DependentUpon>

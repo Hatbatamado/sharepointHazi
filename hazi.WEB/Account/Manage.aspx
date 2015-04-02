@@ -3,6 +3,7 @@
 <%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+    <link rel='stylesheet' href='/Styles/ManageStyle.css' />
     <h2><%: Title %>.</h2>
 
     <div>
@@ -99,39 +100,34 @@
                         </div>
                     </div>
                 </asp:PlaceHolder>
+                <div class="form-group">
+                    <asp:Label runat="server" ID="SzuletesiLabel" CssClass="col-md-2 control-label ujLabel">Születési dátum</asp:Label>
+                    <div class="UjControlPos col-md-10">
+                        <asp:TextBox runat="server" ID="SzuletesiTB" TextMode="Date" CssClass="form-control ujControl"></asp:TextBox>
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="SzuletesiTB" CssClass="text-danger"
+                            ErrorMessage="A születési dátum mező kitöltése kötelező!"></asp:RequiredFieldValidator>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <asp:Label runat="server" ID="VezetoLabel" CssClass="col-md-2 control-label ujLabel">Vezető</asp:Label>
+                    <div class="UjControlPos col-md-10">
+                        <asp:DropDownList runat="server" ID="VezetoDDL" CssClass="form-control  ujControl"></asp:DropDownList>
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="VezetoDDL" CssClass="text-danger"
+                            ErrorMessage="Vezető kiválasztása kötelező!"></asp:RequiredFieldValidator>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <asp:Label runat="server" ID="PKepLabel" CssClass="col-md-2 control-label ujLabel">Profil kép</asp:Label>
+                    <div class="UjControlPos col-md-10">
+                        <asp:FileUpload runat="server" ID="PictureFileUpload" CssClass="form-control ujControl" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="ujAdatokPos col-md-offset-2 col-md-10">
+                        <asp:Button runat="server" OnClick="Unnamed_Click" Text="Adatok mentése" CssClass="btn btn-default ujAdatok" />
+                    </div>
+                </div>
             </section>
-
-            <section id="externalLoginsForm">
-
-                <asp:ListView runat="server"
-                    ItemType="Microsoft.AspNet.Identity.UserLoginInfo"
-                    SelectMethod="GetLogins" DeleteMethod="RemoveLogin" DataKeyNames="LoginProvider,ProviderKey">
-
-                    <LayoutTemplate>
-                        <h4>Registered Logins</h4>
-                        <table class="table">
-                            <tbody>
-                                <tr runat="server" id="itemPlaceholder"></tr>
-                            </tbody>
-                        </table>
-
-                    </LayoutTemplate>
-                    <ItemTemplate>
-                        <tr>
-                            <td><%#: Item.LoginProvider %></td>
-                            <td>
-                                <asp:Button runat="server" Text="Remove" CommandName="Delete" CausesValidation="false"
-                                    ToolTip='<%# "Remove this " + Item.LoginProvider + " login from your account" %>'
-                                    Visible="<%# CanRemoveExternalLogins %>" CssClass="btn btn-default" />
-                            </td>
-                        </tr>
-                    </ItemTemplate>
-                </asp:ListView>
-
-                <uc:OpenAuthProviders runat="server" ReturnUrl="~/Account/Manage" />
-            </section>
-
         </div>
     </div>
-
 </asp:Content>

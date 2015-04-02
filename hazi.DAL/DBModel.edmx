@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="hazi2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FelhasznaloiProfilok">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SzuletesiDatum" Type="date" Nullable="false" />
+          <Property Name="Vezeto" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProfilKepUrl" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="IdoBejelentes">
           <Key>
             <PropertyRef Name="ID" />
@@ -40,6 +49,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="hazi2ModelStoreContainer">
+          <EntitySet Name="FelhasznaloiProfilok" EntityType="Self.FelhasznaloiProfilok" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IdoBejelentes" EntityType="Self.IdoBejelentes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jogcim" EntityType="Self.Jogcim" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_IdoBejelentes_Jogcim" Association="Self.FK_IdoBejelentes_Jogcim">
@@ -68,6 +78,7 @@
             <End Role="Jogcim" EntitySet="Jogcims" />
             <End Role="IdoBejelente" EntitySet="IdoBejelentes1" />
           </AssociationSet>
+          <EntitySet Name="FelhasznaloiProfiloks" EntityType="hazi2Model.FelhasznaloiProfilok" />
         </EntityContainer>
         <EntityType Name="IdoBejelentes">
           <Key>
@@ -95,6 +106,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FelhasznaloiProfilok">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SzuletesiDatum" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Vezeto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProfilKepUrl" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -122,6 +142,16 @@
                 <ScalarProperty Name="VegeDatum" ColumnName="VegeDatum" />
                 <ScalarProperty Name="KezdetiDatum" ColumnName="KezdetiDatum" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FelhasznaloiProfiloks">
+            <EntityTypeMapping TypeName="hazi2Model.FelhasznaloiProfilok">
+              <MappingFragment StoreEntitySet="FelhasznaloiProfilok">
+                <ScalarProperty Name="ProfilKepUrl" ColumnName="ProfilKepUrl" />
+                <ScalarProperty Name="Vezeto" ColumnName="Vezeto" />
+                <ScalarProperty Name="SzuletesiDatum" ColumnName="SzuletesiDatum" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

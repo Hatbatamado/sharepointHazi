@@ -27,5 +27,6 @@ namespace hazi.DAL
     
         public virtual DbSet<Jogcim> Jogcims { get; set; }
         public virtual DbSet<IdoBejelentes> IdoBejelentes1 { get; set; }
+        public virtual DbSet<FelhasznaloiProfilok> FelhasznaloiProfiloks { get; set; }
     }
 }
