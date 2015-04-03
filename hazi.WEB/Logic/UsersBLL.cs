@@ -219,5 +219,20 @@ namespace hazi.WEB.Logic
 
             Response.Redirect(redirect);
         }
+
+        internal static bool IsManager(string username)
+        {
+            List<FelhasznaloiProfilok> fp = new List<FelhasznaloiProfilok>();
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                fp = (from f in db.FelhasznaloiProfiloks
+                      where f.Vezeto == username
+                      select f).ToList();
+            }
+            if (fp.Count > 0)
+                return true;
+            else
+                return false;
+        }
     }
 }

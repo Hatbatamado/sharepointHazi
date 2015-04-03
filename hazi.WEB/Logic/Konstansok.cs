@@ -15,6 +15,7 @@ namespace hazi.WEB.Logic
         public const string TobbBejelenesAlapszin = "#c9c9ee";
         public const string alapSzin = "lightgreen";
         public const string alapFontSzin = "black";
+        public const string IsmeretlenSzin = "#FFFFFF";
 
         public const string RedirectAdminOldal = "/Pages/AdminPage";
         public const string RedirectOsszegzoForm = "/Pages/OsszegzoForm";

@@ -432,5 +432,79 @@ namespace hazi.WEB.Logic
 
             return elem;
         }
+
+
+        public static HaviAttekintoElem Lekerdezes(string vezeto)
+        {
+            HaviAttekintoElem HAE = new HaviAttekintoElem();
+            List<FelhasznaloiProfilok> fp = new List<FelhasznaloiProfilok>();
+            List<HaviAttekintoElem> elemek = new List<HaviAttekintoElem>();
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                fp = (from f in db.FelhasznaloiProfiloks
+                      where f.Vezeto == vezeto
+                      select f).ToList();
+            }
+            if (fp.Count > 0)
+            {
+                foreach (var item in fp)
+                {
+                    elemek.Add(Lekerdezes(item.UserName));
+                }
+                return Elem(vezeto, elemek);
+            }
+            else
+            {
+                return Elem(vezeto, elemek);
+                
+            }
+        }
+
+        private static HaviAttekintoElem Elem(string vezeto, List<HaviAttekintoElem> elemek)
+        {
+            HaviAttekintoElem HAE = new HaviAttekintoElem();
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                try
+                {
+                    HAE = (from b in db.IdoBejelentes1
+                           where b.UserName == vezeto
+                           select new HaviAttekintoElem
+                           {
+                               UserName = b.UserName,
+                               Datum = b.KezdetiDatum,
+                               JogcimNev = b.Jogcim.Cim,
+                               JovahagyasiStatusz = b.Statusz,
+                               Szin = b.Jogcim.Szin,
+                           }).Single();
+                    HAE.JovahagyasiStatusz = JovaStatus(HAE.JovahagyasiStatusz);
+                    HAE.Szin = Szin(HAE.JovahagyasiStatusz, HAE.Szin);
+                    HAE.UsersLista = elemek;
+                }
+                catch (Exception) { return null; }
+            }
+            return HAE;
+        }
+
+        private static string JovaStatus(string statusz)
+        {
+            string[] seged = statusz.Split('&');
+            if (seged.Length > 1)
+                return seged[1];
+            else
+                return "nincs";
+        }
+
+        private static string Szin(string statusz, string szin)
+        {
+            string[] seged = szin.Split('#');
+
+            if (statusz == JovaHagyasStatus.Rogzitve.ToString() && seged.Length > 1)
+                return seged[1];
+            else if (statusz == JovaHagyasStatus.Jovahagyva.ToString() && seged.Length > 2)
+                return seged[2];
+
+            return Konstansok.IsmeretlenSzin;
+        }
     }
 }

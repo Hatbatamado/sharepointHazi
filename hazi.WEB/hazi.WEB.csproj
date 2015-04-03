@@ -167,6 +167,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <Content Include="Pages\HaviAttekinto.aspx" />
     <Content Include="ReportTemplates\ReportTemplate.xlsx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Pages\ErrorPage.aspx" />
@@ -281,6 +282,8 @@
     <Compile Include="Logic\Error404.cs" />
     <Compile Include="Logic\Enumok.cs" />
     <Compile Include="Logic\ExcelReportClass.cs" />
+    <Compile Include="Logic\HaviAttekintoElem.cs" />
+    <Compile Include="Logic\HaviAttekintoViewModel.cs" />
     <Compile Include="Logic\HeaderMenu.cs" />
     <Compile Include="Logic\JelMagy.cs" />
     <Compile Include="Logic\JovahagyBLL.cs" />
@@ -336,6 +339,13 @@
     </Compile>
     <Compile Include="Pages\ErrorPage.aspx.designer.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\HaviAttekinto.aspx.cs">
+      <DependentUpon>HaviAttekinto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\HaviAttekinto.aspx.designer.cs">
+      <DependentUpon>HaviAttekinto.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Naptar.aspx.cs">
       <DependentUpon>Naptar.aspx</DependentUpon>
