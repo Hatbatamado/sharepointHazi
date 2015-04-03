@@ -1,11 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="OsszegzoForm.aspx.cs" Inherits="hazi.WEB.Pages.OsszegzoForm" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <style>
-        .Mentes {
-            float: right;
-        }
-    </style>
+    <link rel='stylesheet' href='/Styles/OsszegzoFormStyle.css' />
+
     <asp:Label ID="Filter" runat="server" Text="Szűrés:"></asp:Label>
     <asp:DropDownList ID="JovahagySzures" runat="server" AutoPostBack="true" OnSelectedIndexChanged="JovahagySzures_SelectedIndexChanged"></asp:DropDownList>
     <br />

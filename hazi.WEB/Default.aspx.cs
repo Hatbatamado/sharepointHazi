@@ -15,10 +15,6 @@ namespace hazi.WEB
 {
     public partial class _Default : Page
     {
-        private string admin = RegisterUserAs.Admin.ToString();
-        private string normal = RegisterUserAs.NormalUser.ToString();
-        private string jovahagy = RegisterUserAs.Jovahagyok.ToString();
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -31,9 +27,9 @@ namespace hazi.WEB
                 else
                 {
                     Bejelentesek.Visible = false;
-                    Response.Redirect("/Account/Login.aspx");
+                    Response.Redirect(Konstansok.RedirectAccoutLogin);
                 }
-            }
+            } //szűrés
             if (Request["__EVENTARGUMENT"] == "FilterTextChanged")
             {
                 List<UjBejelentes> lista;
@@ -91,19 +87,28 @@ namespace hazi.WEB
             MegfeleloMezokMegjelenitese(string.Empty);
         }
 
+        /// <summary>
+        /// Időbejelentése lista feltöltése szerepkör alapján
+        /// </summary>
+        /// <param name="UName"></param>
+        /// <returns></returns>
         private List<UjBejelentes> ListaAdat(string UName)
         {
             List<UjBejelentes> lista = new List<UjBejelentes>();
-            if (RoleActions.IsInRole(UName, admin))
-                lista = UjBejelentesBLL.GetIdoBejelentesek(admin, UName, DateTime.MinValue, DateTime.MinValue);
-            else if (RoleActions.IsInRole(UName, normal))
-                lista = UjBejelentesBLL.GetIdoBejelentesek(normal, UName, DateTime.MinValue, DateTime.MinValue);
-            else if (RoleActions.IsInRole(UName, jovahagy))
-                lista = UjBejelentesBLL.GetIdoBejelentesek(jovahagy, UName, DateTime.MinValue, DateTime.MinValue);
+            if (RoleActions.IsInRole(UName, Konstansok.admin))
+                lista = UjBejelentesBLL.GetIdoBejelentesek(Konstansok.admin, UName, DateTime.MinValue, DateTime.MinValue);
+            else if (RoleActions.IsInRole(UName, Konstansok.normal))
+                lista = UjBejelentesBLL.GetIdoBejelentesek(Konstansok.normal, UName, DateTime.MinValue, DateTime.MinValue);
+            else if (RoleActions.IsInRole(UName, Konstansok.jovahagy))
+                lista = UjBejelentesBLL.GetIdoBejelentesek(Konstansok.jovahagy, UName, DateTime.MinValue, DateTime.MinValue);
 
             return lista;
         }
 
+        /// <summary>
+        /// Gridview feltöltése
+        /// </summary>
+        /// <param name="lista"></param>
         private void GridFeltoles(List<UjBejelentes> lista)
         {
             //null értéknél nem sikerült rájönni, hogyan tűntessem el az oldalról a 2 gombot,
@@ -119,7 +124,7 @@ namespace hazi.WEB
 
         protected void Ujbejelentes_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Pages/Bejelento");
+            Response.Redirect(Konstansok.RedirectBejelento);
         }
 
         protected void BejelentesTorles_Click(object sender, EventArgs e)
@@ -129,7 +134,7 @@ namespace hazi.WEB
 
             //Admin nem tud egy bejelentés törlési kérelmét átállítani regisztrálta
             //így ha véletlen mégis benyomná egy admin, nem fog történni semmi
-            if (RoleActions.IsInRole(User.Identity.Name, admin))
+            if (RoleActions.IsInRole(User.Identity.Name, Konstansok.admin))
             {
                 string sikeresTorles = string.Empty;
 
@@ -179,7 +184,8 @@ namespace hazi.WEB
                 bejelentesekLista.DataBind();
                 MegfeleloMezokMegjelenitese(sikeresTorles);
             }
-            else if (RoleActions.IsInRole(User.Identity.Name, normal) || RoleActions.IsInRole(User.Identity.Name, jovahagy))
+            else if (RoleActions.IsInRole(User.Identity.Name, Konstansok.normal) ||
+                RoleActions.IsInRole(User.Identity.Name, Konstansok.jovahagy))
             {
                 //NormalUser törlésre regisztrál bejelentést
                 for (int i = 0; i < bejelentesekLista.Rows.Count; i++)
@@ -200,12 +206,16 @@ namespace hazi.WEB
             }
         }
 
+        /// <summary>
+        /// Szerepkörnek megfelelő mezők megjelenítése
+        /// </summary>
+        /// <param name="uzenet"></param>
         private void MegfeleloMezokMegjelenitese(string uzenet)
         {
             //ha újból futattjuk és cookie-val bent vagyunk,
             //akkor a User.IsInRole szerint nem vagyunk bent az adott szerepkörben
             //emiatt az egész alkalmazásban lecseréltem
-            if (RoleActions.IsInRole(User.Identity.Name, admin))
+            if (RoleActions.IsInRole(User.Identity.Name, Konstansok.admin))
             {
                 if (bejelentesekLista.Rows.Count > 0)
                 {
@@ -219,7 +229,8 @@ namespace hazi.WEB
                 else
                     BejelentesTorles.Visible = false;
             }
-            else if (RoleActions.IsInRole(User.Identity.Name, normal) || RoleActions.IsInRole(User.Identity.Name, jovahagy))
+            else if (RoleActions.IsInRole(User.Identity.Name, Konstansok.normal) ||
+                RoleActions.IsInRole(User.Identity.Name, Konstansok.jovahagy))
             {
                 if (bejelentesekLista.HeaderRow != null)
                 {
@@ -264,12 +275,17 @@ namespace hazi.WEB
 
         protected void Vissza_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Default.aspx");
+            Response.Redirect(Konstansok.RedirectFooldal);
         }
 
+        /// <summary>
+        /// Szűrő DDL értékeinek beállítása
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void bejelentesekLista_DataBound(object sender, EventArgs e)
         {
-            if (bejelentesekLista.Rows.Count > 0 && RoleActions.IsInRole(User.Identity.Name, admin))
+            if (bejelentesekLista.Rows.Count > 0 && RoleActions.IsInRole(User.Identity.Name, Konstansok.admin))
             {
                 SzuroDiv.Visible = true;
                 DDLSzures.Items.Clear(); //újraírjuk az egészet, így nem lesz benne dupla elem

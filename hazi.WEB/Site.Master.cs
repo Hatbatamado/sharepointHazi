@@ -143,7 +143,7 @@ namespace hazi.WEB
                 }
             } catch(Exception)
             {
-                Response.Redirect("/Account/Login");
+                Response.Redirect(Konstansok.RedirectAccoutLogin);
             }
         }
 

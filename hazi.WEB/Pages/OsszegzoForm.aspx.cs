@@ -34,7 +34,9 @@ namespace hazi.WEB.Pages
                 }
             }
         }
-
+        /// <summary>
+        /// Gridview feltöltése adatokkal
+        /// </summary>
         private void GVFeltoltese()
         {
             List<UjBejelentes> lista = new List<UjBejelentes>();
@@ -48,6 +50,9 @@ namespace hazi.WEB.Pages
                 Mentes.Visible = true;
         }
 
+        /// <summary>
+        /// Jóváhagyás szűrő DDL feltöltése
+        /// </summary>
         private void DDLFeltoltes()
         {
             JovahagySzures.Items.Add(new ListItem() { Value = JovaHagyasStatus.Rogzitve.ToString(), Text = JovaHagyasStatus.Rogzitve.ToDisplayString() });
@@ -56,6 +61,11 @@ namespace hazi.WEB.Pages
             JovahagySzures.Items.Add(new ListItem() { Value = "Mind", Text = "Mind" });
         }
 
+        /// <summary>
+        /// Új jóváhagyási státusz elmentése
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Mentes_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < Jovahagyas.Rows.Count; i++)

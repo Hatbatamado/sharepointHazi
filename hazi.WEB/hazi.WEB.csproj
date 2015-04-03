@@ -150,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ExternalDLLs\EPPlus.dll" />
-    <Content Include="Pages\About.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Manage.aspx" />
     <Content Include="Account\OpenAuthProviders.ascx" />
@@ -159,7 +158,6 @@
     <Content Include="Pages\AdminPage.aspx" />
     <Content Include="Pages\Attekinto.aspx" />
     <Content Include="Pages\Bejelento.aspx" />
-    <Content Include="Pages\Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
@@ -216,8 +214,11 @@
     <Content Include="Services.asmx" />
     <Content Include="Site.Master" />
     <Content Include="Styles\AdminStyle.css" />
+    <Content Include="Styles\BejelentoStyle.css" />
+    <Content Include="Styles\DeafultStyle.css" />
     <Content Include="Styles\ManageStyle.css" />
     <Content Include="Styles\NaptarStyle.css" />
+    <Content Include="Styles\OsszegzoFormStyle.css" />
     <Content Include="Styles\ProfileStyle.css" />
     <Content Include="Styles\RegisterStyle.css" />
     <Content Include="Styles\SiteMStyle.css" />
@@ -295,13 +296,6 @@
     <Compile Include="Logic\UsersBLL.cs" />
     <Compile Include="Logic\Utility.cs" />
     <Compile Include="Models\MyMenuItem.cs" />
-    <Compile Include="Pages\About.aspx.cs">
-      <DependentUpon>About.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\About.aspx.designer.cs">
-      <DependentUpon>About.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Pages\AdminPage.aspx.cs">
@@ -324,13 +318,6 @@
     </Compile>
     <Compile Include="Pages\Bejelento.aspx.designer.cs">
       <DependentUpon>Bejelento.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Contact.aspx.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\Contact.aspx.designer.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

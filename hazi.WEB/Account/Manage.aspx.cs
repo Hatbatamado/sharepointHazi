@@ -65,7 +65,7 @@ namespace hazi.WEB.Account
                 if (message != null)
                 {
                     // Strip the query string from action
-                    Form.Action = ResolveUrl("~/Account/Manage");
+                    Form.Action = ResolveUrl("~"+Konstansok.RedirectAccoutManage);
 
                     SuccessMessage =
                         message == "ChangePwdSuccess" ? "Your password has been changed."
@@ -85,7 +85,7 @@ namespace hazi.WEB.Account
                 IdentityResult result = manager.ChangePassword(User.Identity.GetUserId(), CurrentPassword.Text, NewPassword.Text);
                 if (result.Succeeded)
                 {
-                    Response.Redirect("~/Account/Manage?m=ChangePwdSuccess");
+                    Response.Redirect("~"+Konstansok.RedirectAccoutManage+"?m=ChangePwdSuccess");
                 }
                 else
                 {
@@ -103,7 +103,7 @@ namespace hazi.WEB.Account
                 IdentityResult result = manager.AddPassword(User.Identity.GetUserId(), password.Text);
                 if (result.Succeeded)
                 {
-                    Response.Redirect("~/Account/Manage?m=SetPwdSuccess");
+                    Response.Redirect("~"+Konstansok.RedirectAccoutManage+"?m=SetPwdSuccess");
                 }
                 else
                 {
@@ -127,7 +127,7 @@ namespace hazi.WEB.Account
             var msg = result.Succeeded
                 ? "?m=RemoveLoginSuccess"
                 : String.Empty;
-            Response.Redirect("~/Account/Manage" + msg);
+            Response.Redirect("~/"+Konstansok.RedirectAccoutManage + msg);
         }
 
         private void AddErrors(IdentityResult result)
@@ -138,10 +138,15 @@ namespace hazi.WEB.Account
             }
         }
 
+        /// <summary>
+        /// Profil adatok mentése
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Unnamed_Click(object sender, EventArgs e)
         {
             UsersBLL.ProfilMentes(Server, PictureFileUpload, ErrorMessage, User.Identity.Name,
-                SzuletesiTB.Text, VezetoDDL.SelectedValue, Response, "/Account/Manage");
+                SzuletesiTB.Text, VezetoDDL.SelectedValue, Response, Konstansok.RedirectAccoutManage);
         }
     }
 }

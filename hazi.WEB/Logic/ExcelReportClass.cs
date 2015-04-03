@@ -10,6 +10,11 @@ namespace hazi.WEB.Logic
 {
     public class ExcelReportClass
     {
+        /// <summary>
+        /// Excel report készítése bejelentések és jogcímek tábla adatai alapján
+        /// </summary>
+        /// <param name="Server"></param>
+        /// <param name="Response"></param>
         public ExcelReportClass(HttpServerUtility Server, HttpResponse Response)
         {
             byte[] result = null;
@@ -65,6 +70,11 @@ namespace hazi.WEB.Logic
             }
         }
 
+        /// <summary>
+        /// Jóváhagyási státusz beállítása törlésit elhagyva
+        /// </summary>
+        /// <param name="statusz"></param>
+        /// <returns></returns>
         private string JovaStatuszKonv(string statusz)
         {
             string[] seged = statusz.Split('&');
@@ -74,6 +84,12 @@ namespace hazi.WEB.Logic
                 return "Nincs";
         }
 
+        /// <summary>
+        /// jogcímek színeinek beállítása
+        /// </summary>
+        /// <param name="szin"></param>
+        /// <param name="Elso">true = rögzítve szín, false = jóváhagyva szín</param>
+        /// <returns></returns>
         private string SzinBeallit(string szin, bool Elso)
         {
             string[] seged = szin.Split('#');
@@ -93,6 +109,11 @@ namespace hazi.WEB.Logic
             }
         }
 
+        /// <summary>
+        /// Dátum.ToString-et ad vissza, mivel db-ben nem tudja végrehajtani a .ToString-et
+        /// </summary>
+        /// <param name="datum"></param>
+        /// <returns></returns>
         private string DatumKiiratas(DateTime datum)
         {
             return datum.ToString();

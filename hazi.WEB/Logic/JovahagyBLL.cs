@@ -365,7 +365,12 @@ namespace hazi.WEB.Logic
             }
         }
 
-
+        /// <summary>
+        /// Dátum és felhasználó szerint visszaad egy Áttekintő elemet megfelelő értékekkel beállítva
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
         internal static AttekintoElem GetJovahagyByEvByUser(DateTime date, string user)
         {
             AttekintoElem elem = null;

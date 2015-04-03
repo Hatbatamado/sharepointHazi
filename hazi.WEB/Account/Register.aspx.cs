@@ -17,7 +17,7 @@ namespace hazi.WEB.Account
             if(!IsPostBack)
             {
                 if (User.Identity.IsAuthenticated)
-                    Response.Redirect("/Account/Login");
+                    Response.Redirect(Konstansok.RedirectAccoutLogin);
                 else
                 {
                     VezetoDDL.DataSource = UsersBLL.GetUserNames();
@@ -33,7 +33,7 @@ namespace hazi.WEB.Account
                 ErrorMessage.Text = error;
 
             UsersBLL.ProfilMentes(Server, PictureFileUpload, ErrorMessage, UserName.Text,
-                SzuletesiTB.Text, VezetoDDL.SelectedValue, Response, "/");
+                SzuletesiTB.Text, VezetoDDL.SelectedValue, Response, Konstansok.RedirectFooldal);
         }
     }
 }

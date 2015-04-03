@@ -4,14 +4,8 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
-    <style>
-        .Torles {
-            float: right;
-        }
-        .linkek {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel='stylesheet' href='/Styles/DefaultStyle.css' />
+
     <div id="tabs">
         <ul>
             <li><a href="#tabs-1">Bejelentések (lista)</a></li>
@@ -111,10 +105,6 @@
         });
         function TextChanged() {
             __doPostBack('<%= MainUpdatePanel.ClientID %>', 'FilterTextChanged');
-        }
-        function NaptarRefresh()
-        {
-            alert('default');
         }
     </script>
 </asp:Content>

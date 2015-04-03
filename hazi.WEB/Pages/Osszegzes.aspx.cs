@@ -10,6 +10,11 @@ namespace hazi.WEB.Pages
 {
     public partial class Osszegzes : System.Web.UI.Page
     {
+        /// <summary>
+        /// Aktuális havi bejelentéseknek az összegzése
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

@@ -6,6 +6,9 @@ using System.Web;
 
 namespace hazi.WEB.Logic
 {
+    /// <summary>
+    /// Áttekintő elem: dátum, jóváhagyási státusz, jogcim, jogcím név és jogcím szín adatokkal
+    /// </summary>
     public class AttekintoElem
     {
         public DateTime Datum { get; set; }

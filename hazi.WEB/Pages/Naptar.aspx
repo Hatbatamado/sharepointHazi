@@ -83,9 +83,5 @@
         );
         popUpObj.focus();
     }
-
-    function NaptarRefresh() {
-        alert('naptar');
-    }
 </script>
 </html>

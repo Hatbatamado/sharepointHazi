@@ -4,6 +4,7 @@ using Microsoft.Owin.Security;
 using System.Web;
 using System;
 using hazi.WEB.Models;
+using hazi.WEB.Logic;
 
 namespace hazi.WEB.Models
 {
@@ -69,7 +70,7 @@ namespace hazi.WEB
             }
             else
             {
-                response.Redirect("/");
+                response.Redirect(Konstansok.RedirectFooldal);
             }
         }
     }

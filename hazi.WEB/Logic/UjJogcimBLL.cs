@@ -8,7 +8,10 @@ namespace hazi.WEB.Logic
 {
     public class UjJogcimBLL
     {
-
+        /// <summary>
+        /// Jogcímeket ad vissza színekkel együtt
+        /// </summary>
+        /// <returns></returns>
         public static List<UjJogcim> GetAllJogcim()
         {
             List<UjJogcim> jogcimek = new List<UjJogcim>();
@@ -40,6 +43,10 @@ namespace hazi.WEB.Logic
             return jogcimek;
         }
 
+        /// <summary>
+        /// Jel magyarázat listát ad vissza, jel magyarázat nevekkel és színekkel ellátva
+        /// </summary>
+        /// <returns></returns>
         internal static List<JelMagy> GetJelMagy()
         {
             List<JelMagy> lista = new List<JelMagy>();

@@ -9,10 +9,6 @@ namespace hazi.WEB.Logic
 {
     public class UjBejelentesBLL
     {
-        static string admin = RegisterUserAs.Admin.ToString();
-        static string normal = RegisterUserAs.NormalUser.ToString();
-        static string jovahagy = RegisterUserAs.Jovahagyok.ToString();
-
         /// <summary>
         /// Listás / Naptári nézethez időbejelentések kiolvasása admin / más felhasználó szerint
         /// </summary>
@@ -27,7 +23,7 @@ namespace hazi.WEB.Logic
             {
                 //Admin összes bejelentés LISTÁS nézetben
                 //minden törlési státusszal rendelkezőt megjelenítűnk
-                if (role == admin)
+                if (role == Konstansok.admin)
                 {
                     using (hazi2Entities db = new hazi2Entities())
                     {
@@ -51,7 +47,7 @@ namespace hazi.WEB.Logic
                         return bejelentesek;
                     }
                 }
-                else if (role == normal || role == jovahagy)
+                else if (role == Konstansok.normal || role == Konstansok.jovahagy)
                 {
                     //NormalUser összes bejelentés LISTÁS nézetben
                     //csak azokat listázzuk ki, aminek a státuszát még a felhasználó nem állította át
@@ -98,7 +94,7 @@ namespace hazi.WEB.Logic
                 //minden törlési státusszal rendelkezőt megjelenítűnk
                 //így az admin naptári nézett alapján is meg tudja nézni,
                 //hogy hol találhatóak a felhasználó által törlésre kért bejelentések
-                if (role == admin)
+                if (role == Konstansok.admin)
                 {
                     using (hazi2Entities db = new hazi2Entities())
                     {
@@ -117,7 +113,7 @@ namespace hazi.WEB.Logic
                                 }).ToList();
                     }
                 }
-                else if (role == normal || role == jovahagy)
+                else if (role == Konstansok.normal || role == Konstansok.jovahagy)
                 {
                     //NormalUser megadott időszakon belüli jelentések NAPTÁRI nézetben
                     //csak azokat listázzuk ki, aminek a státuszát még a felhasználó nem állította át

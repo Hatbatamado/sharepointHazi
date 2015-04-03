@@ -60,7 +60,7 @@
                 <asp:Label ID="helloLabel" runat="server" Text="Label"></asp:Label>
                 <br />
                 <br />
-                <asp:Button ID="buttonLogoff" runat="server" Text="Log off" OnClick="buttonLogoff_Click" />
+                <asp:Button ID="buttonLogoff" runat="server" Text="Log off" OnClick="buttonLogoff_Click" CssClass="btn btn-default" />
             </asp:PlaceHolder>
         </ContentTemplate>
     </asp:UpdatePanel>

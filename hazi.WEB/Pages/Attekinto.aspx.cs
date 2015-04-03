@@ -34,6 +34,12 @@ namespace hazi.WEB.Pages
             }
         }
 
+        /// <summary>
+        /// Áttekintő feltöltése adatokkal év és felhasználó alapján
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
         private string AdatokFeltoltese(int year, string user)
         {
             if (user == "" || user == null)
@@ -72,6 +78,9 @@ namespace hazi.WEB.Pages
             return string.Empty;
         }
 
+        /// <summary>
+        /// Jelmagyarázat repeater feltöltése
+        /// </summary>
         private void Jelmagyarazat()
         {
             List<JelMagy> jelmagy = UjJogcimBLL.GetJelMagy();
@@ -79,32 +88,46 @@ namespace hazi.WEB.Pages
             JelmagyarazatRepeater.DataBind();
         }
 
+        /// <summary>
+        /// kockák kiszínezése
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void BelsoRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            string alapszin = "lightgreen";
             string szin = (e.Item.DataItem as AttekintoElem).Szin;
             string fontcolor = "";
             if (szin == "" || szin == null)
             {
-                szin = alapszin;
-                fontcolor = alapszin;
+                szin = Konstansok.alapSzin;
+                fontcolor = Konstansok.alapSzin;
             }
             else
-                fontcolor = "black";
+                fontcolor = Konstansok.alapFontSzin;
             HtmlGenericControl divRog = (HtmlGenericControl)(e.Item.FindControl("bejelentesKocka"));
 
             if (divRog != null)
                 divRog.Attributes["style"] += ("background:" + szin + "; color: " + fontcolor + ";)"); 
         }
 
+        /// <summary>
+        /// jelmagyarázat kockák kiszínezése
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void JelmagyarazatRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             HtmlGenericControl div = (HtmlGenericControl)(e.Item.FindControl("jelSzin"));
             string szin = (e.Item.DataItem as JelMagy).Szin;
             if (div != null)
-                div.Attributes["style"] += ("background:" + szin + "; color: black;)");   
+                div.Attributes["style"] += ("background:" + szin + "; color: " + Konstansok.alapFontSzin + ";)");
         }
 
+        /// <summary>
+        /// felhasználó keresése
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void kereses_Click(object sender, EventArgs e)
         {
             //ha már volt sikeretelen keresés

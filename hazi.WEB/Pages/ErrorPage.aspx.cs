@@ -9,6 +9,11 @@ namespace hazi.WEB.Pages
 {
     public partial class ErrorPage : System.Web.UI.Page
     {
+        /// <summary>
+        /// 404-es hiba dobása a felhasználónak
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
             string errorMsg = Request.QueryString["msg"];

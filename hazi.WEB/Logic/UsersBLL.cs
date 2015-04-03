@@ -58,6 +58,11 @@ namespace hazi.WEB.Logic
             else return string.Empty;
         }
 
+        /// <summary>
+        /// Igaz értéket ad vissza, ha a felhasználót megtalálta az adatbázisban
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public static bool FelhasznaloIsInDB(string username)
         {
             List<Users> users = new List<Users>();
@@ -77,6 +82,10 @@ namespace hazi.WEB.Logic
             return false;
         }
 
+        /// <summary>
+        /// DDL-hez visszaadja a felhasználók nevét egy nullal a lista elején
+        /// </summary>
+        /// <returns></returns>
         public static List<string> GetUserNames()
         {
             List<Users> users = new List<Users>();
@@ -99,6 +108,13 @@ namespace hazi.WEB.Logic
             return usernames;
         }
 
+        /// <summary>
+        /// Felhasználó profil adatok mentése
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="szuletesiDatum"></param>
+        /// <param name="vezeto"></param>
+        /// <param name="kepUrl"></param>
         internal static void FelhasznaloiAdatokMentese(string username, string szuletesiDatum, string vezeto, string kepUrl)
         {
             using (hazi2Entities db = new hazi2Entities())
@@ -129,6 +145,11 @@ namespace hazi.WEB.Logic
             }
         }
 
+        /// <summary>
+        /// Felhasználó profil adatok lekérése
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public static FelhasznaloiProfilok GetUserProfilData(string user)
         {
             
@@ -144,6 +165,17 @@ namespace hazi.WEB.Logic
             }
         }
 
+        /// <summary>
+        /// Felhasználó profil adatok mentése
+        /// </summary>
+        /// <param name="Server"></param>
+        /// <param name="PictureFileUpload"></param>
+        /// <param name="ErrorMessage"></param>
+        /// <param name="username"></param>
+        /// <param name="szuldatum"></param>
+        /// <param name="vezeto"></param>
+        /// <param name="Response"></param>
+        /// <param name="redirect"></param>
         public static void ProfilMentes(HttpServerUtility Server,
             System.Web.UI.WebControls.FileUpload PictureFileUpload, System.Web.UI.WebControls.Literal ErrorMessage,
             string username, string szuldatum, string vezeto, HttpResponse Response, string redirect)

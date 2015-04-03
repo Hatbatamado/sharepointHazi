@@ -71,7 +71,7 @@ namespace hazi.WEB.Pages
                         if (ib == null)
                             HibaUzenetFelhasznalonak(hibak.IbNincsDBben);
                         else
-                            AdatokFeltolteseIdAlapjan(ib);
+                            AdatokFeltolteseIbAlapjan(ib);
                         if (ib.Jogcim.Inaktiv == true)
                         {
                             InaktivJogim();
@@ -90,11 +90,14 @@ namespace hazi.WEB.Pages
                 else
                 {
                     BejelentoForm.Visible = false;
-                    Response.Redirect("/Account/Login.aspx");
+                    Response.Redirect(Konstansok.RedirectAccoutLogin);
                 }
             }
         }
 
+        /// <summary>
+        /// Inaktív jogcím esetén a mezők letiltása / elrejtése
+        /// </summary>
         private void InaktivJogim()
         {
             save.Visible = false;
@@ -111,7 +114,9 @@ namespace hazi.WEB.Pages
         }
 
         #region DDL-ek feltoltese + alaperteke
-        //DDL feltöltése jogcímekkel
+        /// <summary>
+        /// DDL feltöltése jogcímekkel
+        /// </summary>
         private void DropDownListFeltoltes()
         {
             List<Jogcim> jogcimek = JogcimBLL.GetJogcimek(false);
@@ -121,7 +126,9 @@ namespace hazi.WEB.Pages
             }
         }
 
-        //dátum és idő mezők feltöltése
+        /// <summary>
+        /// dátum és idő mezők feltöltése
+        /// </summary>
         private void AlapAdatokFeltoltese()
         {
             //órák feltöltése DropDownList-be
@@ -138,7 +145,11 @@ namespace hazi.WEB.Pages
             }
         }
 
-        private void AdatokFeltolteseIdAlapjan(IdoBejelentes ib)
+        /// <summary>
+        /// Adatok feltöltése időbejelentés adatai alapján
+        /// </summary>
+        /// <param name="ib"></param>
+        private void AdatokFeltolteseIbAlapjan(IdoBejelentes ib)
         {
             //dátum
             datepicker.Text = DateTimeTosringMegfeleloModra(ib.KezdetiDatum);
@@ -155,7 +166,9 @@ namespace hazi.WEB.Pages
             DropDownList1.SelectedValue = JogcimBLL.GetJogcimById(ib.JogcimID);
         }
 
-        //alap értékek beállítása
+        /// <summary>
+        /// alap értékek beállítása
+        /// </summary>
         private void AlapErtekekBeallitasa()
         {
             //Folyamat kezdése: alap értéknek a mostani idő beállítása
@@ -176,6 +189,10 @@ namespace hazi.WEB.Pages
         #endregion
 
         #region Maradek hiba kereses es kezeles
+        /// <summary>
+        /// Maradék hiba keresése
+        /// </summary>
+        /// <returns></returns>
         private hibak Hibakereses()
         {
             //Folyamat vége a kezdeti előtt van-e vagy megegyezik-e
@@ -185,7 +202,10 @@ namespace hazi.WEB.Pages
             return hibak.nincsHiba;
         }
 
-        //hiba esetén a felhasználó értesítése
+        /// <summary>
+        /// hiba esetén a felhasználó értesítése
+        /// </summary>
+        /// <param name="hiba"></param>
         private void HibaUzenetFelhasznalonak(hibak hiba)
         {
             string hibaUzenet = "";
@@ -228,13 +248,22 @@ namespace hazi.WEB.Pages
         #endregion
 
         #region datum metodusok
-        //DateTime parse-hoz a dátum átalakítása
+        /// <summary>
+        /// DateTime parse-hoz a dátum átalakítása
+        /// </summary>
+        /// <param name="ido"></param>
+        /// <returns></returns>
         private string DateTimeTosringMegfeleloModra(DateTime ido)
         {
             return ido.Year + "." + ido.Month.ToString("00") + "." + ido.Day;
         }
 
-        //másodpercek nullázása
+        /// <summary>
+        /// másodpercek nullázása
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
         private DateTime IdoVizsgalat(vizsgalat v, DateTime date)
         {
             TimeSpan ts = new TimeSpan();
@@ -260,7 +289,7 @@ namespace hazi.WEB.Pages
             }
             else
                 //Home-ra navigálás
-                Response.Redirect("/Default.aspx");
+                Response.Redirect(Konstansok.RedirectFooldal);
         }
 
         protected void save_Click(object sender, EventArgs e)
@@ -296,6 +325,9 @@ namespace hazi.WEB.Pages
         #endregion
 
         #region Mentes + elemek elrejtese
+        /// <summary>
+        /// Időbejelentés elmentése
+        /// </summary>
         private void Mentes()
         {
             string ujBejelentoUser;
@@ -321,6 +353,9 @@ namespace hazi.WEB.Pages
             ElemekElrejtese();
         }
 
+        /// <summary>
+        /// Sikeres mentés esetén a felhasználó egyszerűen visszatudjon navigálni a rendszer főoldalára
+        /// </summary>
         private void ElemekElrejtese()
         {
             Label5.Visible = false;
@@ -342,7 +377,11 @@ namespace hazi.WEB.Pages
         #endregion
 
         #region validatorok
-        //dátum validátor
+        /// <summary>
+        /// dátum validátor
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="args"></param>
         protected void CustomValidatorDatum_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (hiba == hibak.nincsHiba)
@@ -371,7 +410,11 @@ namespace hazi.WEB.Pages
             }
         }
 
-        //folyamat kezdeti időpont validátor
+        /// <summary>
+        /// folyamat kezdeti időpont validátor
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="args"></param>
         protected void CustomValidatorIdopont1_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (hiba == hibak.nincsHiba)
@@ -401,7 +444,11 @@ namespace hazi.WEB.Pages
             }
         }
 
-        //folyamat vége időpont validátor
+        /// <summary>
+        /// folyamat vége időpont validátor
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="args"></param>
         protected void CustomValidatorIdopont2_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (hiba == hibak.nincsHiba)

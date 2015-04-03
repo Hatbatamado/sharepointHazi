@@ -51,14 +51,19 @@ namespace hazi.WEB.Pages
             }
         }
 
+        /// <summary>
+        /// Szerepkör enum név keresése "szép" név alapján
+        /// </summary>
+        /// <param name="SzepNev"></param>
+        /// <returns></returns>
         private string RoleNevKereses(string SzepNev)
         {
             if (SzepNev == RegisterUserAs.Admin.ToDisplayString())
-                return RegisterUserAs.Admin.ToString();
+                return Konstansok.admin;
             else if (SzepNev == RegisterUserAs.Jovahagyok.ToDisplayString())
-                return RegisterUserAs.Jovahagyok.ToString();
+                return Konstansok.jovahagy;
             else if (SzepNev == RegisterUserAs.NormalUser.ToDisplayString())
-                return RegisterUserAs.NormalUser.ToString();
+                return Konstansok.normal;
             else return null;
         }
 
@@ -128,6 +133,10 @@ namespace hazi.WEB.Pages
             }
         }
 
+        /// <summary>
+        /// Ha egy egy jogcím inaktív, akkor annál a checkboxot bepipálja
+        /// </summary>
+        /// <param name="lista"></param>
         private void CheckBoxCheck(List<UjJogcim> lista)
         {
             for (int i = 0; i < JogcimekGV.Rows.Count; i++)
@@ -137,6 +146,9 @@ namespace hazi.WEB.Pages
             }
         }
 
+        /// <summary>
+        /// Jogcímes gridview tab kiválasztása
+        /// </summary>
         private void LoadJogcimekGV()
         {
             Felhasznalok.Visible = false; //bind miatti visszatérés miatt

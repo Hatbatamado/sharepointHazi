@@ -5,19 +5,8 @@
     <asp:PlaceHolder runat="server" ID="BejelentoForm" Visible="false">
         <!-- http://jqueryui.com/datepicker/ -->
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
-        <!-- css -->
-        <style>
-            #fent {
-                padding-top: 20px;
-            }
-            .alul {
-                padding-bottom: 20px;
-            }
-            #gombBeljebb {
-                padding-left: 40px;
-            }
-        </style>
-        <!-- css vége -->
+        <link rel='stylesheet' href='/Styles/BejelentoStyle.css' />
+
         <div id="fent">
             <div class="alul">
                 <asp:Label ID="Label4" runat="server" Text="Bejelentő űrlap" Font-Bold="true" Font-Size="XX-Large"></asp:Label>

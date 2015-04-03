@@ -107,12 +107,12 @@ namespace hazi.WEB.Account
 
         protected void SzerepB_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Pages/AdminPage");
+            Response.Redirect(Konstansok.RedirectAdminOldal);
         }
 
         protected void OsszegB_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Pages/OsszegzoForm");
+            Response.Redirect(Konstansok.RedirectOsszegzoForm);
         }
     }
 }
