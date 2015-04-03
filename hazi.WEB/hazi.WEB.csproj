@@ -215,7 +215,7 @@
     <Content Include="Site.Master" />
     <Content Include="Styles\AdminStyle.css" />
     <Content Include="Styles\BejelentoStyle.css" />
-    <Content Include="Styles\DeafultStyle.css" />
+    <Content Include="Styles\DefaultStyle.css" />
     <Content Include="Styles\ManageStyle.css" />
     <Content Include="Styles\NaptarStyle.css" />
     <Content Include="Styles\OsszegzoFormStyle.css" />
