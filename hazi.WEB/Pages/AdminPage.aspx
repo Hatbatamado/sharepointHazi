@@ -3,7 +3,6 @@
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="/Styles/colorpicker.css" />
     <link rel="stylesheet" href="/Styles/AdminStyle.css" />
 
     <asp:HiddenField runat="server" ID="HiddenField" Value="0" />
@@ -85,7 +84,6 @@
 
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script src="/Scripts/colorpicker.js"></script>
     <script>
         $(function () {
             $("#tabs").tabs({

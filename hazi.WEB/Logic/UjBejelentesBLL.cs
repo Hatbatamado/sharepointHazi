@@ -304,5 +304,70 @@ namespace hazi.WEB.Logic
 
             return items;
         }
+
+        /// <summary>
+        /// Időbejelentés kiolvása db-ből, adminnak mindet, más felhasználókat csak azt, amit nem kért törlésre
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="mind"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static UjBejelentes GetIdoBejelentesById(int? id, bool mind, string name)
+        {
+            if (id.HasValue && id > 0)
+            {
+                using (hazi2Entities db = new hazi2Entities())
+                {
+                    if (mind)
+                    {
+                        try
+                        {
+                            return (from b in db.IdoBejelentes1
+                                    where b.ID == id
+                                    select new UjBejelentes
+                                    {
+                                        ID = b.ID,
+                                        KezdetiDatum = b.KezdetiDatum,
+                                        VegeDatum = b.VegeDatum,
+                                        JogcimID = b.JogcimID,
+                                        UserName = b.UserName,
+                                        LastEdit = b.UtolsoModosito,
+                                        LastEditTime = (DateTime)b.UtolsoModositas,
+                                        JogcimStatusz = (bool)b.Jogcim.Inaktiv
+                                    }).Single();
+                        }
+                        catch (Exception)
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            return (from b in db.IdoBejelentes1
+                                    where b.ID == id &&
+                                    !b.Statusz.Contains("RogzitettKerelem") && b.UserName == name
+                                    select new UjBejelentes
+                                    {
+                                        ID = b.ID,
+                                        KezdetiDatum = b.KezdetiDatum,
+                                        VegeDatum = b.VegeDatum,
+                                        JogcimID = b.JogcimID,
+                                        UserName = b.UserName,
+                                        LastEdit = b.UtolsoModosito,
+                                        LastEditTime = (DateTime)b.UtolsoModositas,
+                                        JogcimStatusz = (bool)b.Jogcim.Inaktiv
+                                    }).Single();
+                        }
+                        catch (Exception)
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

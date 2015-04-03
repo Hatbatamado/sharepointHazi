@@ -19,6 +19,7 @@ namespace hazi.DAL
         public string LastEdit { get; set; }
         public System.DateTime LastEditTime { get; set; }
         public string JogcimNev { get; set; }
+        public bool JogcimStatusz { get; set; }
         public string TorlesStatus { get; set; }
         public string JovaStatus { get; set; }
         public string JovaStatusMegjelenes { get; set; }

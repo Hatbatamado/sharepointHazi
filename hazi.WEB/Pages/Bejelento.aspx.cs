@@ -63,16 +63,16 @@ namespace hazi.WEB.Pages
                     {
                         Bejelentes.UjBejelentes = false;
                         Id = Int32.Parse(Request.QueryString["ID"]);
-                        IdoBejelentes ib;
+                        UjBejelentes ib;
                         if (RoleActions.IsInRole(User.Identity.Name, Konstansok.admin))
-                            ib = IdoBejelentesBLL.GetIdoBejelentesById(Id.Value, true, string.Empty);
+                            ib = UjBejelentesBLL.GetIdoBejelentesById(Id.Value, true, string.Empty);
                         else
-                            ib = IdoBejelentesBLL.GetIdoBejelentesById(Id.Value, false, User.Identity.Name);
+                            ib = UjBejelentesBLL.GetIdoBejelentesById(Id.Value, false, User.Identity.Name);
                         if (ib == null)
                             HibaUzenetFelhasznalonak(hibak.IbNincsDBben);
                         else
                             AdatokFeltolteseIbAlapjan(ib);
-                        if (ib.Jogcim.Inaktiv == true)
+                        if (ib.JogcimStatusz == true)
                         {
                             InaktivJogim();
                         }
@@ -149,7 +149,7 @@ namespace hazi.WEB.Pages
         /// Adatok feltöltése időbejelentés adatai alapján
         /// </summary>
         /// <param name="ib"></param>
-        private void AdatokFeltolteseIbAlapjan(IdoBejelentes ib)
+        private void AdatokFeltolteseIbAlapjan(UjBejelentes ib)
         {
             //dátum
             datepicker.Text = DateTimeTosringMegfeleloModra(ib.KezdetiDatum);

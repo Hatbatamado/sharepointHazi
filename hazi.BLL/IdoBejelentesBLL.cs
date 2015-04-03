@@ -58,53 +58,6 @@ namespace hazi.BLL
         }
 
         /// <summary>
-        /// Időbejelentés kiolvása db-ből, adminnak mindet, más felhasználókat csak azt, amit nem kért törlésre
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="mind"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public static IdoBejelentes GetIdoBejelentesById(int? id, bool mind, string name)
-        {
-            if (id.HasValue && id > 0)
-            {
-                using (hazi2Entities db = new hazi2Entities())
-                {
-                    if (mind)
-                    {
-                        try
-                        {
-                            var bej = (from b in db.IdoBejelentes1
-                                       where b.ID == id
-                                       select b).Single();
-                            return bej;
-                        }
-                        catch (Exception)
-                        {
-                            return null;
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            var bej = (from b in db.IdoBejelentes1
-                                       where b.ID == id &&
-                                       !b.Statusz.Contains("RogzitettKerelem") && b.UserName == name
-                                       select b).Single();
-                            return bej;
-                        }
-                        catch (Exception)
-                        {
-                            return null;
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
         /// Admini törlés időbejelentés db-ből id alapján
         /// </summary>
         /// <param name="id"></param>
