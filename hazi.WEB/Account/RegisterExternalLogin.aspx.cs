@@ -3,6 +3,7 @@ using Microsoft.Owin.Security;
 using System;
 using System.Web;
 using hazi.WEB.Models;
+using hazi.WEB.Logic;
 
 namespace hazi.WEB.Account
 {
@@ -26,7 +27,7 @@ namespace hazi.WEB.Account
             ProviderName = IdentityHelper.GetProviderNameFromRequest(Request);
             if (String.IsNullOrEmpty(ProviderName))
             {
-                Response.Redirect("~/Account/Login");
+                Response.Redirect("~/" + Konstansok.RedirectAccoutLogin);
             }
             if (!IsPostBack)
             {
@@ -34,7 +35,7 @@ namespace hazi.WEB.Account
                 var loginInfo = Context.GetOwinContext().Authentication.GetExternalLoginInfo();
                 if (loginInfo == null)
                 {
-                    Response.Redirect("~/Account/Login");
+                    Response.Redirect("~/" + Konstansok.RedirectAccoutLogin);
                 }
                 var user = manager.Find(loginInfo.Login);
                 if (user != null)
@@ -48,7 +49,7 @@ namespace hazi.WEB.Account
                     var verifiedloginInfo = Context.GetOwinContext().Authentication.GetExternalLoginInfo(IdentityHelper.XsrfKey, User.Identity.GetUserId());
                     if (verifiedloginInfo == null)
                     {
-                        Response.Redirect("~/Account/Login");
+                        Response.Redirect("~/" + Konstansok.RedirectAccoutLogin);
                     }
 
                     var result = manager.AddLogin(User.Identity.GetUserId(), verifiedloginInfo.Login);
@@ -88,7 +89,7 @@ namespace hazi.WEB.Account
                 var loginInfo = Context.GetOwinContext().Authentication.GetExternalLoginInfo();
                 if (loginInfo == null)
                 {
-                    Response.Redirect("~/Account/Login");
+                    Response.Redirect("~/" + Konstansok.RedirectAccoutLogin);
                     return;
                 }
                 result = manager.AddLogin(user.Id, loginInfo.Login);

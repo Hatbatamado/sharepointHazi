@@ -23,7 +23,7 @@ namespace hazi.WEB.Logic
 
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                balmenuitems.Add(new MyMenuItem() { Text = "Bejelentések", Link = "/" });
+                balmenuitems.Add(new MyMenuItem() { Text = "Bejelentések", Link = Konstansok.RedirectFooldal });
 
                 if (!RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.NormalUser.ToString()))
                     balmenuitems.Add(new MyMenuItem() { Text = "Jóváhagyások", Link = Konstansok.RedirectOsszegzoForm });

@@ -2,6 +2,7 @@
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using hazi.WEB.Logic;
 
 namespace hazi.WEB
 {
@@ -16,7 +17,7 @@ namespace hazi.WEB
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login")
+                LoginPath = new PathString(Konstansok.RedirectAccoutLogin)
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
