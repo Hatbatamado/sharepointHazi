@@ -42,23 +42,20 @@ namespace hazi.WEB
 
         private List<UjBejelentes> ListaAdat(string UName, DateTime start, DateTime end)
         {
-            string admin = RegisterUserAs.Admin.ToString();
-            string normal = RegisterUserAs.NormalUser.ToString();
-            string jovahagy = RegisterUserAs.Jovahagyok.ToString();
             List<UjBejelentes> lista = new List<UjBejelentes>();
-            if (RoleActions.IsInRole(UName, admin))
+            if (RoleActions.IsInRole(UName, Konstansok.admin))
             {
-                lista = UjBejelentesBLL.GetIdoBejelentesek(admin, UName, start, end);
+                lista = UjBejelentesBLL.GetIdoBejelentesek(Konstansok.admin, UName, start, end);
                 JovahagyBLL.StatuszBeallitasok(lista, true);
             }
-            else if (RoleActions.IsInRole(UName, normal))
+            else if (RoleActions.IsInRole(UName, Konstansok.normal))
             {
-                lista = UjBejelentesBLL.GetIdoBejelentesek(normal, UName, start, end);
+                lista = UjBejelentesBLL.GetIdoBejelentesek(Konstansok.normal, UName, start, end);
                 JovahagyBLL.StatuszBeallitasok(lista, false);
             }
-            else if (RoleActions.IsInRole(UName, jovahagy))
+            else if (RoleActions.IsInRole(UName, Konstansok.jovahagy))
             {
-                lista = UjBejelentesBLL.GetIdoBejelentesek(jovahagy, UName, start, end);
+                lista = UjBejelentesBLL.GetIdoBejelentesek(Konstansok.jovahagy, UName, start, end);
                 JovahagyBLL.StatuszBeallitasok(lista, false);
             }           
 

@@ -18,7 +18,7 @@ namespace hazi.WEB.Pages
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!User.Identity.IsAuthenticated ||
-                !RoleActions.IsInRole(User.Identity.Name, RegisterUserAs.Admin.ToString()))
+                !RoleActions.IsInRole(User.Identity.Name, Konstansok.admin))
             {
                 Error404.HibaDobas(Response);
             }

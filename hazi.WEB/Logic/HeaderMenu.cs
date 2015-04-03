@@ -25,12 +25,12 @@ namespace hazi.WEB.Logic
             {
                 balmenuitems.Add(new MyMenuItem() { Text = "Bejelentések", Link = Konstansok.RedirectFooldal });
 
-                if (!RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.NormalUser.ToString()))
+                if (!RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, Konstansok.normal))
                     balmenuitems.Add(new MyMenuItem() { Text = "Jóváhagyások", Link = Konstansok.RedirectOsszegzoForm });
 
                 balmenuitems.Add(new MyMenuItem() { Text = "Éves áttekintő", Link = Konstansok.RedirectAttekinto });
 
-                if (RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.Admin.ToString()))
+                if (RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, Konstansok.admin))
                     jobbmenuitems.Add(new MyMenuItem() { Text = "Admin oldal", Link = Konstansok.RedirectAdminOldal });
 
                 jobbmenuitems.Add(new MyMenuItem()

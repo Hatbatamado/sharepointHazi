@@ -29,9 +29,9 @@ namespace hazi.WEB.Logic
             foreach (Users user in users)
             {
                 user.RoleList = new List<ListItem>();
-                user.RoleList.Add(new ListItem { Value = RegisterUserAs.Admin.ToString(), Text = RegisterUserAs.Admin.ToDisplayString() });
-                user.RoleList.Add(new ListItem { Value = RegisterUserAs.NormalUser.ToString(), Text = RegisterUserAs.NormalUser.ToDisplayString() });
-                user.RoleList.Add(new ListItem { Value = RegisterUserAs.Jovahagyok.ToString(), Text = RegisterUserAs.Jovahagyok.ToDisplayString() });
+                user.RoleList.Add(new ListItem { Value = Konstansok.admin, Text = RegisterUserAs.Admin.ToDisplayString() });
+                user.RoleList.Add(new ListItem { Value = Konstansok.normal, Text = RegisterUserAs.NormalUser.ToDisplayString() });
+                user.RoleList.Add(new ListItem { Value = Konstansok.jovahagy, Text = RegisterUserAs.Jovahagyok.ToDisplayString() });
                 user.Role = UserRole(user.Name);
                 user.RoleMegjelenes = ((RegisterUserAs)Enum.Parse(typeof(RegisterUserAs), user.Role)).ToDisplayString();
             }
@@ -46,15 +46,12 @@ namespace hazi.WEB.Logic
         /// <returns></returns>
         private static string UserRole(string name)
         {
-            string admin = RegisterUserAs.Admin.ToString();
-            string normal = RegisterUserAs.NormalUser.ToString();
-            string jovahagy = RegisterUserAs.Jovahagyok.ToString();
-            if (RoleActions.IsInRole(name, admin))
-                return admin;
-            else if (RoleActions.IsInRole(name, normal))
-                return normal;
-            else if (RoleActions.IsInRole(name, jovahagy))
-                return jovahagy;
+            if (RoleActions.IsInRole(name, Konstansok.admin))
+                return Konstansok.admin;
+            else if (RoleActions.IsInRole(name, Konstansok.normal))
+                return Konstansok.normal;
+            else if (RoleActions.IsInRole(name, Konstansok.jovahagy))
+                return Konstansok.jovahagy;
             else return string.Empty;
         }
 

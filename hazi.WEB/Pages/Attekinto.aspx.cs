@@ -47,7 +47,7 @@ namespace hazi.WEB.Pages
             else if (!UsersBLL.FelhasznaloIsInDB(user))
                 return "nincs";
 
-            if (!RoleActions.IsInRole(User.Identity.Name, RegisterUserAs.NormalUser.ToString()))
+            if (!RoleActions.IsInRole(User.Identity.Name, Konstansok.normal))
                 AttekintoUserKereso.Visible = true;
             else
                 AttekintoUserKereso.Visible = false;

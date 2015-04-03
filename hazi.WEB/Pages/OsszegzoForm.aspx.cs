@@ -12,16 +12,13 @@ namespace hazi.WEB.Pages
 {
     public partial class OsszegzoForm : System.Web.UI.Page
     {
-        string admin = RegisterUserAs.Admin.ToString();
-        string jova = RegisterUserAs.Jovahagyok.ToString();
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 if (User.Identity.IsAuthenticated &&
-                    (RoleActions.IsInRole(User.Identity.Name, admin) ||
-                    RoleActions.IsInRole(User.Identity.Name, jova)))
+                    (RoleActions.IsInRole(User.Identity.Name, Konstansok.admin) ||
+                    RoleActions.IsInRole(User.Identity.Name, Konstansok.jovahagy)))
                 {
                     Jovahagyas.Visible = true;
                     DDLFeltoltes();
