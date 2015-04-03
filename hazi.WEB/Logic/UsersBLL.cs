@@ -149,7 +149,7 @@ namespace hazi.WEB.Logic
             string username, string szuldatum, string vezeto, HttpResponse Response, string redirect)
         {
             Boolean fileOK = false;
-            String path = Server.MapPath("~/Images/");
+            String path = Server.MapPath("~" + Konstansok.ImagesPath);
             String fileExtension = "";
             if (PictureFileUpload.HasFile)
             {
@@ -184,7 +184,7 @@ namespace hazi.WEB.Logic
             }
 
             if (fileOK)
-                FelhasznaloiAdatokMentese(username, szuldatum, vezeto, "/Images/" + FileNev);
+                FelhasznaloiAdatokMentese(username, szuldatum, vezeto, Konstansok.ImagesPath + FileNev);
             else
                 FelhasznaloiAdatokMentese(username, szuldatum, vezeto, FileNev);
 

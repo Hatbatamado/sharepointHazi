@@ -1,9 +1,11 @@
 ﻿using hazi.BLL;
 using hazi.DAL;
 using hazi.WEB.Logic;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -140,6 +142,11 @@ namespace hazi.WEB.Pages
             Felhasznalok.Visible = false; //bind miatti visszatérés miatt
             string js = string.Format("$(\"#tabs\" ).tabs(\"option\", \"active\", 1 );");
             ClientScript.RegisterStartupScript(this.GetType(), "showTab", js, true);
-        }     
+        }
+
+        protected void ExcelReport_Click(object sender, EventArgs e)
+        {
+            ExcelReportClass er = new ExcelReportClass(Server, Response);
+        }
     }
 }

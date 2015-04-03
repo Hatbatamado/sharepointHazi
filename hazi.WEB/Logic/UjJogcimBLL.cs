@@ -8,6 +8,7 @@ namespace hazi.WEB.Logic
 {
     public class UjJogcimBLL
     {
+
         public static List<UjJogcim> GetAllJogcim()
         {
             List<UjJogcim> jogcimek = new List<UjJogcim>();
@@ -63,9 +64,9 @@ namespace hazi.WEB.Logic
                     if (rogszin.Length <= 1 || jovaszin.Length <= 1)
                     {
                         if (rogszin.Length <= 1)
-                            rogszin = "#FFFF00";
+                            rogszin = Konstansok.RogzitveAlapSzin;
                         if (jovaszin.Length <= 1)
-                            jovaszin = "#006400";
+                            jovaszin = Konstansok.JovahagyvaAlapSzin;
 
                         item.Szin = rogszin + jovaszin;
 
@@ -88,7 +89,7 @@ namespace hazi.WEB.Logic
                 }
             }
             lista.Add(new JelMagy() {
-                BetuJel = 'T', JelNev = "Több bejelentés 1 nap", Szin = "#c9c9ee" });
+                BetuJel = 'T', JelNev = "Több bejelentés 1 nap", Szin = Konstansok.TobbBejelenesAlapszin });
 
             return lista;
         }

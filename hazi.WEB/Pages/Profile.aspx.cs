@@ -31,7 +31,7 @@ namespace hazi.WEB.Pages
                         if (fp.ProfilKepUrl != "")
                             ProfilePictureImg.ImageUrl = fp.ProfilKepUrl;
                         else
-                            ProfilePictureImg.ImageUrl = "/Images/logo.jpg";
+                            ProfilePictureImg.ImageUrl = Konstansok.ImagesPath + "logo.jpg";
                         BirthdayLabel.Text = fp.SzuletesiDatum.ToString("yyyy.MM.dd");
                         ManagerLabel.Text = fp.Vezeto;
                     }

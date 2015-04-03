@@ -38,6 +38,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EPPlus, Version=4.0.3.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDLLs\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -145,6 +149,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ExternalDLLs\EPPlus.dll" />
     <Content Include="Pages\About.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Manage.aspx" />
@@ -164,6 +169,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <Content Include="ReportTemplates\ReportTemplate.xlsx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Pages\ErrorPage.aspx" />
     <Content Include="Pages\Naptar.aspx" />
@@ -209,6 +215,7 @@
     <Content Include="Global.asax" />
     <Content Include="Services.asmx" />
     <Content Include="Site.Master" />
+    <Content Include="Styles\AdminStyle.css" />
     <Content Include="Styles\ManageStyle.css" />
     <Content Include="Styles\NaptarStyle.css" />
     <Content Include="Styles\ProfileStyle.css" />
@@ -272,9 +279,11 @@
     <Compile Include="Logic\EnumHelper.cs" />
     <Compile Include="Logic\Error404.cs" />
     <Compile Include="Logic\Enumok.cs" />
+    <Compile Include="Logic\ExcelReportClass.cs" />
     <Compile Include="Logic\HeaderMenu.cs" />
     <Compile Include="Logic\JelMagy.cs" />
     <Compile Include="Logic\JovahagyBLL.cs" />
+    <Compile Include="Logic\Konstansok.cs" />
     <Compile Include="Logic\Napokszama.cs" />
     <Compile Include="Logic\OsszegzoBLL.cs" />
     <Compile Include="Logic\RoleActions.cs" />

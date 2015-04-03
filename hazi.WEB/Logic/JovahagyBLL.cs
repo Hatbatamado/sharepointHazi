@@ -391,7 +391,7 @@ namespace hazi.WEB.Logic
                     elem = new AttekintoElem {
                         Datum = date,
                         JogcimNev = 'T',
-                        Szin = "#c9c9ee" };
+                        Szin = Konstansok.TobbBejelenesAlapszin };
 
                     return elem;
                 }
