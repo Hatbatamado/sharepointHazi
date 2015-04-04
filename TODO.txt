@@ -1,0 +1,1 @@
+TODO: user lista vezetok db szama alapjan sort majd rekurziv lekeres
