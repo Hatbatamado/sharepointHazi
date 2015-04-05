@@ -1,1 +1,3 @@
-TODO: user lista vezetok db szama alapjan sort majd rekurziv lekeres
+TODO:
+user lista vezetok db szama alapjan sort majd rekurziv lekeres
+Header bug: http://prntscr.com/6ptebl
