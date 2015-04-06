@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
+using hazi.WEB.Models;
 
 namespace hazi.WEB.Logic
 {
@@ -365,6 +366,69 @@ namespace hazi.WEB.Logic
             }
         }
 
+        public static HaviAttekintoElem GetJovahagyByHaviAttekinto(DateTime date, string user)
+        {
+            HaviAttekintoElem elem = null;
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                try
+                {
+                    elem = (from h in db.IdoBejelentes1
+                            where h.KezdetiDatum.Year == date.Year &&
+                            h.KezdetiDatum.Month == date.Month &&
+                            h.KezdetiDatum.Day == date.Day && h.UserName == user &&
+                            !h.Statusz.Contains("Elutasitva")
+                            select new HaviAttekintoElem
+                            {
+                                Datum = h.KezdetiDatum,
+                                JogcimNev = h.Jogcim.Cim,
+                                JovahagyasiStatusz = h.Statusz,
+                                UserName = h.UserName,
+                                Szin = h.Jogcim.Szin
+                            }).SingleOrDefault();
+                }
+                catch (InvalidOperationException)
+                {
+                    elem = new HaviAttekintoElem {
+                        Datum = date,
+                        JogcimNev = "T",
+                        Szin = Konstansok.TobbBejelenesAlapszin
+                    };
+
+                    return elem;
+                }
+                if (elem != null)
+                {
+                    elem.JogcimNev = elem.JogcimNev.ToUpper()[0].ToString();
+
+                    string[] seged = elem.JovahagyasiStatusz.Split('&');
+                    if (seged.Length < 2)
+                        return null;
+                    else
+                        elem.JovahagyasiStatusz = seged[1];
+
+                    string[] segedszin = elem.Szin.Split('#');
+                    string rogszin = "";
+                    string jovaszin = "";
+                    if (segedszin.Length >= 1)
+                        rogszin = '#' + segedszin[1];
+                    if (segedszin.Length >= 2)
+                        jovaszin = '#' + segedszin[2];
+
+                    if (elem.JovahagyasiStatusz == JovaHagyasStatus.Rogzitve.ToString())
+                        elem.Szin = rogszin;
+                    else if (elem.JovahagyasiStatusz == JovaHagyasStatus.Jovahagyva.ToString())
+                        elem.Szin = jovaszin;
+                }
+                else
+                {
+                    //Szöveges tartalom kell a divekbe, mert különben elcsúszik a többi div ahol van
+                    elem = new HaviAttekintoElem() { JogcimNev = "." };
+                }
+            }
+            return elem;
+        }
+
         /// <summary>
         /// Dátum és felhasználó szerint visszaad egy Áttekintő elemet megfelelő értékekkel beállítva
         /// </summary>
@@ -433,9 +497,86 @@ namespace hazi.WEB.Logic
             return elem;
         }
 
-
-        public static HaviAttekintoElem Lekerdezes(string vezeto)
+        public static int Lekerdezes2(string user, List<HiearchiaOsszeg> lista, List<string> userlista)
         {
+            userlista.Remove(user);
+
+            List<FelhasznaloiProfilok> fp = new List<FelhasznaloiProfilok>();
+            HiearchiaOsszeg ho = new HiearchiaOsszeg() { UserName = user };
+            int darab = 0;
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                fp = (from f in db.FelhasznaloiProfiloks
+                      where f.Vezeto == user
+                      select f).ToList();
+            }
+            if (fp.Count > 0)
+            {
+                foreach (var item in fp)
+                {
+                    darab += Lekerdezes2(item.UserName, lista, userlista);
+                }
+                ho.UserCount += darab;
+
+                int index = -1;
+                int i = 0;
+                foreach (var item in lista)
+                {
+                    if (item.UserName == ho.UserName)
+                    {
+                        index = i;
+                        break;
+                    }
+                    i++;
+                }
+
+                if (index != -1)
+                {
+                    if (lista[index].UserCount != ho.UserCount)
+                        lista[index].UserCount = ho.UserCount;
+                }
+                else
+                    lista.Add(ho);
+
+                return darab + 1;
+            }
+            else
+            {
+                ho.UserCount += darab;
+                int index = -1;
+                int i = 0;
+                foreach (var item in lista)
+                {
+                    if (item.UserName == ho.UserName)
+                    {
+                        index = i;
+                        break;
+                    }
+                    i++;
+                }
+
+                if (index != -1)
+                {
+                    if (lista[index].UserCount != ho.UserCount)
+                        lista[index].UserCount = ho.UserCount;
+                }
+                else
+                    lista.Add(ho);
+            }
+            return 1;
+        }
+
+        public static HaviAttekintoElem Lekerdezes(string vezeto, List<HiearchiaOsszeg> lista)
+        {
+            foreach (var item in lista)
+            {
+                if (item.UserName == vezeto)
+                {
+                    lista.Remove(item);
+                    break;
+                }
+            }
+
             HaviAttekintoElem HAE = new HaviAttekintoElem();
             List<FelhasznaloiProfilok> fp = new List<FelhasznaloiProfilok>();
             List<HaviAttekintoElem> elemek = new List<HaviAttekintoElem>();
@@ -449,7 +590,7 @@ namespace hazi.WEB.Logic
             {
                 foreach (var item in fp)
                 {
-                    elemek.Add(Lekerdezes(item.UserName));
+                    elemek.Add(Lekerdezes(item.UserName, lista));
                 }
                 return Elem(vezeto, elemek);
             }
@@ -481,7 +622,7 @@ namespace hazi.WEB.Logic
                     HAE.Szin = Szin(HAE.JovahagyasiStatusz, HAE.Szin);
                     HAE.UsersLista = elemek;
                 }
-                catch (Exception) { return null; }
+                catch (Exception) { return new HaviAttekintoElem() { UserName = vezeto, UsersLista = elemek }; }
             }
             return HAE;
         }

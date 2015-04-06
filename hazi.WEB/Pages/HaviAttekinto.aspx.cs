@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using hazi.WEB.Models;
 
 namespace hazi.WEB.Pages
 {
@@ -29,7 +30,42 @@ namespace hazi.WEB.Pages
 
         private void HaviMegjelenites(bool vezeto)
         {
-            HaviAttekintoElem hv = JovahagyBLL.Lekerdezes(User.Identity.Name);
+            List<HiearchiaOsszeg> lista = new List<HiearchiaOsszeg>();
+            List<string> userlista = UsersBLL.GetUserNames();
+            userlista.RemoveAt(0);
+            while (userlista.Count > 0)
+                JovahagyBLL.Lekerdezes2(userlista[0], lista, userlista);
+            
+            lista = lista.OrderBy(o => o.UserCount).ToList();
+
+            List<HaviAttekintoElem> hv = new List<HaviAttekintoElem>();
+            while (lista.Count > 0)
+                hv.Add(JovahagyBLL.Lekerdezes(lista[lista.Count - 1].UserName, lista));
+
+            List<HaviAttekintoViewModel> hvRep = new List<HaviAttekintoViewModel>();
+            foreach (var item in hv)
+            {
+                if (item.UsersLista.Count != 0)
+                    hvRep.Add(new HaviAttekintoViewModel(2015, 04, item.UserName)
+                    {
+                        Nev = item.UserName,
+                        RangVezeto = '+'
+                    });
+                else
+                    hvRep.Add(new HaviAttekintoViewModel(2015, 04, item.UserName)
+                    {
+                        Nev = item.UserName,
+                        RangNormal = '&'
+                    });
+            }
+            KulsoRepeater.DataSource = hvRep;
+            KulsoRepeater.DataBind();
+        }
+
+        protected void RangLinkB_Command(object sender, CommandEventArgs e)
+        {
+            var asd = e.CommandArgument;
+            ((LinkButton)sender).Text = "-";
         }
     }
 }

@@ -7,11 +7,14 @@
                 <div class="HonapValaszto"></div>
                 <asp:Repeater runat="server" ID="KulsoRepeater">
                     <ItemTemplate>
-                        <div id="rang"></div>
-                        <div id="nev"></div>
+                        <asp:LinkButton runat="server" ID="RangLinkB" OnCommand="RangLinkB_Command" CommandArgument='<%# Eval("Nev") %>'>
+                            <%# Eval("RangVezeto") %>
+                        </asp:LinkButton>
+                        <div id="rang"><%# Eval("RangNormal") %></div>
+                        <div id="nev"><%# Eval("Nev") %></div>
                         <asp:Repeater runat="server" ID="BelsoRepeater" DataSource='<%# Eval("BelsoLista") %>'>
                             <ItemTemplate>
-                                <div runat="server" id="bejelentesKocka" class="kockak"></div>
+                                <div runat="server" id="bejelentesKocka" class="kockak"><%# Eval("JogcimNev") %></div>
                             </ItemTemplate>
                         </asp:Repeater>
                         <br />
