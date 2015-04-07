@@ -259,7 +259,7 @@ namespace hazi.WEB.Logic
                     }
                     foreach (int item in index)
                     {
-                        lista[item].OsszIdo = osszeg;
+                        lista[item].OsszIdo = Math.Round(osszeg, 2);
                     }
                     i = j - 1;
                 }

@@ -13,6 +13,15 @@ namespace hazi.WEB.Pages {
     public partial class OsszegzoForm {
         
         /// <summary>
+        /// JovahagyUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel JovahagyUpdatePanel;
+        
+        /// <summary>
         /// Filter control.
         /// </summary>
         /// <remarks>

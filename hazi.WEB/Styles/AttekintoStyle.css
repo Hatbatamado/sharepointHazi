@@ -77,7 +77,7 @@
     -ms-user-select: none;
     user-select: none;
     width: 1200px;
-    min-width:1200px;
+    min-width: 1200px;
 }
 /*****************/
 
@@ -90,6 +90,8 @@
     border: 1px solid gray;
     text-align: center;
     font-weight: bold;
+    background-color: lightgreen;
+    color: lightgreen;
 }
 
     .kockak:hover {

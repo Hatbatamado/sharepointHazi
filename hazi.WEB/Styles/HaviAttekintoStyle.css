@@ -30,7 +30,7 @@
 
 /*Jel magyarázat*/
 .Jelmagyarazat {
-    padding-top:20px;
+    padding-top: 20px;
 }
 
 .jelSzin {
@@ -59,7 +59,7 @@
     -ms-user-select: none;
     user-select: none;
     width: 990px;
-    min-width:990px;
+    min-width: 990px;
 }
 /*****************/
 
@@ -72,6 +72,8 @@
     border: 1px solid gray;
     text-align: center;
     font-weight: bold;
+    background-color: lightgreen;
+    color: lightgreen;
 }
 
     .kockak:hover {
@@ -80,10 +82,10 @@
 
 /*****************/
 
-
+/*Felhasználók lenyíló/becsukó rész*/
 .Felhasznalok {
     display: inline-block;
-    width:125px;
+    width: 125px;
 }
 
 .nev {
@@ -92,9 +94,10 @@
 
 .rang {
     display: inline-block;
-    color:red;
+    color: red;
 }
 
 .lenyilo {
-    color:darkblue;
+    color: darkblue;
 }
+/*****************/

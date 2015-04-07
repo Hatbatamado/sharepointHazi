@@ -221,18 +221,16 @@ namespace hazi.WEB.Pages
         protected void BelsoRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             string szin = (e.Item.DataItem as HaviAttekintoElem).Szin;
-            string fontcolor = "";
-            if (szin == "" || szin == null)
+            if (szin != null)
             {
-                szin = Konstansok.alapSzin;
-                fontcolor = Konstansok.alapSzin;
-            }
-            else
-                fontcolor = Konstansok.alapFontSzin;
-            HtmlGenericControl divRog = (HtmlGenericControl)(e.Item.FindControl("bejelentesKocka"));
+                if (szin != "")
+                {
+                    HtmlGenericControl divRog = (HtmlGenericControl)(e.Item.FindControl("bejelentesKocka"));
 
-            if (divRog != null)
-                divRog.Attributes["style"] += ("background:" + szin + "; color: " + fontcolor + ";)"); 
+                    if (divRog != null)
+                        divRog.Attributes["style"] += ("background:" + szin + "; color: " + Konstansok.alapFontSzin + ";)");
+                }
+            }
         }
 
         protected void JelmagyarazatRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)

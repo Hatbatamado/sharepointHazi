@@ -13,7 +13,6 @@ namespace hazi.WEB.Logic
         public const string RogzitveAlapSzin = "#FFFF00";
         public const string JovahagyvaAlapSzin = "#006400";
         public const string TobbBejelenesAlapszin = "#c9c9ee";
-        public const string alapSzin = "lightgreen";
         public const string alapFontSzin = "black";
         public const string IsmeretlenSzin = "#FFFFFF";
 

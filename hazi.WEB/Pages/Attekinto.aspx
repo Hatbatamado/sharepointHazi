@@ -35,7 +35,7 @@
                         <div class="HonapNeve"><%# Eval("HonapNeve") %></div>
                         <asp:Repeater runat="server" ID="BelsoRepeater" DataSource='<%# Eval("BelsoLista") %>' OnItemDataBound="BelsoRepeater_ItemDataBound">
                             <ItemTemplate>
-                                <div runat="server" id="bejelentesKocka" class="kockak">
+                                <div runat="server" id="bejelentesKocka" class="kockak alapkocka">
                                     <%# Eval("JogcimNev") %>
                                 </div>
                             </ItemTemplate>
@@ -67,7 +67,6 @@
                 ev = ev - 1;
                 __doPostBack('<%= AttekintoUpdatePanel.ClientID %>', 'TextChangedBalra');
             }
-            <%--$('#<%= evLabel.ClientID %>').text(ev);--%>
         }
     </script>
 </asp:Content>
