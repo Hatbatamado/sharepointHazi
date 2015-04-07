@@ -55,6 +55,11 @@ namespace hazi.WEB.Logic
             else return string.Empty;
         }
 
+        /// <summary>
+        /// Vezető nevének lekérése
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public static string GetManager(string username)
         {
             using (hazi2Entities db = new hazi2Entities())
@@ -73,6 +78,11 @@ namespace hazi.WEB.Logic
             }
         }
 
+        /// <summary>
+        /// Alárendelt felhasználó nevek lekérése
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="userlista"></param>
         public static void GetUsersByManager(string user, List<string> userlista)
         {
             List<FelhasznaloiProfilok> fp = new List<FelhasznaloiProfilok>();
@@ -257,6 +267,11 @@ namespace hazi.WEB.Logic
             Response.Redirect(redirect);
         }
 
+        /// <summary>
+        /// Vezető-e az adott felhasználó
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         internal static bool IsManager(string username)
         {
             List<FelhasznaloiProfilok> fp = new List<FelhasznaloiProfilok>();

@@ -366,6 +366,12 @@ namespace hazi.WEB.Logic
             }
         }
 
+        /// <summary>
+        /// Havi áttekintőhöz bejelentés adatok, színek
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public static HaviAttekintoElem GetJovahagyByHaviAttekinto(DateTime date, string user)
         {
             HaviAttekintoElem elem = null;
@@ -497,7 +503,14 @@ namespace hazi.WEB.Logic
             return elem;
         }
 
-        public static int Lekerdezes2(string user, List<HiearchiaOsszeg> lista, List<string> userlista)
+        /// <summary>
+        /// Vezető hiearchia szerinti alárendeltek száma
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="lista"></param>
+        /// <param name="userlista"></param>
+        /// <returns></returns>
+        public static int GetUserNumbersByManager(string user, List<HiearchiaOsszeg> lista, List<string> userlista)
         {
             userlista.Remove(user);
 
@@ -514,59 +527,57 @@ namespace hazi.WEB.Logic
             {
                 foreach (var item in fp)
                 {
-                    darab += Lekerdezes2(item.UserName, lista, userlista);
-                }
-                ho.UserCount += darab;
-
-                int index = -1;
-                int i = 0;
-                foreach (var item in lista)
-                {
-                    if (item.UserName == ho.UserName)
-                    {
-                        index = i;
-                        break;
-                    }
-                    i++;
+                    darab += GetUserNumbersByManager(item.UserName, lista, userlista);
                 }
 
-                if (index != -1)
-                {
-                    if (lista[index].UserCount != ho.UserCount)
-                        lista[index].UserCount = ho.UserCount;
-                }
-                else
-                    lista.Add(ho);
+                ListData(ho, darab, lista);
 
                 return darab + 1;
             }
             else
-            {
-                ho.UserCount += darab;
-                int index = -1;
-                int i = 0;
-                foreach (var item in lista)
-                {
-                    if (item.UserName == ho.UserName)
-                    {
-                        index = i;
-                        break;
-                    }
-                    i++;
-                }
+                ListData(ho, darab, lista);
 
-                if (index != -1)
-                {
-                    if (lista[index].UserCount != ho.UserCount)
-                        lista[index].UserCount = ho.UserCount;
-                }
-                else
-                    lista.Add(ho);
-            }
             return 1;
         }
 
-        public static HaviAttekintoElem Lekerdezes(string vezeto, List<HiearchiaOsszeg> lista)
+        /// <summary>
+        /// Alárendeltek számához metódus
+        /// </summary>
+        /// <param name="ho"></param>
+        /// <param name="darab"></param>
+        /// <param name="lista"></param>
+        private static void ListData(HiearchiaOsszeg ho, int darab, List<HiearchiaOsszeg> lista)
+        {
+            ho.UserCount += darab;
+
+            int index = -1;
+            int i = 0;
+            foreach (var item in lista)
+            {
+                if (item.UserName == ho.UserName)
+                {
+                    index = i;
+                    break;
+                }
+                i++;
+            }
+
+            if (index != -1)
+            {
+                if (lista[index].UserCount != ho.UserCount)
+                    lista[index].UserCount = ho.UserCount;
+            }
+            else
+                lista.Add(ho);
+        }
+
+        /// <summary>
+        /// 1 listába / mezőbe feltölti a teljes hiearchiát
+        /// </summary>
+        /// <param name="vezeto"></param>
+        /// <param name="lista"></param>
+        /// <returns></returns>
+        public static HaviAttekintoElem HiearchiaElem(string vezeto, List<HiearchiaOsszeg> lista)
         {
             if (lista != null)
             {
@@ -593,62 +604,14 @@ namespace hazi.WEB.Logic
             {
                 foreach (var item in fp)
                 {
-                    elemek.Add(Lekerdezes(item.UserName, lista));
+                    elemek.Add(HiearchiaElem(item.UserName, lista));
                 }
-                return Elem(vezeto, elemek);
+                return new HaviAttekintoElem() { UserName = vezeto, UsersLista = elemek };
             }
             else
             {
-                return Elem(vezeto, elemek);
-                
+                return new HaviAttekintoElem() { UserName = vezeto, UsersLista = elemek };
             }
-        }
-
-        private static HaviAttekintoElem Elem(string vezeto, List<HaviAttekintoElem> elemek)
-        {
-            HaviAttekintoElem HAE = new HaviAttekintoElem();
-            using (hazi2Entities db = new hazi2Entities())
-            {
-                try
-                {
-                    HAE = (from b in db.IdoBejelentes1
-                           where b.UserName == vezeto
-                           select new HaviAttekintoElem
-                           {
-                               UserName = b.UserName,
-                               Datum = b.KezdetiDatum,
-                               JogcimNev = b.Jogcim.Cim,
-                               JovahagyasiStatusz = b.Statusz,
-                               Szin = b.Jogcim.Szin,
-                           }).Single();
-                    HAE.JovahagyasiStatusz = JovaStatus(HAE.JovahagyasiStatusz);
-                    HAE.Szin = Szin(HAE.JovahagyasiStatusz, HAE.Szin);
-                    HAE.UsersLista = elemek;
-                }
-                catch (Exception) { return new HaviAttekintoElem() { UserName = vezeto, UsersLista = elemek }; }
-            }
-            return HAE;
-        }
-
-        private static string JovaStatus(string statusz)
-        {
-            string[] seged = statusz.Split('&');
-            if (seged.Length > 1)
-                return seged[1];
-            else
-                return "nincs";
-        }
-
-        private static string Szin(string statusz, string szin)
-        {
-            string[] seged = szin.Split('#');
-
-            if (statusz == JovaHagyasStatus.Rogzitve.ToString() && seged.Length > 1)
-                return seged[1];
-            else if (statusz == JovaHagyasStatus.Jovahagyva.ToString() && seged.Length > 2)
-                return seged[2];
-
-            return Konstansok.IsmeretlenSzin;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace hazi.WEB.Pages
                     Error404.HibaDobas(Response);
                 else
                 {
-                    Kuss(DateTime.Now);
+                    Feltoltes(DateTime.Now);
                     honapLabel.Text = DateTime.Now.Year + "/" + DateTime.Now.Month;
                 }
             }
@@ -41,7 +41,7 @@ namespace hazi.WEB.Pages
 
                 honapLabel.Text = date.Year + "/" + date.Month;
 
-                Kuss(date);
+                Feltoltes(date);
             }
             else if (Request["__EVENTARGUMENT"] == "TextChangedBalra")
             {
@@ -59,11 +59,11 @@ namespace hazi.WEB.Pages
 
                 honapLabel.Text = date.Year + "/" + date.Month;
 
-                Kuss(date);
+                Feltoltes(date);
             }
         }
 
-        private void Kuss(DateTime date)
+        private void Feltoltes(DateTime date)
         {
             bool vezeto = UsersBLL.IsManager(User.Identity.Name);
             if (vezeto || RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.Admin.ToString()) ||
@@ -89,13 +89,13 @@ namespace hazi.WEB.Pages
                 userlista.Add(User.Identity.Name);
 
             while (userlista.Count > 0)
-                JovahagyBLL.Lekerdezes2(userlista[0], lista, userlista);
+                JovahagyBLL.GetUserNumbersByManager(userlista[0], lista, userlista);
             
             lista = lista.OrderBy(o => o.UserCount).ToList();
 
             List<HaviAttekintoElem> hv = new List<HaviAttekintoElem>();
             while (lista.Count > 0)
-                hv.Add(JovahagyBLL.Lekerdezes(lista[lista.Count - 1].UserName, lista));
+                hv.Add(JovahagyBLL.HiearchiaElem(lista[lista.Count - 1].UserName, lista));
 
             HAVS havs = new HAVS(hv, date);
 
@@ -129,15 +129,8 @@ namespace hazi.WEB.Pages
 
         private void Becsukas(List<HaviAttekintoViewModel> tempList, string userNev)
         {
-            int i = 0;
-            while (i < HAVS.HvRep.Count)
-            {
-                tempList.Add(HAVS.HvRep[i]);
-                if (HAVS.HvRep[i].Nev != userNev)
-                    i++;
-                else
-                    break;
-            }
+            int i = IndexOfUser(0, tempList, userNev);
+
             List<string> UsersList = new List<string>();
             if (i < HAVS.HvRep.Count)
             {
@@ -152,34 +145,18 @@ namespace hazi.WEB.Pages
                         HAVS.HvRep.Remove(item);
                 }
             }
-            i++;
-            while (i < HAVS.HvRep.Count)
-            {
-                tempList.Add(HAVS.HvRep[i++]);
-            }
-
-            HAVS.HvRep = tempList;
-            KulsoRepeater.DataSource = tempList;
-            KulsoRepeater.DataBind();
+            ListaEsRepeaterFeltoltes(tempList, i);
         }
 
         private void Kinyitas(List<HaviAttekintoViewModel> tempList, string userNev)
         {
-            int i = 0;
-            while (i < HAVS.HvRep.Count)
-            {
-                tempList.Add(HAVS.HvRep[i]);
-                if (HAVS.HvRep[i].Nev != userNev)
-                    i++;
-                else
-                    break;
-            }
+            int i = IndexOfUser(0, tempList, userNev);
 
             if (i < HAVS.HvRep.Count)
             {
                 tempList[tempList.Count - 1].RangVezeto = '-';
                 List<HaviAttekintoElem> hv = new List<HaviAttekintoElem>();
-                hv.Add(JovahagyBLL.Lekerdezes(HAVS.HvRep[i].Nev, null));
+                hv.Add(JovahagyBLL.HiearchiaElem(HAVS.HvRep[i].Nev, null));
 
                 foreach (var item in hv)
                 {
@@ -210,16 +187,35 @@ namespace hazi.WEB.Pages
                         }
                     }
                 }
-                i++;
-                while (i < HAVS.HvRep.Count)
-                {
-                    tempList.Add(HAVS.HvRep[i++]);
-                }
-
-                HAVS.HvRep = tempList;
-                KulsoRepeater.DataSource = tempList;
-                KulsoRepeater.DataBind();
+                ListaEsRepeaterFeltoltes(tempList, i);
             }
+        }
+
+        private int IndexOfUser(int i, List<HaviAttekintoViewModel> tempList, string userNev)
+        {
+            while (i < HAVS.HvRep.Count)
+            {
+                tempList.Add(HAVS.HvRep[i]);
+                if (HAVS.HvRep[i].Nev != userNev)
+                    i++;
+                else
+                    break;
+            }
+
+            return i;
+        }
+
+        private void ListaEsRepeaterFeltoltes(List<HaviAttekintoViewModel> tempList, int i)
+        {
+            i++;
+            while (i < HAVS.HvRep.Count)
+            {
+                tempList.Add(HAVS.HvRep[i++]);
+            }
+
+            HAVS.HvRep = tempList;
+            KulsoRepeater.DataSource = tempList;
+            KulsoRepeater.DataBind();
         }
 
         protected void BelsoRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
