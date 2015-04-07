@@ -10,6 +10,7 @@ namespace hazi.WEB.Logic
         public char RangVezeto { get; set; }
         public char RangNormal { get; set; }
         public string Nev { get; set; }
+        public string Vezeto { get; set; }
         public List<HaviAttekintoElem> BelsoLista { get; set; }
 
         public HaviAttekintoViewModel(int year, int month, string user)
@@ -20,7 +21,9 @@ namespace hazi.WEB.Logic
                 DateTime temp = new DateTime(year, month, i);
                 HaviAttekintoElem elem = JovahagyBLL.GetJovahagyByHaviAttekinto(temp, user);
                 BelsoLista.Add(elem);
-            } 
+            }
+            string manager = UsersBLL.GetManager(user);
+            Vezeto = manager;
         }
     }
 }

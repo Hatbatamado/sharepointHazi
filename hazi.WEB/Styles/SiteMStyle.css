@@ -16,7 +16,7 @@
 
 /*Bal Menü*/
 .BalMenu {
-    margin-left: 175px;
+    margin-left: 75px;
     float: left;
 }
 
@@ -41,7 +41,7 @@
 
 .JobbMenu {
     float: right;
-    margin-right: 375px;
+    margin-right: 300px;
     display: inline-block;
 }
 

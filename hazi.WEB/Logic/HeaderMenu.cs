@@ -29,6 +29,11 @@ namespace hazi.WEB.Logic
                     balmenuitems.Add(new MyMenuItem() { Text = "Jóváhagyások", Link = Konstansok.RedirectOsszegzoForm });
 
                 balmenuitems.Add(new MyMenuItem() { Text = "Éves áttekintő", Link = Konstansok.RedirectAttekinto });
+                
+                bool vezeto = UsersBLL.IsManager(HttpContext.Current.User.Identity.Name);
+                if (vezeto || RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.Admin.ToString()) ||
+                    RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, RegisterUserAs.Jovahagyok.ToDisplayString()))
+                    balmenuitems.Add(new MyMenuItem() { Text = "Havi áttekintő", Link = Konstansok.RedirectHaviAttekinto });
 
                 if (RoleActions.IsInRole(HttpContext.Current.User.Identity.Name, Konstansok.admin))
                     jobbmenuitems.Add(new MyMenuItem() { Text = "Admin oldal", Link = Konstansok.RedirectAdminOldal });

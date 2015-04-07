@@ -24,6 +24,7 @@ namespace hazi.WEB.Logic
         public const string RedirectAccoutRegister = "/Account/Register";
         public const string RedirectFooldal = "/";
         public const string RedirectAttekinto = "/Pages/Attekinto";
+        public const string RedirectHaviAttekinto = "/Pages/HaviAttekinto";
         public const string RedirectBejelento = "/Pages/Bejelento";
 
         public static string admin = RegisterUserAs.Admin.ToString();

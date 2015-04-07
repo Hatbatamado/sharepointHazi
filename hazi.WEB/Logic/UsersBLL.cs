@@ -55,6 +55,43 @@ namespace hazi.WEB.Logic
             else return string.Empty;
         }
 
+        public static string GetManager(string username)
+        {
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                try
+                {
+                    var query = (from f in db.FelhasznaloiProfiloks
+                                 where f.UserName == username
+                                 select f).Single();
+                    return query.Vezeto;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
+        public static void GetUsersByManager(string user, List<string> userlista)
+        {
+            List<FelhasznaloiProfilok> fp = new List<FelhasznaloiProfilok>();
+            using (hazi2Entities db = new hazi2Entities())
+            {
+                fp = (from f in db.FelhasznaloiProfiloks
+                      where f.Vezeto == user
+                      select f).ToList();
+            }
+            if (fp.Count > 0)
+            {
+                foreach (var item in fp)
+                {
+                    GetUsersByManager(item.UserName, userlista);
+                    userlista.Add(item.UserName);
+                }
+            }
+        }
+
         /// <summary>
         /// Igaz értéket ad vissza, ha a felhasználót megtalálta az adatbázisban
         /// </summary>

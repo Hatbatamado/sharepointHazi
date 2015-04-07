@@ -568,12 +568,15 @@ namespace hazi.WEB.Logic
 
         public static HaviAttekintoElem Lekerdezes(string vezeto, List<HiearchiaOsszeg> lista)
         {
-            foreach (var item in lista)
+            if (lista != null)
             {
-                if (item.UserName == vezeto)
+                foreach (var item in lista)
                 {
-                    lista.Remove(item);
-                    break;
+                    if (item.UserName == vezeto)
+                    {
+                        lista.Remove(item);
+                        break;
+                    }
                 }
             }
 

@@ -1,28 +1,12 @@
-﻿/*Kereso rész*/
-.UserLabel {
-    display: inline-block;
-}
-
-.UserTB {
-    display: inline-block;
-}
-/***************/
-
-.keresoUzenet {
-    font-weight: bold;
-    font-size: 9pt;
-    padding-top: 5px;
-    color: #52339f;
-}
-
+﻿
 /*Tablazat fejlec*/
-.EvValaszto {
+.HonapValaszto {
     text-align: center;
     font-weight: bold;
     font-size: 14pt;
 }
 
-.ev {
+.honap {
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -39,16 +23,14 @@
 }
 
 .Fejlec {
-    margin-left: 104px;
+    margin-left: 130px;
 }
 
 /******************/
 
 /*Jel magyarázat*/
 .Jelmagyarazat {
-    float: right;
-    position: relative;
-    bottom: 272px;
+    padding-top:20px;
 }
 
 .jelSzin {
@@ -76,8 +58,8 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    width: 1200px;
-    min-width:1200px;
+    width: 990px;
+    min-width:990px;
 }
 /*****************/
 
@@ -98,9 +80,21 @@
 
 /*****************/
 
-/*Honap neve*/
-.HonapNeve {
+
+.Felhasznalok {
     display: inline-block;
-    width: 100px;
+    width:125px;
 }
-/*****************/
+
+.nev {
+    display: inline-block;
+}
+
+.rang {
+    display: inline-block;
+    color:red;
+}
+
+.lenyilo {
+    color:darkblue;
+}

@@ -43,17 +43,18 @@
                         <br />
                     </ItemTemplate>
                 </asp:Repeater>
-                <div class="Jelmagyarazat">
-                    <div class="JelmagyarazatCim">Jelmagyarázat:</div>
-                    <asp:Repeater runat="server" ID="JelmagyarazatRepeater" OnItemDataBound="JelmagyarazatRepeater_ItemDataBound">
-                        <ItemTemplate>
-                            <div runat="server" id="jelSzin" class="jelSzin"><%# Eval("BetuJel") %></div>
-                            <div class="jelNev"><%# Eval("JelNev") %></div>
-                            <br />
-                        </ItemTemplate>
-                    </asp:Repeater>
             </ContentTemplate>
         </asp:UpdatePanel>
+        <div class="Jelmagyarazat">
+            <div class="JelmagyarazatCim">Jelmagyarázat:</div>
+            <asp:Repeater runat="server" ID="JelmagyarazatRepeater" OnItemDataBound="JelmagyarazatRepeater_ItemDataBound">
+                <ItemTemplate>
+                    <div runat="server" id="jelSzin" class="jelSzin"><%# Eval("BetuJel") %></div>
+                    <div class="jelNev"><%# Eval("JelNev") %></div>
+                    <br />
+                </ItemTemplate>
+            </asp:Repeater>
+        </div>
     </div>
     <script>
         function DatumValtozas(irany) {
@@ -67,6 +68,6 @@
                 __doPostBack('<%= AttekintoUpdatePanel.ClientID %>', 'TextChangedBalra');
             }
             <%--$('#<%= evLabel.ClientID %>').text(ev);--%>
-        }        
+        }
     </script>
 </asp:Content>
