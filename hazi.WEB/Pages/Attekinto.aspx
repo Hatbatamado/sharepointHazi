@@ -35,7 +35,7 @@
                         <div class="HonapNeve"><%# Eval("HonapNeve") %></div>
                         <asp:Repeater runat="server" ID="BelsoRepeater" DataSource='<%# Eval("BelsoLista") %>' OnItemDataBound="BelsoRepeater_ItemDataBound">
                             <ItemTemplate>
-                                <div runat="server" id="bejelentesKocka" class="kockak alapkocka">
+                                <div runat="server" id="bejelentesKocka" class="kockak">
                                     <%# Eval("JogcimNev") %>
                                 </div>
                             </ItemTemplate>

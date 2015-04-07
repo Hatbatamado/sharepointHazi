@@ -255,7 +255,7 @@ namespace hazi.WEB.Pages
         /// <returns></returns>
         private string DateTimeTosringMegfeleloModra(DateTime ido)
         {
-            return ido.Year + "." + ido.Month.ToString("00") + "." + ido.Day;
+            return ido.Year + "." + ido.Month.ToString("00") + "." + ido.Day.ToString("00");
         }
 
         /// <summary>
